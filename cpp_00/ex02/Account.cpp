@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 16:48:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/12 10:05:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/01/12 12:11:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,18 @@ int	Account::_totalNbDeposits = 0;
 int	Account::_totalNbWithdrawals = 0;
 
 void	Account::_displayTimestamp() {
-	time_t		current_time = time(nullptr);
-	struct tm	*t = localtime(&current_time);
+	// time_t		current_time = time(nullptr);
+	// struct tm	*t = localtime(&current_time);
 
-	std::cout << "["
-		<< t->tm_year + 1900
-		<< std::setw(2) << std::setfill('0') << t->tm_mon + 1
-		<< std::setw(2) << std::setfill('0') << t->tm_mday
-		<< "_"
-		<< std::setw(2) << std::setfill('0') << t->tm_hour
-		<< std::setw(2) << std::setfill('0') << t->tm_min
-		<< std::setw(2) << std::setfill('0') << t->tm_sec
-		<< "] ";
+	// std::cout << "["
+	// 	<< t->tm_year + 1900
+	// 	<< std::setw(2) << std::setfill('0') << t->tm_mon + 1
+	// 	<< std::setw(2) << std::setfill('0') << t->tm_mday
+	// 	<< "_"
+	// 	<< std::setw(2) << std::setfill('0') << t->tm_hour
+	// 	<< std::setw(2) << std::setfill('0') << t->tm_min
+	// 	<< std::setw(2) << std::setfill('0') << t->tm_sec
+	// 	<< "] ";
 }
 int	Account::getNbAccounts( void ) {
 	return (Account::_nbAccounts);

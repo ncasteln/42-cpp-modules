@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:57:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/12 10:05:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/01/12 12:18:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void PhoneBook::getContactByIndex( void ) const {
 		std::cout << std::endl << "* Choose a contact between [0] and [7]: ";
 		getline(std::cin, line);
 		n = std::atoi(line.c_str());
-		if (!isValidIndex(line, n))
-			std::cout << "[!!!] Invalid index [!!!]";
+		if (!isValidIndex(line, n) || line.empty())
+			std::cout << "[!!!] Invalid input [!!!]";
 		else
 			break ;
 	}
