@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:56:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/12 12:15:28 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:16:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ int	main(void)
 		std::cout << std::endl << "*** Hello! What do you want to do? ***" << std::endl;
 		std::cout << "- ADD\n- SEARCH\n- EXIT\n" << std::endl;
 		getline(std::cin, line);
+		if (std::cin.fail()) {
+			std::cerr << "Error: std::cin" <<std::endl;
+			break ;
+		}
 		if (call_method(line, &p))
 			break ;
 	}

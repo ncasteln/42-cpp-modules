@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:57:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/12 12:18:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:17:57 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ PhoneBook::PhoneBook( void ) {}
 PhoneBook::~PhoneBook( void ) {}
 
 void PhoneBook::getAllContact( void ) const {
-	if (!this->c_[0].isSet) {
+	if (!this->c_[0].getIsSet()) {
 		std::cout << "*** [Your contact list is empty!] ***" << std::endl;
 		return ;
 	}
 	Contact::displayRow(Contact::headerRow);
 	Contact::displayRow(Contact::emptyRow);
 	for (int i = 0; i < 8; i++) {
-		if (this->c_[i].isSet) {
+		if (this->c_[i].getIsSet()) {
 			std::string s[4] = {
 				std::string(1, i + '0'),
 				this->c_[i].getContact().fname_,
@@ -66,6 +66,10 @@ void PhoneBook::getContactByIndex( void ) const {
 	while (1) {
 		std::cout << std::endl << "* Choose a contact between [0] and [7]: ";
 		getline(std::cin, line);
+		if (std::cin.fail()) {
+			std::cerr << "Error: std::cin" <<std::endl;
+			exit(1);
+		}
 		n = std::atoi(line.c_str());
 		if (!isValidIndex(line, n) || line.empty())
 			std::cout << "[!!!] Invalid input [!!!]";
@@ -74,7 +78,7 @@ void PhoneBook::getContactByIndex( void ) const {
 	}
 	for (int i = 0; i < 8; i++) {
 		if (i == n) {
-			if (!this->c_[i].isSet)
+			if (!this->c_[i].getIsSet())
 				std::cout << "*** [The contact doesn't exist] ***" << std::endl;
 			else
 				this->c_[i].displayContact();

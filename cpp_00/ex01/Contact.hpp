@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:57:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/12 09:54:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:17:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ class	Contact {
 		void		setContact( int );
 		void		setField( std::string *, int );
 		t_contact	getContact( void ) const;
-		bool		isSet;
+		int			getIsSet( void ) const;
 
 		/* DISPLAY */
 		void				displayContact( void ) const;
@@ -45,6 +45,7 @@ class	Contact {
 		static std::string	emptyRow[4];
 		static std::string	contactList[5];
 	private:
+		bool		isSet;
 		t_contact	data_;
 };
 

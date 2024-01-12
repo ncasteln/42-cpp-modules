@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:12:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/12 12:19:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:18:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,18 @@ t_contact Contact::getContact( void ) const {
 	return (this->data_);
 }
 
+int Contact::getIsSet( void ) const {
+	return (this->isSet);
+}
+
 void Contact::setField( std::string *field, int i ) {
 	while (1) {
 		std::cout << Contact::contactList[i] << ": ";
 		getline(std::cin, *field);
+		if (std::cin.fail()) {
+			std::cerr << "Error: std::cin" <<std::endl;
+			exit(1);
+		}
 		if (!(*field).empty())
 			break ;
 		std::cout << "[!!!] Empty fields are not allowed: retry [!!!]" << std::endl;
