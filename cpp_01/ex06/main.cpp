@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newZombie.cpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/13 15:47:44 by nico              #+#    #+#             */
-/*   Updated: 2024/01/25 17:40:23 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/01/17 14:12:29 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/01/25 18:39:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#include "Harl.hpp"
 
-Zombie *newZombie( std::string name ) {
-	Zombie	*z = new Zombie(name);
-	return (z);
+int	main ( int argc, char **argv ) {
+	Harl		h;
+	std::string	s;
+
+	s = "";
+	if (argc > 2)
+		return (1);
+	if (argc == 2)
+		s = std::string(argv[1]);
+	h.complain(s);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Zombie.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 15:37:34 by nico              #+#    #+#             */
-/*   Updated: 2024/01/15 14:13:42 by nico             ###   ########.fr       */
+/*   Updated: 2024/01/25 17:43:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,3 @@ void Zombie::init( std::string name ) {
 void Zombie::announce( void ) {
 	std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 }
-
-

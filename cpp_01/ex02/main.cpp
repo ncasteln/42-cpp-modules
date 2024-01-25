@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:14:27 by nico              #+#    #+#             */
-/*   Updated: 2024/01/15 18:09:22 by nico             ###   ########.fr       */
+/*   Updated: 2024/01/25 17:50:46 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 	Both s and *stringPTR can be first declared and then initalized, as opposed
 	to references, which need an immediate initialization.
-	Reference = something similar as a const pointer, which means, a pointer 
+	Reference = something similar as a const pointer, which means, a pointer
 	which points forever to the same variable.
 */
 int	main(void) {
@@ -28,13 +28,13 @@ int	main(void) {
 	stringPTR = &s;
 
 	std::cout
-		<< "Address of s -> "<< &s << std::endl
-		<< "Address hold by stringPTR ->" << stringPTR << std::endl
-		<< "Address hold by stringREF ->" << &stringREF << std::endl;
+		<< "Address of s              -> " << &s << std::endl
+		<< "Address hold by stringPTR -> " << stringPTR << std::endl
+		<< "Address hold by stringREF -> " << &stringREF << std::endl;
 
 	std::cout
-		<< "Value of s -> "<< s << std::endl
-		<< "Value hold by stringPTR ->" << *stringPTR << std::endl
-		<< "Value hold by stringREF ->" << stringREF << std::endl;
+		<< "Value of s                -> " << s << std::endl
+		<< "Value hold by stringPTR   -> " << *stringPTR << std::endl
+		<< "Value hold by stringREF   -> " << stringREF << std::endl;
 	return (0);
 }

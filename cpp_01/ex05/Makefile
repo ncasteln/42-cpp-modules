@@ -6,20 +6,16 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/08 08:52:54 by ncasteln          #+#    #+#              #
-#    Updated: 2024/01/17 08:51:44 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/01/23 10:18:26 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	a.out
+NAME		=	harl
 CFLAGS		=	-Wall -Wextra -std=c++98 -Werror
 SRC			=	main.cpp \
-				Weapon.cpp \
-				HumanA.cpp \
-				HumanB.cpp
+				Harl.cpp
 OBJS		=	$(SRC:.cpp=.o)
-HEADERS		=	Weapon.hpp \
-				HumanA.hpp \
-				HumanB.hpp
+HEADERS		=	Harl.hpp
 
 all: $(NAME)
 
