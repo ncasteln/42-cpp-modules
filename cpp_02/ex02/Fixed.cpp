@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/31 15:58:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/02 17:13:12 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Fixed::Fixed( const int n ) {
 }
 
 Fixed::Fixed( const float n ) {
-	this->fpn_ = roundf(n * 256.0f);
+	this->fpn_ = roundf(n * (1 << Fixed::bits_)); // why round () ??
 }
 
 Fixed::~Fixed() {}
@@ -47,11 +47,11 @@ void Fixed::setRawBits( int const n ) {
 }
 
 float Fixed::toFloat( void ) const {
-	return (((float)this->fpn_) / 256.0f);
+	return (((float)this->fpn_) / (1 << Fixed::bits_));
 }
 
 int Fixed::toInt( void ) const {
-	return (this->fpn_ >> 8);
+	return (this->fpn_ >> Fixed::bits_);
 }
 
 // ---------------------------------------------------------------- OVERLOADERS
@@ -63,9 +63,7 @@ int Fixed::toInt( void ) const {
 	(a + b + c) --------> a.operator+(b).operator+(c)
 */
 Fixed Fixed::operator+( Fixed obj ) {
-	float a = this->toFloat();
-	float b = obj.toFloat();
-	return (Fixed(a + b));
+	return (Fixed(this->toFloat() + obj.toFloat()));
 }
 
 Fixed Fixed::operator-( Fixed obj ) {
@@ -75,6 +73,7 @@ Fixed Fixed::operator-( Fixed obj ) {
 }
 
 Fixed Fixed::operator*( Fixed obj ) {
+	// float prod = (this->fpn_ * obj.fpn_) / ((1 >> 8) * (1 >> 8)); // pow() ?
 	float a = this->toFloat();
 	float b = obj.toFloat();
 	return (Fixed(a * b));
