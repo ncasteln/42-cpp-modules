@@ -3,18 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
+#    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/01/31 10:12:08 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/02 17:53:33 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
 CFLAGS		=	-Wall -Wextra -std=c++98 #-Werror
 SRC			=	main.cpp \
-				Fixed.cpp
-HEADERS		=	Fixed.hpp
+				Fixed.cpp \
+				bsp.cpp \
+				Point.cpp
+HEADERS		=	Fixed.hpp \
+				Point.hpp
 OBJS 	= $(SRC:.cpp=.o)
 
 all: $(NAME)
