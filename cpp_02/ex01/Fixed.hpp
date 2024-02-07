@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/30 15:20:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:28:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 # define __FIXED_HPP__
 
 #include <iostream>
+#include <cmath>
+#include <string>
 
 /*
-	Default copy constructor: init the new obj as a (deep) copy of another one.
-	It is "called" when we pass a parameter by value (yes, it makes a copy!).
-	MyClass a(42);
-	MyClass b(a);
-	MyClass b = a;
+	Operator overloading: if no chaining is expected, can return (void),
+	otherwise the return value has then to be the correct type of the first
+	parameter taken by the function.
 
-	Default assignment operator: copies the values of an obj to another one. The
-	default is not enough when the class/struct contains pointers.
-	MyClass a(42);
-	MyClass b;
-	b = a;
+	Example.
+	a << b << c; -----> type1 operator<<( type1, type2 );
 */
 class Fixed
 {
@@ -34,12 +31,19 @@ class Fixed
 		Fixed( void );
 		~Fixed( void );
 		Fixed( const Fixed& );
-		Fixed& operator=( const Fixed& );
+		void operator=( const Fixed& );
+
 		int getRawBits( void ) const;
 		void setRawBits( int const raw );
+		Fixed( const int );
+		Fixed( const float );
+		float toFloat( void ) const;
+		int toInt( void ) const;
 		int fpn_;
 	private:
 		static const int bits_;
 };
+
+std::ostream& operator<<( std::ostream& cout, const Fixed& obj );
 
 #endif /* __FIXED_HPP__ */
