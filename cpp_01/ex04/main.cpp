@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:12 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/25 18:11:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:14:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 #include <iostream>
 #include <string>
 
-static std::string	replace(std::string line, char *s1, char *s2) {
+static std::string	replace(std::string line, std::string s1, std::string s2) {
 	size_t		i;
 	size_t		match;
 	std::string	newline;
 
 	i = 0;
-	while (i + strlen(s1) <= line.length()) {
+	while (i + s1.length() <= line.length()) {
 		match = line.find(s1, i);
 		if (match == std::string::npos)
 			break ;
 		else {
 			newline.append(line.substr(i, match - i));
 			newline.append(s2);
-			i += match - i + strlen(s1);
+			i += match - i + s1.length();
 		}
 	}
 	newline.append(line.substr(i, line.length() - i));
@@ -35,11 +35,14 @@ static std::string	replace(std::string line, char *s1, char *s2) {
 }
 
 static int	openFileStream(char *fname, std::fstream& fsin, std::ofstream& fsout) {
+	std::string	outfile;
+
 	fsin.open(fname, std::fstream::in);
 	if (fsin.fail()) {
 		return (1);
 	}
-	fsout.open(std::string(fname) + ".replace", std::fstream::out | std::fstream::trunc);
+	outfile = std::string(fname).append(".replace");
+	fsout.open(outfile.c_str(), std::fstream::out | std::fstream::trunc);
 	if (fsout.fail()) {
 		return (1);
 	}
@@ -61,7 +64,7 @@ static int	error(int n) {
 }
 
 /*
-	Error flag for open(): good(), eof(), bad(), fail().
+	Flag for open(): good(), eof(), bad(), fail().
 */
 int main (int argc, char **argv) {
 	std::fstream	fsin;
@@ -78,9 +81,7 @@ int main (int argc, char **argv) {
 	while (getline(fsin, line)) {
 		if (fsin.bad())
 			return (error(4));
-		std::cout << "line     -> " << line << std::endl;
-		replaced = replace(line, (argv[2]), (argv[3]));
-		std::cout << "replaced -> "<< replaced << std::endl;
+		replaced = replace(line, std::string(argv[2]), std::string(argv[3]));
 		fsout << replaced;
 		if (fsin.eof())
 			break ;

@@ -6,13 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/30 15:20:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:15:19 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
-
-const int Fixed::bits_ = 8;
 
 Fixed::Fixed( void ) {
 	std::cout << "Default constructor called" << std::endl;
@@ -23,15 +21,26 @@ Fixed::~Fixed() {
 	std::cout << "Destructor called" << std::endl;
 }
 
+/*
+	The same copy constructor can be achieved via different syntaxes like:
+	• this->fpn_ = obj.getRawBits();
+	• this->operator=(obj);
+	• *this = obj;
+*/
 Fixed::Fixed( const Fixed& obj ) {
 	std::cout << "Copy constructor called" << std::endl;
-	this->fpn_ = obj.getRawBits();
+	*this = obj;
 }
 
-Fixed& Fixed::operator=( const Fixed& obj ) {
+/*
+	In case of a = b, in the method (this) refers to left operand (a), while
+	the parameter taken is (b).
+	The return value of the function, as in the function about operator<<,
+	is needed only for chaining it with other oprands like a = b = c.
+*/
+void Fixed::operator=( const Fixed& obj ) {
 	std::cout << "Copy assignment operator called" << std::endl;
 	this->fpn_ = obj.getRawBits();
-	return (*this);
 }
 
 int Fixed::getRawBits( void ) const {

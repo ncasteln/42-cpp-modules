@@ -6,12 +6,12 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/08 08:52:54 by ncasteln          #+#    #+#              #
-#    Updated: 2024/01/25 08:17:03 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/01/26 10:35:20 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
-CFLAGS		=	-Wall -Wextra -std=c++98 #-Werror
+CFLAGS		=	-Wall -Wextra -Werror -std=c++98
 SRC			=	main.cpp
 OBJS		=	$(SRC:.cpp=.o)
 

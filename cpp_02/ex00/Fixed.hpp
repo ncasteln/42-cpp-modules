@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/01/30 15:20:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:15:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 	MyClass b = a;
 
 	Default assignment operator: copies the values of an obj to another one. The
-	default is not enough when the class/struct contains pointers.
+	default one is not enough when the class/struct contains pointers.
 	MyClass a(42);
 	MyClass b;
 	b = a;
@@ -34,12 +34,12 @@ class Fixed
 		Fixed( void );
 		~Fixed( void );
 		Fixed( const Fixed& );
-		Fixed& operator=( const Fixed& );
+		void operator=( const Fixed& );
 		int getRawBits( void ) const;
 		void setRawBits( int const raw );
-		int fpn_;
 	private:
-		static const int bits_;
+		int fpn_;
+		static const int bits_ = 8;
 };
 
 #endif /* __FIXED_HPP__ */

@@ -6,14 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/07 09:17:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:30:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-const int Fixed::bits_ = 8;
-
+// --------------------------------------------------------------- CONSTRUCTORS
 Fixed::Fixed( void ) {
 	std::cout << "Default constructor called" << std::endl;
 	this->fpn_ = 0;
@@ -26,7 +25,7 @@ Fixed::Fixed( const int n ) {
 
 Fixed::Fixed( const float n ) {
 	std::cout << "Float constructor called" << std::endl;
-	this->fpn_ = roundf(n * 256);
+	this->fpn_ = roundf(n * (1 << Fixed::bits_));
 }
 
 Fixed::~Fixed() {
@@ -35,23 +34,16 @@ Fixed::~Fixed() {
 
 Fixed::Fixed( const Fixed& obj ) {
 	std::cout << "Copy constructor called" << std::endl;
-	// this->fpn_ = obj.getRawBits();
-	// this->operator=(obj);
 	*this = obj;
 }
 
-/*
-	In case of a = b, in the method (this) refers to left operand (a), while
-	the parameter taken is (b).
-	The return value of the function, as in the function about operator<<,
-	is needed only for chaining it with other oprands like a = b = c.
-*/
-void Fixed::operator=( const Fixed& obj ) {
+Fixed& Fixed::operator=( const Fixed& rhs ) {
 	std::cout << "Copy assignment operator called" << std::endl;
-	this->fpn_ = obj.getRawBits();
+	this->fpn_ = rhs.getRawBits();
+	return (*this);
 }
 
-/* MEMBER FUNCTIONS */
+// ----------------------------------------------------------- MEMBER FUNCTIONS
 int Fixed::getRawBits( void ) const {
 	return (this->fpn_);
 }
@@ -61,14 +53,14 @@ void Fixed::setRawBits( int const n ) {
 }
 
 float Fixed::toFloat( void ) const {
-	return (((float)this->fpn_) / 256);
+	return (((float)this->fpn_) / (1 << Fixed::bits_));
 }
 
 int Fixed::toInt( void ) const {
-	return (this->fpn_ >> 8);
+	return (this->fpn_ >> Fixed::bits_);
 }
 
-/* EXTERNAL TO CLASS */
+// --------------------------------------------------------- EXTERNAL FUNCTIONS
 std::ostream& operator<<( std::ostream& cout, const Fixed& obj ) {
 	cout << obj.toFloat();
 	return (cout);

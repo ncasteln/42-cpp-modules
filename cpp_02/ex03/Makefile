@@ -6,15 +6,18 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/07 10:19:33 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/08 09:27:55 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
-CFLAGS		=	-Wall -Wextra -std=c++98 #-Werror
+CFLAGS		=	-Wall -Wextra -std=c++98 -Werror
 SRC			=	main.cpp \
-				Fixed.cpp
-HEADERS		=	Fixed.hpp
+				Fixed.cpp \
+				bsp.cpp \
+				Point.cpp
+HEADERS		=	Fixed.hpp \
+				Point.hpp
 OBJS 	= $(SRC:.cpp=.o)
 
 all: $(NAME)

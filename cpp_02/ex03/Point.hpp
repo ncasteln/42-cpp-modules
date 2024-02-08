@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Point.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 17:17:02 by nico              #+#    #+#             */
-/*   Updated: 2024/02/02 17:53:20 by nico             ###   ########.fr       */
+/*   Updated: 2024/02/07 18:24:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ class Point {
 		~Point( void );
 		Point( const Point& );
 		Point& operator=( const Point& );
-		Point ( const float, const float );
-
-		Fixed getY( void );
-		Fixed getX( void );
+		Point( const float, const float );
+		Fixed getX( void ) const;
+		Fixed getY( void ) const;
 };
+
+bool bsp( Point const a, Point const b, Point const c, Point const point);
 
 #endif /* __POINT_HPP__ */
