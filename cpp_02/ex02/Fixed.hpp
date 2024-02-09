@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/08 09:14:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/09 07:44:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@
 #include <iostream>
 #include <cmath>
 
-/*
-	Operator overloading: if no chaining is expected, can return (void),
-	otherwise the return value has then to be the correct type of the first
-	parameter taken by the function.
-
-	Example.
-	a << b << c; -----> type1 operator<<( type1, type2 );
-*/
 class Fixed
 {
 	public:

@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 09:31:01 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/07 12:17:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/09 07:44:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-/* nt main( void ) {
+/* int main( void ) {
 	Fixed	a(42.42f);
 	Fixed	b(10);
 

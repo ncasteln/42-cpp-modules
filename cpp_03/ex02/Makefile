@@ -6,16 +6,20 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/09 07:45:00 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/09 14:08:46 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
 CFLAGS		=	-Wall -Wextra -std=c++98 -Werror
 SRC			=	main.cpp \
-				Fixed.cpp
-HEADERS		=	Fixed.hpp
-OBJS 	= $(SRC:.cpp=.o)
+				ClapTrap.cpp \
+				ScavTrap.cpp \
+				FragTrap.cpp
+HEADERS		=	ClapTrap.hpp \
+				ScavTrap.hpp \
+				FragTrap.hpp
+OBJS 		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
 

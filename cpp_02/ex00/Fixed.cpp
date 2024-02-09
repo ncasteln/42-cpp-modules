@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/08 09:15:19 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/09 07:40:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Fixed::~Fixed() {
 }
 
 /*
-	The same copy constructor can be achieved via different syntaxes like:
+	The same copy constructor can be achieved via different syntax like:
 	• this->fpn_ = obj.getRawBits();
 	• this->operator=(obj);
 	• *this = obj;

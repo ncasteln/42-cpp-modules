@@ -6,14 +6,14 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 09:31:01 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/07 09:50:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/09 07:44:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
 /*
-	With this main() is interesting to change the bits_ inside the FIxed class
+	With this main() is interesting to change the bits_ inside the Fixed class
 	to different values and verify its accuracy.
 */
 /* int main( void ) {

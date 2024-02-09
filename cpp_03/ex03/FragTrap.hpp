@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Point.hpp                                          :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 17:17:02 by nico              #+#    #+#             */
-/*   Updated: 2024/02/09 07:47:40 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/09 15:16:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __POINT_HPP__
-# define __POINT_HPP__
+#ifndef __FRAGTRAP_HPP__
+# define __FRAGTRAP_HPP__
 
-#include "Fixed.hpp"
+#include "ClapTrap.hpp"
 
-class Point {
-	private:
-		const Fixed	x_;
-		const Fixed	y_;
+class FragTrap : virtual public ClapTrap
+{
 	public:
-		Point( void );
-		~Point( void );
-		Point( const Point& );
-		Point& operator=( const Point& );
-		Point( const float, const float );
-		Fixed getX( void ) const;
-		Fixed getY( void ) const;
+		FragTrap( void );
+		~FragTrap( void );
+		FragTrap( const FragTrap& );
+		FragTrap& operator=( const FragTrap& );
+		FragTrap( std::string name );
+
+		void highFivesGuys(void);
 };
 
-bool bsp( Point const a, Point const b, Point const c, Point const point);
-
-#endif /* __POINT_HPP__ */
+#endif /* __FRAGTRAP_HPP__ */
