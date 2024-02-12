@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/12 13:50:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:47:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,43 @@ ClapTrap::ClapTrap( void ) {
 }
 
 ClapTrap::ClapTrap( std::string name ):
-	name_(name),
-	health_(10),
-	energy_(10),
-	attack_damage_(0) {
-	std::cout << "ClapTrap " << this->name_ << " created" << std::endl;
+	_name(name),
+	_health(10),
+	_energy(10),
+	_attack_damage(0) {
+	std::cout << "ClapTrap " << this->_name << " created" << std::endl;
 }
 
 ClapTrap::~ClapTrap( void ) {
-	std::cout << "ClapTrap " << this->name_ << " destroyed" << std::endl;
+	std::cout << "ClapTrap " << this->_name << " destroyed" << std::endl;
 }
 
 ClapTrap::ClapTrap( const ClapTrap& obj ) {
-	this->name_ = obj.name_;
-	this->health_ = obj.health_;
-	this->energy_ = obj.energy_;
-	this->attack_damage_ = obj.attack_damage_;
-	std::cout << "ClapTrap " << this->name_ << " created by copy" << std::endl;
+	this->_name = obj._name;
+	this->_health = obj._health;
+	this->_energy = obj._energy;
+	this->_attack_damage = obj._attack_damage;
+	std::cout << "ClapTrap " << this->_name << " created by copy" << std::endl;
 }
 
 ClapTrap& ClapTrap::operator=( const ClapTrap& rhs ) {
-	this->name_ = rhs.name_;
-	this->health_ = rhs.health_;
-	this->energy_ = rhs.energy_;
-	this->attack_damage_ = rhs.attack_damage_;
+	this->_name = rhs._name;
+	this->_health = rhs._health;
+	this->_energy = rhs._energy;
+	this->_attack_damage = rhs._attack_damage;
 	return (*this);
 }
 
 // ----------------------------------------------------------- PUBLIC FUNCTIONS
 void ClapTrap::attack( const std::string& target ) {
-	if (this->health_ <= 0) {
-		std::cout << this->name_ << " is dead!" << std::endl;
+	if (this->_health <= 0) {
+		std::cout << this->_name << " is dead!" << std::endl;
 		return ;
 	}
-	std::cout << this->name_ << " tries to attack " << target;
-	if (this->energy_ > 0) {
-		std::cout << "...and causes " << this->attack_damage_ << " points of damage!";
-		this->energy_ -= 1;
+	std::cout << this->_name << " tries to attack " << target;
+	if (this->_energy > 0) {
+		std::cout << "...and causes " << this->_attack_damage << " points of damage!";
+		this->_energy -= 1;
 	}
 	else
 		std::cout << "...but has no energy left!";
@@ -62,15 +62,15 @@ void ClapTrap::attack( const std::string& target ) {
 }
 
 void ClapTrap::beRepaired( unsigned int amount ) {
-	if (this->health_ <= 0) {
-		std::cout << this->name_ << " is dead!" << std::endl;
+	if (this->_health <= 0) {
+		std::cout << this->_name << " is dead!" << std::endl;
 		return ;
 	}
-	std::cout << this->name_ << " tries to repair itself...";
-	if (this->energy_ > 0) {
+	std::cout << this->_name << " tries to repair itself...";
+	if (this->_energy > 0) {
 		std::cout << "and its health is restored by " << amount << " points!";
-		this->energy_ -= 1;
-		this->health_ += amount;
+		this->_energy -= 1;
+		this->_health += amount;
 	}
 	else
 		std::cout << "but has no energy left!";
@@ -78,13 +78,13 @@ void ClapTrap::beRepaired( unsigned int amount ) {
 }
 
 void ClapTrap::takeDamage( unsigned int amount ) {
-	if (this->health_ <= 0) {
-		std::cout << this->name_ << " is dead!" << std::endl;
+	if (this->_health <= 0) {
+		std::cout << this->_name << " is dead!" << std::endl;
 		return ;
 	}
-	std::cout << this->name_ << " took a damage of " << amount << "...";
-	this->health_ -= amount;
-	if (this->energy_ <= 0) {
+	std::cout << this->_name << " took a damage of " << amount << "...";
+	this->_health -= amount;
+	if (this->_energy <= 0) {
 		std::cout << "and dies!";
 	}
 	std::cout << std::endl;

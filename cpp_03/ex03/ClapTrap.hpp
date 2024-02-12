@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/12 09:25:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:46:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ class ClapTrap
 		void takeDamage( unsigned int );
 		void beRepaired( unsigned int );
 	protected:
-		std::string name_;
-		int health_;
-		int energy_;
-		int attack_damage_;
+		std::string _name;
+		int _health;
+		int _energy;
+		int _attack_damage;
 };
 
 #endif /* __CLAPTRAP_HPP__ */
