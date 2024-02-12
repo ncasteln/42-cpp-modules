@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 09:31:01 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/12 15:47:33 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/12 16:19:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#ifndef __WRONGANIMAL_HPP__
+# define __WRONGANIMAL_HPP__
 
-/*
-	@param ClapTrap	*p = &s; an instance of type CT, take the address of ST, but
-	when attack, the ST attack is performed.
-*/
-int main( void ) {
-	ScavTrap	s("1111");
+#include <string>
+#include <iostream>
 
-	s.attack("dangerous human");
+class WrongAnimal
+{
+	public:
+		WrongAnimal( void );
+		virtual ~WrongAnimal( void );
+		WrongAnimal( const WrongAnimal& );
+		WrongAnimal& operator=( const WrongAnimal& );
 
-	// ClapTrap	*p = &s;
-	// p->attack("blob");
-	return (0);
-}
+		void makeSound( void ) const;
+		std::string getType( void ) const;
+	protected:
+		std::string _type;
+};
+
+#endif /* __WRONGANIMAL_HPP__ */

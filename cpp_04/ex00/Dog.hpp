@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Dog.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 09:31:01 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/12 15:47:33 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/12 15:58:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#ifndef __DOG_HPP__
+# define __DOG_HPP__
 
-/*
-	@param ClapTrap	*p = &s; an instance of type CT, take the address of ST, but
-	when attack, the ST attack is performed.
-*/
-int main( void ) {
-	ScavTrap	s("1111");
+#include "Animal.hpp"
 
-	s.attack("dangerous human");
+class Dog: public Animal
+{
+	public:
+		Dog( void );
+		~Dog( void );
+		Dog( const Dog& );
+		Dog& operator=( const Dog& );
 
-	// ClapTrap	*p = &s;
-	// p->attack("blob");
-	return (0);
-}
+		void makeSound ( void ) const;
+};
+
+#endif /* __DOG_HPP__ */

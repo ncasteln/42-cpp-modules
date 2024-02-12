@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   WrongCat.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 09:31:01 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/12 15:47:33 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/12 16:19:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#ifndef __WRONGCAT_HPP__
+# define __WRONGCAT_HPP__
 
-/*
-	@param ClapTrap	*p = &s; an instance of type CT, take the address of ST, but
-	when attack, the ST attack is performed.
-*/
-int main( void ) {
-	ScavTrap	s("1111");
+#include "WrongAnimal.hpp"
 
-	s.attack("dangerous human");
+class WrongCat: public WrongAnimal
+{
+	public:
+		WrongCat( void );
+		~WrongCat( void );
+		WrongCat( const WrongCat& );
+		WrongCat& operator=( const WrongCat& );
 
-	// ClapTrap	*p = &s;
-	// p->attack("blob");
-	return (0);
-}
+		void makeSound ( void ) const;
+};
+
+#endif /* __WRONGCAT_HPP__ */

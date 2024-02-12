@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   wrong_main.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 09:31:01 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/12 15:47:33 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/12 16:21:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#include "WrongCat.hpp"
 
-/*
-	@param ClapTrap	*p = &s; an instance of type CT, take the address of ST, but
-	when attack, the ST attack is performed.
-*/
 int main( void ) {
-	ScavTrap	s("1111");
+	const WrongAnimal* meta = new WrongAnimal();
+	const WrongAnimal* i = new WrongCat();
 
-	s.attack("dangerous human");
+	std::cout << i->getType() << " " << std::endl;
 
-	// ClapTrap	*p = &s;
-	// p->attack("blob");
+	i->makeSound(); // will output the generic animal sound!
+	meta->makeSound();
+
+	delete meta;
+	delete i;
 	return (0);
 }

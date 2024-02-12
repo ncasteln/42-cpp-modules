@@ -5,23 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 09:31:01 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/12 15:47:33 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/12 16:16:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#include "Cat.hpp"
+#include "Dog.hpp"
 
-/*
-	@param ClapTrap	*p = &s; an instance of type CT, take the address of ST, but
-	when attack, the ST attack is performed.
-*/
 int main( void ) {
-	ScavTrap	s("1111");
+	const Animal* meta = new Animal();
+	const Animal* j = new Dog();
+	const Animal* i = new Cat();
 
-	s.attack("dangerous human");
+	std::cout << j->getType() << " " << std::endl;
+	std::cout << i->getType() << " " << std::endl;
 
-	// ClapTrap	*p = &s;
-	// p->attack("blob");
+	i->makeSound(); //will output the cat sound!
+	j->makeSound();
+	meta->makeSound();
+
+	delete meta;
+	delete j;
+	delete i;
 	return (0);
 }
+
+
+/*
+int main( void ) {
+	Animal	a;
+	Cat		c;
+	Dog		d;
+
+	a.makeSound();
+	a.getType();
+	std::cout << std::endl;
+
+	c.makeSound();
+	c.getType();
+	std::cout << std::endl;
+
+	d.makeSound();
+	d.getType();
+	std::cout << std::endl;
+
+	return (0);
+}
+ */
