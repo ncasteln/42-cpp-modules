@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 15:45:42 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:58:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 
 /*
 	Diamond problem: It occurs when a class inherits from two classes that have
-	a common ancestor. This can lead to ambiguity and complexity in the
-	inheritance hierarchy.
-	  A
-	 / \
-	B   C
-	 \ /
-	  D
-	Virtual base class: by making ScavTrap and FragTrap virtual, we are saying
-	that the base object is only ONE. So when creating DiamondTrap, only one
-	constructor of ClapTrap is called.
+	a common ancestor, leading to ambiguity. If there is a method in A that
+	B and C have overridden, and D does not override it, then which version
+	of the method does D inherit: that of B, or that of C?
+	A   A         A
+	|   |        / \
+	B   C       B   C
+	 \ /         \ /
+	  D           D
+	In this context 'shadowing' refers to a member of a derived class which
+	"shadows" one in the parent one, because they have the same name.
 */
 class DiamondTrap : public ScavTrap, public FragTrap
 {
@@ -37,7 +37,9 @@ class DiamondTrap : public ScavTrap, public FragTrap
 		DiamondTrap( const DiamondTrap& );
 		DiamondTrap& operator=( const DiamondTrap& );
 		DiamondTrap( std::string );
+
 		void whoAmI( void );
+		void getStatus( void );
 	private:
 		std::string name_;
 };

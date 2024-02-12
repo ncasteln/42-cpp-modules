@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 16:34:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:28:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // --------------------------------------------------------------- CONSTRUCTORS
 ScavTrap::ScavTrap( void ): ClapTrap() {
-	std::cout << "ScavTrap [without a name] created" << std::endl;
+	std::cout << "ScavTrap [default] created" << std::endl;
 }
 
 /*
@@ -28,10 +28,11 @@ ScavTrap::ScavTrap( void ): ClapTrap() {
 	• this->ClapTrap::setAttackDamage(20);
 */
 ScavTrap::ScavTrap( std::string name ): ClapTrap(name) {
-	std::cout << "ScavTrap " << this->name_ << " created" << std::endl;
+	this->name_ = name + "_scav_name";
 	this->health_ = 100;
 	this->energy_ = 50;
 	this->attack_damage_ = 20;
+	std::cout << "ScavTrap " << this->name_ << " created" << std::endl;
 }
 
 ScavTrap::~ScavTrap( void ) {
@@ -39,12 +40,15 @@ ScavTrap::~ScavTrap( void ) {
 }
 
 ScavTrap::ScavTrap( const ScavTrap& obj ): ClapTrap(obj) {
+	this->name_ = obj.name_;
+	this->energy_ = obj.energy_;
+	this->health_ = obj.health_;
+	this->attack_damage_ = obj.attack_damage_;
 	std::cout << "ScavTrap " << this->name_ << " created by copy" << std::endl;
-	// *this = obj;
 }
 
 ScavTrap& ScavTrap::operator=( const ScavTrap& rhs ) {
-	std::cout << "ScavTrap " << this->name_ << " reassigned" << std::endl;
+	std::cout << "ScavTrap " << this->name_ << " reassigned, now is called: " << rhs.name_ << std::endl;
 	this->name_ = rhs.name_;
 	this->energy_ = rhs.energy_;
 	this->health_ = rhs.health_;
@@ -54,10 +58,14 @@ ScavTrap& ScavTrap::operator=( const ScavTrap& rhs ) {
 
 // ----------------------------------------------------------- PUBLIC FUNCTIONS
 void ScavTrap::attack( const std::string& target ) {
-	std::cout << "(ScavTrap) ";
+	std::cout << "(ScavTrap overrides base method) ";
 	this->ClapTrap::attack(target);
 }
 
 void ScavTrap::guardGate( void ) {
 	std::cout << "ScavTrap " << this->name_ << " is now in keeper mode" << std::endl;
+}
+
+int ScavTrap::getEnergy( void ) const {
+	return (this->energy_);
 }

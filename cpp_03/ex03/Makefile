@@ -6,12 +6,12 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/09 16:01:11 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/12 12:57:38 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
-CFLAGS		=	-Wall -Wextra -std=c++98 -Wshadow #-Wno-shadow  #-Werror
+CFLAGS		=	-Wall -Wextra -std=c++98 -Wshadow -Werror
 SRC			=	main.cpp \
 				ClapTrap.cpp \
 				ScavTrap.cpp \

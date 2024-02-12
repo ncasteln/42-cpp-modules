@@ -6,14 +6,16 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 12:39:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:44:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
 // --------------------------------------------------------------- CONSTRUCTORS
-ClapTrap::ClapTrap( void ) {}
+ClapTrap::ClapTrap( void ) {
+	std::cout << "ClapTrap [default] created" << std::endl;
+}
 
 ClapTrap::ClapTrap( std::string name ):
 	name_(name),

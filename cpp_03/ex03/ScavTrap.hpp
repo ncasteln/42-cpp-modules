@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 15:19:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:15:19 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ class ScavTrap : virtual public ClapTrap
 
 		void attack( const std::string& );
 		void guardGate( void );
+		int getEnergy( void ) const;
 };
 
 #endif /* __SCAVTRAP_HPP__ */

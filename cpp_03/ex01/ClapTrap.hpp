@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 13:58:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:11:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 #include <string>
 #include <iostream>
 
+/*
+	• virtual void attack( const std::string& ); virtual makes possible that
+	the derived classes can choose to override the member function with their
+	implementation.
+	• virtual void attack( const std::string& ) = 0; would make the member
+	function pure, and the derived will have to make their own implementation.
+*/
 class ClapTrap
 {
 	public:

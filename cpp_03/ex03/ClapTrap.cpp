@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 16:05:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:50:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // --------------------------------------------------------------- CONSTRUCTORS
 ClapTrap::ClapTrap( void ) {
-	std::cout << "ClapTrap [without a name] created" << std::endl;
+	std::cout << "ClapTrap [default] created" << std::endl;
 }
 
 ClapTrap::ClapTrap( std::string name ):
@@ -30,12 +30,14 @@ ClapTrap::~ClapTrap( void ) {
 }
 
 ClapTrap::ClapTrap( const ClapTrap& obj ) {
-	*this = obj;
+	this->name_ = obj.name_;
+	this->health_ = obj.health_;
+	this->energy_ = obj.energy_;
+	this->attack_damage_ = obj.attack_damage_;
 	std::cout << "ClapTrap " << this->name_ << " created by copy" << std::endl;
 }
 
 ClapTrap& ClapTrap::operator=( const ClapTrap& rhs ) {
-	std::cout << "ClapTrap " << this->name_ <<  " reassigned, now is called:" << rhs.name_ << std::endl;
 	this->name_ = rhs.name_;
 	this->health_ = rhs.health_;
 	this->energy_ = rhs.energy_;

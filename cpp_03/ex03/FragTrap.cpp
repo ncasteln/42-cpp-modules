@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 16:29:45 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:28:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,31 @@
 
 // --------------------------------------------------------------- CONSTRUCTORS
 FragTrap::FragTrap( void ): ClapTrap() {
-	std::cout << "FragTrap [without a name] created" << std::endl;
+	std::cout << "FragTrap [default] created" << std::endl;
 }
 
 FragTrap::FragTrap( std::string name ): ClapTrap(name) {
-	std::cout << "FragTrap " << this->name_ << " created" << std::endl;
+	this->name_ = name + "_frag_name";
 	this->health_ = 100;
 	this->energy_ = 100;
 	this->attack_damage_ = 30;
+	std::cout << "FragTrap " << this->name_ << " created" << std::endl;
 }
 
 FragTrap::~FragTrap( void ) {
 	std::cout << "FragTrap " << this->name_ << " destroyed" << std::endl;
 }
 
-FragTrap::FragTrap( const FragTrap& obj ): ClapTrap(obj) {
+FragTrap::FragTrap( const FragTrap& obj ): ClapTrap( obj ) {
+	this->name_ = obj.name_;
+	this->energy_ = obj.energy_;
+	this->health_ = obj.health_;
+	this->attack_damage_ = obj.attack_damage_;
 	std::cout << "FragTrap " << this->name_ << " created by copy" << std::endl;
-	// *this = obj;
 }
 
-FragTrap& FragTrap::operator=( const FragTrap& rhs ) { // ?????????????????????????????????
-	std::cout << "FragTrap " << this->name_ << " reassigned" << std::endl;
+FragTrap& FragTrap::operator=( const FragTrap& rhs ) {
+	std::cout << "FragTrap " << this->name_ << " reassigned, now is called: " << rhs.name_ << std::endl;
 	this->name_ = rhs.name_;
 	this->energy_ = rhs.energy_;
 	this->health_ = rhs.health_;

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:47:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 14:05:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:46:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // --------------------------------------------------------------- CONSTRUCTORS
 ScavTrap::ScavTrap( void ): ClapTrap() {
-	std::cout << "ScavTrap [without a name] created" << std::endl;
+	std::cout << "ScavTrap [default] created" << std::endl;
 }
 
 /*
@@ -38,13 +38,16 @@ ScavTrap::~ScavTrap( void ) {
 	std::cout << "ScavTrap " << this->name_ << " destroyed" << std::endl;
 }
 
-ScavTrap::ScavTrap( const ScavTrap& obj ) {
+ScavTrap::ScavTrap( const ScavTrap& obj ): ClapTrap( obj ) {
+	this->name_ = obj.name_;
+	this->energy_ = obj.energy_;
+	this->health_ = obj.health_;
+	this->attack_damage_ = obj.attack_damage_;
 	std::cout << "ScavTrap " << this->name_ << " created by copy" << std::endl;
-	*this = obj;
 }
 
 ScavTrap& ScavTrap::operator=( const ScavTrap& rhs ) {
-	std::cout << "ScavTrap " << this->name_ << " reassigned" << std::endl;
+	std::cout << "ScavTrap " << this->name_ << " reassigned, now is called: " << rhs.name_ << std::endl;
 	this->name_ = rhs.name_;
 	this->energy_ = rhs.energy_;
 	this->health_ = rhs.health_;
@@ -54,7 +57,7 @@ ScavTrap& ScavTrap::operator=( const ScavTrap& rhs ) {
 
 // ----------------------------------------------------------- PUBLIC FUNCTIONS
 void ScavTrap::attack( const std::string& target ) {
-	std::cout << "(ScavTrap) ";
+	std::cout << "(ScavTrap overrides base method) ";
 	this->ClapTrap::attack(target);
 }
 

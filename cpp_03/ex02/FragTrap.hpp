@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:46:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/09 14:47:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:25:57 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 #include "ClapTrap.hpp"
 
+/*
+	attack() method is not requested by the subject. Added to clarify the
+	relationship between parent and derived class, about virtual member functions.
+*/
 class FragTrap : public ClapTrap
 {
 	public:
@@ -24,6 +28,7 @@ class FragTrap : public ClapTrap
 		FragTrap& operator=( const FragTrap& );
 		FragTrap( std::string name );
 
+		void attack( const std::string& );
 		void highFivesGuys(void);
 };
 
