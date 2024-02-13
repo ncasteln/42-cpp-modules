@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wrong_main.cpp                                     :+:      :+:    :+:   */
+/*   Animal.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/13 08:21:37 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/13 09:08:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "WrongCat.hpp"
+#ifndef __ANIMAL_HPP__
+# define __ANIMAL_HPP__
 
-int main( void ) {
-	WrongAnimal*	wc = new WrongCat();
-	wc->makeSound();
-	delete wc;
-	return (0);
-}
+#include <string>
+#include <iostream>
 
-/* int main( void ) {
-	const WrongAnimal* meta = new WrongAnimal();
-	const WrongAnimal* i = new WrongCat();
+class Animal
+{
+	public:
+		Animal( void );
+		virtual ~Animal( void );
+		Animal( const Animal& );
+		Animal& operator=( const Animal& );
 
-	std::cout << i->getType() << " " << std::endl;
+		virtual void makeSound( void ) const;
+		std::string getType( void ) const;
+	protected:
+		std::string _type;
+};
 
-	i->makeSound(); // will output the generic animal sound!
-	meta->makeSound();
-
-	delete meta;
-	delete i;
-	return (0);
-} */
+#endif /* __ANIMAL_HPP__ */

@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wrong_main.cpp                                     :+:      :+:    :+:   */
+/*   Brain.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/13 08:21:37 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/13 07:58:52 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/13 10:41:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "WrongCat.hpp"
+#ifndef __BRAIN_HPP__
+# define __BRAIN_HPP__
 
-int main( void ) {
-	WrongAnimal*	wc = new WrongCat();
-	wc->makeSound();
-	delete wc;
-	return (0);
-}
+#include <string>
+#include <iostream>
 
-/* int main( void ) {
-	const WrongAnimal* meta = new WrongAnimal();
-	const WrongAnimal* i = new WrongCat();
+class Brain
+{
+	public:
+		Brain( void );
+		~Brain( void );
+		Brain( const Brain& );
+		Brain& operator=( const Brain& );
+		std::string getIdea( int ) const;
+		void setIdea( int, std::string );
+	private:
+		std::string	_ideas[100];
+};
 
-	std::cout << i->getType() << " " << std::endl;
-
-	i->makeSound(); // will output the generic animal sound!
-	meta->makeSound();
-
-	delete meta;
-	delete i;
-	return (0);
-} */
+#endif /* __BRAIN_HPP__ */
