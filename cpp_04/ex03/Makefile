@@ -6,22 +6,26 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/13 13:27:25 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/13 19:14:57 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
-CFLAGS		=	-Wall -Wextra -std=c++98 -Wshadow -Werror
+CFLAGS		=	-Wall -Wextra -std=c++98 -Wshadow #-Werror
 
 SRC			=	main.cpp \
-				AAnimal.cpp \
-				Dog.cpp \
-				Cat.cpp \
-				Brain.cpp
-HEADERS		=	AAnimal.hpp \
-				Dog.hpp \
-				Cat.hpp \
-				Brain.hpp
+				AMateria.cpp \
+				Ice.cpp \
+				Cure.cpp \
+				Character.cpp \
+				MateriaSource.cpp
+HEADERS		=	AMateria.hpp \
+				Ice.hpp \
+				Cure.hpp \
+				ICharacter.hpp \
+				Character.hpp \
+				IMateriaSource.hpp \
+				MateriaSource.hpp
 OBJS		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
