@@ -25,9 +25,20 @@ AAnimal::AAnimal( const AAnimal& obj ) {
 	this->_type = obj._type;
 }
 
+/*
+	In this case the operator= works normally, bur there is an implicit
+	contradiction, since the type is now is changed. The subject doesn't
+	specify the behavior.
+*/
 AAnimal& AAnimal::operator=( const AAnimal& rhs ) {
 	std::cout << "AAnimal assignment operator" << std::endl;
-	this->_type = rhs._type;
+	try {
+		if (this->_type != rhs._type)
+			throw std::runtime_error(" you tried to reassign a " + this->_type + " to a " + rhs._type);
+	}
+	catch(const std::exception& e) {
+		std::cerr << "[ WARNING ]" << e.what() << std::endl;
+	}
 	return (*this);
 }
 

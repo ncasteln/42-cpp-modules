@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Character.hpp                                       :+:      :+:    :+:   */
+/*   Character.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/13 11:21:15 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/14 08:08:14 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/14 14:38:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ class Character: public ICharacter
 		void equip(AMateria *m);
 		void unequip(int idx);
 		void use(int idx, ICharacter& target);
+
+		AMateria** getItemsAddress( void );	// not requested
 };
 
 #endif /* __CHARACTER_HPP__ */

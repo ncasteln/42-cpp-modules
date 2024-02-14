@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/13 19:38:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:55:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 // ------------------------------------------------------------------- CANONICAL
 Cure::Cure( void ) {
-	std::cout << "Cure default constructor" << std::endl;
+	std::cout << "[Cure] default constructor" << std::endl;
 	this->_type = "cure";
 }
 
 Cure::~Cure( void ) {
-	std::cout << "Cure destructor" << std::endl;
+	std::cout << "[Cure] destructor" << std::endl;
 }
 
 Cure::Cure( const Cure& obj ): AMateria( obj ) {
-	std::cout << "Cure copy constructor" << std::endl;
+	std::cout << "[Cure] copy constructor" << std::endl;
 }
 
 Cure& Cure::operator=( const Cure& rhs ) {
-	std::cout << "Cure assign operator" << std::endl;
+	std::cout << "[Cure] assign operator" << std::endl;
 	this->_type = rhs._type;
 	return (*this);
 }

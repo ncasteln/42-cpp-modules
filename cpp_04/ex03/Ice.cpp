@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/13 19:38:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:41:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 
 // ------------------------------------------------------------------- CANONICAL
 Ice::Ice( void ) {
-	std::cout << "Ice default constructor" << std::endl;
+	std::cout << "[Ice] default constructor" << std::endl;
 	this->_type = "ice";
 }
 
 Ice::~Ice( void ) {
-	std::cout << "Ice destructor" << std::endl;
+	std::cout << "[Ice] destructor" << std::endl;
 }
 
 Ice::Ice( const Ice& obj ): AMateria( obj ) {
-	std::cout << "Ice copy constructor" << std::endl;
+	std::cout << "[Ice] copy constructor" << std::endl;
 }
 
 Ice& Ice::operator=( const Ice& rhs ) {
-	std::cout << "Ice assign operator" << std::endl;
+	std::cout << "[Ice] assign operator" << std::endl;
 	this->_type = rhs._type;
 	return (*this);
 }
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
 AMateria* Ice::clone( void ) {
+	std::cout << "[Ice] new Ice cloned" << std::endl;
 	return (new Ice());
 }
 

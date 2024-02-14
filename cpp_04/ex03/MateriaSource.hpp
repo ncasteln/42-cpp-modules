@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/13 19:21:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/14 09:02:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 class MateriaSource: public IMateriaSource
 {
-	private: // protected ?
+	private:
 		AMateria*	_src[4];
 	public:
 		MateriaSource( void );

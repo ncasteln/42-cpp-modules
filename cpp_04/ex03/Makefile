@@ -6,12 +6,12 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/13 19:14:57 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/14 14:54:05 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
-CFLAGS		=	-Wall -Wextra -std=c++98 -Wshadow #-Werror
+CFLAGS		=	-Wall -Wextra -std=c++98 -Wshadow -Werror
 
 SRC			=	main.cpp \
 				AMateria.cpp \
@@ -30,6 +30,9 @@ OBJS		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
 
+valgrind: fclean all
+	valgrind --leak-check=full ./$(NAME)
+
 $(NAME): $(OBJS) $(HEADERS)
 	c++ $(CFLAGS) $(OBJS) -o $(NAME) -I./
 
@@ -43,5 +46,6 @@ fclean: clean
 	rm -rf $(NAME) $(NAME)_bad
 
 re: fclean all
+
 
 .PHONY: all, clean, fclean, re
