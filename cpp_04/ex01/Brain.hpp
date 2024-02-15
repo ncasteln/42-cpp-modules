@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 07:58:52 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/13 10:41:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:02:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class Brain
 		~Brain( void );
 		Brain( const Brain& );
 		Brain& operator=( const Brain& );
+
 		std::string getIdea( int ) const;
 		void setIdea( int, std::string );
 	private:

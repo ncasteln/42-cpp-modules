@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/12 16:22:39 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/15 09:57:03 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ BAD_HEADERS	=	WrongAnimal.hpp \
 				WrongCat.cpp
 BAD_OBJS	=	$(BAD_SRC:.cpp=.o)
 
-all: $(NAME)
+all: fclean $(NAME)
 
-wrong: $(NAME)_bad
+wrong: fclean $(NAME)_bad
 
 $(NAME)_bad: $(BAD_OBJS) $(BAD_HEADERS)
 	c++ $(CFLAGS) $(BAD_OBJS) -o $(NAME)_bad -I./
