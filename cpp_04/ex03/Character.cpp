@@ -72,8 +72,10 @@ std::string const& Character::getName( void ) const {
 }
 
 void Character::equip(AMateria *m) {
-	if (!m)
+	if (!m) {
+		std::cout << "[Character] nothing to equip..." << std::endl; // not requested
 		return ;
+	}
 	for (int i = 0; i < 4; i++) {
 		if (this->_items[i] == m) {
 			std::cout << "[Character] materia already stored" << std::endl; // not requested

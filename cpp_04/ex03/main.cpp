@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:11 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/14 15:40:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:15:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,44 @@
 #include "Character.hpp"
 #include "MateriaSource.hpp"
 
-/* Reassignment operator AMateria */
 int main ( void ) {
-	Ice			i;
-	Cure		c;
-	AMateria	*pi = &i;
-	AMateria	*pc = &c;
+	Character		nico("Nico");
+	MateriaSource	src; std::cout << std::endl;
+	Ice				ice0; std::cout << std::endl;
+	Ice				ice1; std::cout << std::endl;
+	Cure			cure0; std::cout << std::endl;
+	Cure			cure1; std::cout << std::endl;
+	Ice				ice2; std::cout << std::endl;
+	Ice				ice3; std::cout << std::endl;
 
-	*pi = *pc;
+	src.learnMateria(&ice0); std::cout << &ice0 << std::endl << std::endl;
+	src.learnMateria(&ice1); std::cout << std::endl;
+	src.learnMateria(&cure0); std::cout << &cure0 << std::endl << std::endl;
+	src.learnMateria(&cure1); std::cout << std::endl;
+	src.learnMateria(&ice2); std::cout << std::endl;
+	src.learnMateria(&ice3); std::cout << std::endl;
+
+	nico.equip(src.createMateria("cure")); std::cout << std::endl;
+	nico.equip(src.createMateria("ice")); std::cout << std::endl;
+
+	nico.unequip(2); std::cout << std::endl;
+	nico.unequip(0); std::cout << std::endl;
+	nico.unequip(0); std::cout << std::endl;
 	return (0);
 }
+
+
+
+/* Reassignment operator AMateria */
+// int main ( void ) {
+// 	Ice			i;
+// 	Cure		c;
+// 	AMateria	*pi = &i;
+// 	AMateria	*pc = &c;
+
+// 	*pi = *pc;
+// 	return (0);
+// }
 
 
 
