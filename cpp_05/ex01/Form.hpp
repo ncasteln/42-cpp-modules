@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/16 13:57:40 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/19 08:23:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <stdexcept>
 
 class Bureaucrat;
-#include "Bureaucrat.hpp" // reuiqred ???
 
 #define EXCEP_LOW		0
 #define EXCEP_HIGH		1

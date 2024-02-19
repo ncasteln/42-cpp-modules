@@ -6,11 +6,12 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/16 14:02:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/19 08:23:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Form.hpp"
+#include "Bureaucrat.hpp"
 
 // ------------------------------------------------------ CANONICAL CONSTRUCTORS
 Form::Form( void ):
@@ -46,12 +47,12 @@ Form::Form( const std::string name, int gradeToSign, int gradeToExecute ):
 	_gradeToExecute(gradeToExecute),
 	_isSigned(false) {
 	// std::cout << "[Form] [std::string, int, int] constructor" << std::endl; // remove
-	std::cout << this->_name << " creation: ";
+	std::cout << this->_name << ": ";
 	if (this->_gradeToSign <= 0 || this->_gradeToExecute <= 0)
 		throw GradeTooHighException(EXCEP_HIGH);
 	if (this->_gradeToSign > 150  || this->_gradeToExecute > 150)
 		throw GradeTooLowException(EXCEP_LOW);
-	std::cout << "msuccess" << std::endl;
+	std::cout << "successfully created" << std::endl;
 }
 
 // -------------------------------------------------------------------- GETTERS
@@ -79,16 +80,16 @@ const char* Form::GradeTooLowException::what() const throw() {
 	if (this->_n == EXCEP_NO_PERM)
 		return ("permission denied");
 	if (this->_n == EXCEP_LOW)
-		return ("grade required too low");
+		return ("grade too low");
 	if (this->_n == EXCEP_SIGNED)
 		return ("form already signed");
-	return (": unknow exception");
+	return ("unknow exception");
 }
 
 const char* Form::GradeTooHighException::what() const throw() {
 	if (this->_n == EXCEP_HIGH)
-		return ("grade required too high");
-	return (": unknow exception");
+		return ("grade too high");
+	return ("unknow exception");
 }
 
 // ------------------------------------------------------------------ OVERLOADS

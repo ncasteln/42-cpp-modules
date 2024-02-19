@@ -6,11 +6,12 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/16 13:49:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/19 08:23:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 // ----------------------------------------------------- CANONICAL CONSTRUCTORS
 Bureaucrat::Bureaucrat( void ): _name("<bureaucrat no name>") {
@@ -34,13 +35,12 @@ Bureaucrat& Bureaucrat::operator=( const Bureaucrat& rhs ) {
 
 // ---------------------------------------------------- OVERLOADED CONSTRUCTORS
 Bureaucrat::Bureaucrat( const std::string name, int grade ): _name(name) {
-	std::cout << "[Bureaucrat] [std::string, int] constructor" << std::endl;
 	std::cout << this->_name << " " << grade;
 	if (grade < 1)
 		throw GradeTooHighException(EXCEP_CREATE);
 	if (grade > 150)
 		throw GradeTooLowException(EXCEP_CREATE);
-	std::cout << ": created" << std::endl;
+	std::cout << ": successfully created" << std::endl;
 	this->_grade = grade;
 }
 

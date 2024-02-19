@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/16 13:00:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/19 08:23:07 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define EXCEP_INCR		2
 
 class Form;
-#include "Form.hpp" // reguired ?????
 
 class Bureaucrat
 {
