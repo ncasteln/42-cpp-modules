@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/19 08:16:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/20 08:02:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,24 @@
 #include "Form.hpp"
 
 int main ( void ) {
+	/////////////////////// try ass operator= /////////////////////////////////
+	// try {
+	// 	Bureaucrat	b("Bonnie", 1);
+	// 	Form		f("Basic", 5, 5);
+	// 	Form		g;
+
+	// 	b.signForm(f);
+
+	// 	g = f;
+
+	// 	std::cout << f << std::endl;
+	// 	std::cout << g << std::endl;
+	// }
+	// catch (std::exception& e) {
+	// 	std::cout << e.what() <<  std::endl;
+	// }
+	// std::cout << std::endl;
+
 	/////////////////////// already signed ////////////////////////////////////
 	try {
 		Bureaucrat	b("Bonnie", 10);

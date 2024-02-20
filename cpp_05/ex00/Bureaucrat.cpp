@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/16 11:32:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/20 08:04:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,10 @@ Bureaucrat::~Bureaucrat( void ) {
 	// std::cout << "[Bureaucrat] destructor" << std::endl; // removed for readability
 }
 
-Bureaucrat::Bureaucrat( const Bureaucrat& obj ) {
+Bureaucrat::Bureaucrat( const Bureaucrat& obj ):
+	_grade(obj._grade),
+	_name(obj._name) {
 	std::cout << "[Bureaucrat] copy constructor" << std::endl;
-	(*this) = obj;
-}
-
-Bureaucrat& Bureaucrat::operator=( const Bureaucrat& rhs ) {
-	std::cout << "[Bureaucrat] assignment operator" << std::endl;
-	this->_grade = rhs._grade;
-	return (*this);
 }
 
 // --------------------------------------------------------- EXTRA CONSTRUCTORS

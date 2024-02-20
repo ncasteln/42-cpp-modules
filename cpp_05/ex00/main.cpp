@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/16 12:01:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/20 08:05:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,24 @@ int main ( void ) {
 	}
 	std::cout << std::endl;
 
-	///////////////////////////////////////////////////////////////////////////
+	////////////////// try assignment operator= ///////////////////////////////
+	// try {
+	// 	Bureaucrat	b("Nico", 1);
+	// 	Bureaucrat	c("Johnny", 2);
 
-	try {
-		Bureaucrat	b("Nico", 1);
-		Bureaucrat	c("Johnny", 2);
+	// 	c = b;
+	// 	std::cout << b << std::endl;
+	// 	std::cout << c << std::endl;
 
-		c = b;
-		std::cout << b << std::endl;
-		std::cout << c << std::endl;
+	// 	std::cout << std::endl;
 
-		std::cout << std::endl;
-
-		Bureaucrat	d;
-		d = b;
-		std::cout << b << std::endl;
-		std::cout << d << std::endl;
-	}
-	catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
-	}
+	// 	Bureaucrat	d;
+	// 	d = b;
+	// 	std::cout << b << std::endl;
+	// 	std::cout << d << std::endl;
+	// }
+	// catch (std::exception& e) {
+	// 	std::cout << e.what() << std::endl;
+	// }
 	return (0);
 }

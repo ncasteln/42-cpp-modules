@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:05:27 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/02/19 08:34:54 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/02/19 15:42:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __FORM_HPP__
-# define __FORM_HPP__
+#ifndef __AFORM_HPP__
+# define __AFORM_HPP__
 
 #include <string>
 #include <iostream>
@@ -19,21 +19,22 @@
 
 class Bureaucrat;
 
-#define EXCEP_LOW		0
-#define EXCEP_HIGH		1
-#define EXCEP_NO_PERM	2
-#define EXCEP_SIGNED	3
+# define EXCEP_LOW			0
+# define EXCEP_HIGH			1
+# define EXCEP_NO_PERM		2
+# define EXCEP_SIGNED		3
+# define EXCEP_NOTSIGNED	4
 
-class Form
+class AForm
 {
 	public:
 		// --------------------------------------------- CANONICAL CONSTRUCTORS
-		Form( void );
-		~Form( void );
-		Form( const Form& );
+		AForm( void );
+		virtual ~AForm( void );
+		AForm( const AForm& );
 
 		// -------------------------------------------- OVERLOADED CONSTRUCTORS
-		Form( const std::string formName, int gradeToSign, int gradeToExecute);
+		AForm( const std::string AFormName, int gradeToSign, int gradeToExecute);
 
 		// ------------------------------------------------------------ GETTERS
 		const std::string getName( void ) const;
@@ -44,18 +45,23 @@ class Form
 		// ------------------------------------------------------------ SETTERS
 		void beSigned( Bureaucrat& );
 
+		// ------------------------------------------------------------- OTHERS
+		void isExecutable( Bureaucrat const & executor ) const;
+		virtual int execute( Bureaucrat const & executor ) const = 0;
+
 		// -------------------------------------------------------------- EXCEP
 		class GradeTooLowException;
 		class GradeTooHighException;
+		class FormSignException;
 	private:
 		const std::string _name;
 		const int _gradeToSign;
 		const int _gradeToExecute;
 		bool _isSigned;
-		Form& operator=( const Form& );	// not-usable
+		AForm& operator=( const AForm& ); // not-usable
 };
 
-class Form::GradeTooLowException: public std::exception
+class AForm::GradeTooLowException: public std::exception
 {
 	public:
 		GradeTooLowException( int );
@@ -64,7 +70,7 @@ class Form::GradeTooLowException: public std::exception
 		int _n;
 };
 
-class Form::GradeTooHighException: public std::exception
+class AForm::GradeTooHighException: public std::exception
 {
 	public:
 		GradeTooHighException( int );
@@ -73,6 +79,15 @@ class Form::GradeTooHighException: public std::exception
 		int _n;
 };
 
-std::ostream& operator<<( std::ostream&, const Form& );
+class AForm::FormSignException: public std::exception
+{
+	public:
+		FormSignException( int );
+		virtual const char* what() const throw();
+	private:
+		int _n;
+};
 
-#endif /* __FORM_HPP__ */
+std::ostream& operator<<( std::ostream&, const AForm& );
+
+#endif /* __AFORM_HPP__ */

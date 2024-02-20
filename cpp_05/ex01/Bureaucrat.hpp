@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/19 08:23:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:50:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ class Bureaucrat
 		Bureaucrat( void );
 		~Bureaucrat( void );
 		Bureaucrat( const Bureaucrat& );
-		Bureaucrat& operator=( const Bureaucrat& );
 
 		// -------------------------------------------- OVERLOADED CONSTRUCTORS
 		Bureaucrat( const std::string, int );
@@ -52,6 +51,7 @@ class Bureaucrat
 	private:
 		int _grade;
 		const std::string _name;
+		Bureaucrat& operator=( const Bureaucrat& ); // not-usable
 };
 
 class Bureaucrat::GradeTooLowException: public std::exception

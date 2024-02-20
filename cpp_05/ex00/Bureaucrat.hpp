@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/16 11:06:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/20 08:01:36 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ class Bureaucrat
 		Bureaucrat( void );
 		virtual ~Bureaucrat( void );
 		Bureaucrat( const Bureaucrat& );
-		Bureaucrat& operator=( const Bureaucrat& );
 
 		Bureaucrat( const std::string, int );
 
@@ -41,6 +40,7 @@ class Bureaucrat
 	private:
 		int _grade;
 		const std::string _name;
+		Bureaucrat& operator=( const Bureaucrat& );	// not-usable
 };
 
 class Bureaucrat::GradeTooLowException: public std::exception

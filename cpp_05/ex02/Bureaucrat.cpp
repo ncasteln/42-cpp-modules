@@ -6,12 +6,12 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/19 14:50:53 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/20 08:10:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 // ----------------------------------------------------- CANONICAL CONSTRUCTORS
 Bureaucrat::Bureaucrat( void ): _name("<bureaucrat no name>") {
@@ -67,13 +67,27 @@ void Bureaucrat::decrementGrade( void ) {
 }
 
 // --------------------------------------------------------------------- OTHERS
-void Bureaucrat::signForm( Form& f ) {
-	std::cout << "Bureaucrat <" << this->_name << "> try to sign Form <" << f.getName() << ">: ";
+void Bureaucrat::signForm( AForm& f ) {
+	std::cout << "Bureaucrat " << this->_name << " try to sign form " << f.getName() << ": ";
 	f.beSigned(*this);
 	if (f.getIsSigned())
 		std::cout << this->_name << " signed " << f.getName() << std::endl;
 	else
 		std::cout << this->_name << " couldn't sign " << f.getName() << ": " << std::endl;
+}
+
+/*
+	f.execute(*this) will call the implementation of the subclass instance
+	(either Shrubbery, Robotomy or Presidential.execute()).
+*/
+void Bureaucrat::executeForm( AForm const & f ) {
+	std::cout << "Bureaucrat " << this->_name << " try to execute form " << f.getName() << ": ";
+	if (f.execute(*this)) {
+		std::cerr << "Error: " << this->_name << " was not able to execute " << f.getName();
+		std::cerr << ": std::ofstream.open() failed" << std::endl;
+		return ;
+	}
+	std::cout << this->_name << " executed " << f.getName() << std::endl;
 }
 
 // --------------------------------------------------------------------- NESTED

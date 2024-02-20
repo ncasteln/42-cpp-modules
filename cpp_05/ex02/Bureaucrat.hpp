@@ -1,78 +1,78 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:05:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:44:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __FORM_HPP__
-# define __FORM_HPP__
+#ifndef __BUREAUCRAT_HPP__
+# define __BUREAUCRAT_HPP__
 
 #include <string>
 #include <iostream>
 #include <stdexcept>
 
-class Bureaucrat;
+# define EXCEP_CREATE	0
+# define EXCEP_DECR		1
+# define EXCEP_INCR		2
 
-#define EXCEP_LOW		0
-#define EXCEP_HIGH		1
-#define EXCEP_NO_PERM	2
-#define EXCEP_SIGNED	3
+class AForm;
 
-class Form
+class Bureaucrat
 {
 	public:
 		// --------------------------------------------- CANONICAL CONSTRUCTORS
-		Form( void );
-		~Form( void );
-		Form( const Form& );
+		Bureaucrat( void );
+		~Bureaucrat( void );
+		Bureaucrat( const Bureaucrat& );
 
 		// -------------------------------------------- OVERLOADED CONSTRUCTORS
-		Form( const std::string formName, int gradeToSign, int gradeToExecute);
+		Bureaucrat( const std::string, int );
 
 		// ------------------------------------------------------------ GETTERS
 		const std::string getName( void ) const;
-		int getGradeToSign( void ) const;
-		int getGradeToExecute( void ) const;
-		bool getIsSigned( void ) const;
+		int getGrade( void ) const;
 
 		// ------------------------------------------------------------ SETTERS
-		void beSigned( Bureaucrat& );
+		void incrementGrade( void );
+		void decrementGrade( void );
+
+		// ------------------------------------------------------------- OTHERS
+		void signForm( AForm& );
+		void executeForm( AForm const & );
 
 		// -------------------------------------------------------------- EXCEP
 		class GradeTooLowException;
 		class GradeTooHighException;
 	private:
+		int _grade;
 		const std::string _name;
-		const int _gradeToSign;
-		const int _gradeToExecute;
-		bool _isSigned;
-		Form& operator=( const Form& );	// not-usable
+		Bureaucrat& operator=( const Bureaucrat& ); // not-usable
 };
 
-class Form::GradeTooLowException: public std::exception
+class Bureaucrat::GradeTooLowException: public std::exception
 {
 	public:
 		GradeTooLowException( int );
 		virtual const char* what() const throw();
 	private:
-		int _n;
+		int _excep_n;
 };
 
-class Form::GradeTooHighException: public std::exception
+class Bureaucrat::GradeTooHighException: public std::exception
 {
 	public:
 		GradeTooHighException( int );
 		virtual const char* what() const throw();
 	private:
-		int _n;
+		int _excep_n;
 };
 
-std::ostream& operator<<( std::ostream&, const Form& );
+std::ostream& operator<<( std::ostream&, const Bureaucrat& );
 
-#endif /* __FORM_HPP__ */
+#endif /* __BUREAUCRAT_HPP__ */

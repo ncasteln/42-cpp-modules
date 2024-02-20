@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/16 11:54:28 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/20 09:24:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ AMateria::AMateria( const AMateria& obj ) {
 AMateria& AMateria::operator=( const AMateria& rhs ) {
 	std::cout << "[AMateria] assign operator" << std::endl;
 	if (this->_type != rhs._type)
-		std::cerr << " [ WARNING ] you're trying to reassign a " << this->_type + " to a " + rhs._type + " (reassignment NOT performed)" << std::endl;
+		std::cerr << "[ WARNING ] you're trying to reassign a " << this->_type + " to a " + rhs._type + " (reassignment NOT performed)" << std::endl;
 	return (*this);
 }
 
