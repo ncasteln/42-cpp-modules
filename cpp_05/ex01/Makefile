@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/19 08:16:35 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/20 16:32:56 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ $(NAME): $(OBJS) $(HEADERS)
 	c++ $(CFLAGS) -c $< -o $@ -I./
 
 clean:
-	rm -rf $(OBJS) $(BAD_OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	rm -rf $(NAME)

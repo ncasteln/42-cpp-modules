@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/19 14:50:53 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:21:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "Form.hpp"
 
 // ----------------------------------------------------- CANONICAL CONSTRUCTORS
-Bureaucrat::Bureaucrat( void ): _name("<bureaucrat no name>") {
+Bureaucrat::Bureaucrat( void ): _grade(150),  _name("<bureaucrat no name>") {
 	std::cout << "[Bureaucrat] default constructor" << std::endl;
 }
 
@@ -51,9 +51,8 @@ int Bureaucrat::getGrade( void ) const {
 // -------------------------------------------------------------------- SETTERS
 void Bureaucrat::incrementGrade( void ) {
 	std::cout << this->_name;
-	if (this->_grade == 1) {
+	if (this->_grade == 1)
 		throw GradeTooHighException(EXCEP_INCR);
-	}
 	std::cout << ": grade incremented" << std::endl;
 	this->_grade--;
 }
@@ -84,13 +83,17 @@ Bureaucrat::GradeTooHighException::GradeTooHighException( int excep ): _excep_n(
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
 	if (this->_excep_n == EXCEP_DECR)
 		return (": cannot decrement");
-	return (": grade too low to be used");
+	if (this->_excep_n == EXCEP_CREATE)
+		return (": cannot create Bureaucrat with grade lower than 150");
+	return (": grade too low");
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
 	if (this->_excep_n == EXCEP_INCR)
 		return (": cannot increment");
-	return (": grade too high to be used");
+	if (this->_excep_n == EXCEP_CREATE)
+		return (": cannot create Bureaucrat with negative grade");
+	return (": grade too high");
 }
 
 // ------------------------------------------------------------------ OVERLOADS

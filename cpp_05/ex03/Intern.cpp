@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:07:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:57:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:23:36 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ AForm *Intern::makeForm( std::string name, std::string target ) {
 			std::cout << "Intern creates " << name << std::endl;
 			break ;
 		default:
-			std::cerr << "form named " << name << " doesn't exist" << std::endl;
-			break ;
+			std::cerr << "Form named " << name << " doesn't exist" << std::endl;
 	}
 	return (form);
 }

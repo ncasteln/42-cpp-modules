@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:05:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:53:07 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int main ( void ) {
 	try {
 		Bureaucrat	b("B", 1);
+		std::cout << b << std::endl;
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:34:32 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:08:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:18:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 // ------------------------------------------------------ CANONICAL CONSTRUCTORS
 AForm::AForm( void ):
 	_name("<Aform no name>"),
-	_gradeToSign(0),
-	_gradeToExecute(0),
+	_gradeToSign(1),
+	_gradeToExecute(1),
 	_isSigned(false) {
 	std::cout << "[AForm] default constructor" << std::endl;
 }
@@ -66,7 +66,6 @@ void AForm::beSigned( Bureaucrat& b ) {
 
 // --------------------------------------------------------------------- OTHERS
 void AForm::isExecutable( Bureaucrat const & executor ) const {
-
 	if (!this->getIsSigned())
 		throw FormSignException(EXCEP_NOTSIGNED);
 	if (this->getGradeToExecute() < executor.getGrade())

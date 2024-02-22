@@ -6,14 +6,14 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:04:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:21:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 
 // ------------------------------------------------------------------ CANONICAL
-Bureaucrat::Bureaucrat( void ) {
+Bureaucrat::Bureaucrat( void ): _grade(150), _name("<bureaucrat no name>") {
 	std::cout << "[Bureaucrat] default constructor" << std::endl;
 }
 
@@ -50,9 +50,8 @@ int Bureaucrat::getGrade( void ) const {
 
 void Bureaucrat::incrementGrade( void ) {
 	std::cout << this->_name;
-	if (this->_grade == 1) {
+	if (this->_grade == 1)
 		throw GradeTooHighException(EXCEP_INCR);
-	}
 	std::cout << ": grade incremented" << std::endl;
 	this->_grade--;
 }
@@ -73,21 +72,21 @@ Bureaucrat::GradeTooHighException::GradeTooHighException( int excep ): _excep_n(
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
 	if (this->_excep_n == EXCEP_DECR)
 		return (": cannot decrement");
+	if (this->_excep_n == EXCEP_CREATE)
+		return (": cannot create Bureaucrat with grade lower than 150");
 	return (": grade too low to be used");
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
 	if (this->_excep_n == EXCEP_INCR)
 		return (": cannot increment");
+	if (this->_excep_n == EXCEP_CREATE)
+		return (": cannot create Bureaucrat with negative grade");
 	return (": grade too high to be used");
 }
 
 // ------------------------------------------------------------------ OVERLOADS
 std::ostream& operator<<( std::ostream& cout, const Bureaucrat& b ) {
-	if (b.getName().empty())
-		cout << "<no name>";
-	else
-		cout << b.getName();
-	cout << ", bureaucrat grade " << b.getGrade() << ".";
+	cout << b.getName() << ", bureaucrat grade " << b.getGrade() << ".";
 	return (cout);
 }

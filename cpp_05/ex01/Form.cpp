@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:05:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:23:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 // ------------------------------------------------------ CANONICAL CONSTRUCTORS
 Form::Form( void ):
 	_name("<form no name>"),
-	_gradeToSign(0),
-	_gradeToExecute(0),
+	_gradeToSign(1),
+	_gradeToExecute(1),
 	_isSigned(false) {
 	std::cout << "[Form] default constructor" << std::endl;
 }
@@ -58,9 +58,8 @@ bool Form::getIsSigned( void ) const { return (this->_isSigned); }
 void Form::beSigned( Bureaucrat& b ) {
 	if (this->getIsSigned())
 		throw GradeTooLowException(EXCEP_SIGNED);
-	if (b.getGrade() > this->_gradeToSign) {
+	if (b.getGrade() > this->_gradeToSign)
 		throw GradeTooLowException(EXCEP_LOW);
-	}
 	this->_isSigned = true;
 }
 
@@ -87,10 +86,10 @@ const char* Form::GradeTooHighException::what() const throw() {
 
 // ------------------------------------------------------------------ OVERLOADS
 std::ostream& operator<<( std::ostream& cout, const Form& f ) {
-	cout << "Form " << f.getName() << ": " << std::endl;
-	cout << "Grade required to be signed: " << f.getGradeToSign() << std::endl;
-	cout << "Grade required to be executed: " << f.getGradeToExecute() << std::endl;
-	cout << "Grade signed: ";
+	cout << "| Form [ " << f.getName() << " ]" << std::endl;
+	cout << "| Grade required to be signed: " << f.getGradeToSign() << std::endl;
+	cout << "| Grade required to be executed: " << f.getGradeToExecute() << std::endl;
+	cout << "| Grade signed: ";
 	if (f.getIsSigned())
 		cout << "[ true ]" << std::endl;
 	else

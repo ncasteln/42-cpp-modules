@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:47:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:25:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "AForm.hpp"
 
 // ----------------------------------------------------- CANONICAL CONSTRUCTORS
-Bureaucrat::Bureaucrat( void ): _name("<bureaucrat no name>") {
+Bureaucrat::Bureaucrat( void ): _grade(150), _name("<bureaucrat no name>") {
 	std::cout << "[Bureaucrat] default constructor" << std::endl;
 }
 
@@ -98,12 +98,16 @@ Bureaucrat::GradeTooHighException::GradeTooHighException( int excep ): _excep_n(
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
 	if (this->_excep_n == EXCEP_DECR)
 		return (": cannot decrement");
+	if (this->_excep_n == EXCEP_CREATE)
+		return (": cannot create Bureaucrat with grade lower than 150");
 	return (": grade too low to be used");
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
 	if (this->_excep_n == EXCEP_INCR)
 		return (": cannot increment");
+	if (this->_excep_n == EXCEP_CREATE)
+		return (": cannot create Bureaucrat with negative grade");
 	return (": grade too high to be used");
 }
 

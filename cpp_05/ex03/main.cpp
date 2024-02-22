@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 08:51:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:29:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 #include "PresidentialPardonForm.hpp"
 #include "Intern.hpp"
 
+/*
+	***** EVALUATION *****
+	• check Robotomy use of srand() and (TIME)
+	• Intern operator= is done in a different way without justification, it can
+	be done either so or like in the previous exercises
+
+*/
 // int main ( void ) {
 // 	Intern	i;
 // 	AForm	*f;
