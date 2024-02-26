@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/14 14:55:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:34:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ Cure& Cure::operator=( const Cure& rhs ) {
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
 AMateria* Cure::clone( void ) {
+	std::cout << "[Cure] materia cloned, a new one is returned" << std::endl;
 	return (new Cure());
 }
 

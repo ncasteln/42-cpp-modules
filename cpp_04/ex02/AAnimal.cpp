@@ -26,19 +26,16 @@ AAnimal::AAnimal( const AAnimal& obj ) {
 }
 
 /*
-	In this case the operator= works normally, bur there is an implicit
+	In this case the operator= works normally, but there is an implicit
 	contradiction, since the type is now is changed. The subject doesn't
 	specify the behavior.
+	See tests in main() called "Rassign operator contradiction".
 */
 AAnimal& AAnimal::operator=( const AAnimal& rhs ) {
 	std::cout << "AAnimal assignment operator" << std::endl;
-	try {
-		if (this->_type != rhs._type)
-			throw std::runtime_error(" you tried to reassign a " + this->_type + " to a " + rhs._type);
-	}
-	catch(const std::exception& e) {
-		std::cerr << "[ WARNING ]" << e.what() << std::endl;
-	}
+	if (this->_type != rhs._type)
+		std::cout << "[ WARNING ] you reassigned a " + this->_type + " to a " + rhs._type << std::endl;
+	this->_type = rhs._type;
 	return (*this);
 }
 

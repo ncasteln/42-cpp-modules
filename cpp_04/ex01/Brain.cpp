@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 07:58:52 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/15 10:04:42 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/26 09:04:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ Brain& Brain::operator=( const Brain& rhs ) {
 std::string Brain::getIdea( int n ) const {
 	if (n < 100)
 		return (this->_ideas[n]);
-	return ("[Brain] no such an idea");
+	return ("[Brain] invalid index for idea");
 }
 
 void Brain::setIdea( int n, std::string s ) {

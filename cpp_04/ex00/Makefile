@@ -6,12 +6,15 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/15 09:57:03 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/26 08:58:03 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
 CFLAGS		=	-Wall -Wextra -std=c++98 -Wshadow -Werror
+
+# *** -Wshadow ***
+# warns about variable declarations that shadow a variable declared in an outer scope.
 
 SRC			=	main.cpp \
 				Animal.cpp \
@@ -29,9 +32,9 @@ BAD_HEADERS	=	WrongAnimal.hpp \
 				WrongCat.cpp
 BAD_OBJS	=	$(BAD_SRC:.cpp=.o)
 
-all: fclean $(NAME)
+all: $(NAME)
 
-wrong: fclean $(NAME)_bad
+wrong: $(NAME)_bad
 
 $(NAME)_bad: $(BAD_OBJS) $(BAD_HEADERS)
 	c++ $(CFLAGS) $(BAD_OBJS) -o $(NAME)_bad -I./

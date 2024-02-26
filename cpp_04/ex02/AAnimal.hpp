@@ -18,7 +18,7 @@
 
 /*
 	By creating a PURE virtual memeber function, we are defining the class as
-	Abstract and therefore not instantiable. The derived will have to implement
+	Abstract and therefore not instantiable. The derived WILL HAVE to implement
 	it by themselves.
 */
 class AAnimal

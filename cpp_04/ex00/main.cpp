@@ -6,12 +6,27 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/15 09:58:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/26 08:58:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 #include "Dog.hpp"
+
+int main( void ) {
+	Animal	generic;
+	Cat		c;
+	Animal*	a = &c;
+
+	generic.makeSound();
+	std::cout << std::endl;
+	a->makeSound();
+	std::cout << std::endl;
+	c.makeSound();
+	std::cout << std::endl;
+
+	return (0);
+}
 
 // int main( void ) {
 // 	const Animal* meta = new Animal();
@@ -31,24 +46,22 @@
 // 	return (0);
 // }
 
+// int main( void ) {
+// 	Animal	a;
+// 	Cat		c;
+// 	Dog		d;
 
+// 	a.makeSound();
+// 	a.getType();
+// 	std::cout << std::endl;
 
-int main( void ) {
-	Animal	a;
-	Cat		c;
-	Dog		d;
+// 	c.makeSound();
+// 	c.getType();
+// 	std::cout << std::endl;
 
-	a.makeSound();
-	a.getType();
-	std::cout << std::endl;
+// 	d.makeSound();
+// 	d.getType();
+// 	std::cout << std::endl;
 
-	c.makeSound();
-	c.getType();
-	std::cout << std::endl;
-
-	d.makeSound();
-	d.getType();
-	std::cout << std::endl;
-
-	return (0);
-}
+// 	return (0);
+// }

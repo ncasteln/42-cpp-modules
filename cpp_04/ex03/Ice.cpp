@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/14 14:41:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:35:00 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ Ice& Ice::operator=( const Ice& rhs ) {
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
 AMateria* Ice::clone( void ) {
-	std::cout << "[Ice] new Ice cloned" << std::endl;
+	std::cout << "[Ice] materia cloned, a new one is returned" << std::endl;
 	return (new Ice());
 }
 

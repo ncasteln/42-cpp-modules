@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 09:24:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/26 09:50:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ AMateria::AMateria( const AMateria& obj ) {
 /*
 	Since makes no sense to assign an Ice type to a Cure type, the assigment
 	operator of AMateria should do nothing, but because of the subject rules
-	it has to be written.
-	A part of doing nothing, I wanted to avoid that someone call the assignment
-	operator by mistake. The solution on std98 could be:
+	(OCC form) it has to be written. What I do, I warn the user about what it
+	is doing, without re-assigning the _type.
+
+	A part of doing nothing, if I would like to avoid that someone could call
+	the assignment operator by mistake, in c++98, I could:
 	• Make the mem function as private.
 	• Use try-catch statement, without exiting the program, but warning the
 	developer on what it is doing.

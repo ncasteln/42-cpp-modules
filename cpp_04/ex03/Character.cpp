@@ -116,6 +116,11 @@ void Character::use(int idx, ICharacter& target) {
 		std::cout << "[Character] Materia @ index [ " << idx << " ] cannot be used (doesn't exist)" << std::endl;
 }
 
+/*
+	This member is not required by the subject, but I did to show that, when
+	I use the copy constructor, every Character has its own items, and they
+	are not shared.
+*/
 // -------------------------------------------------------------- NOT REQUESTED
 AMateria** Character::getItemsAddress( void ) {
 	return (this->_items);

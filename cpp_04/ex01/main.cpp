@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/15 10:22:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/26 09:11:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,58 @@
 #include "Dog.hpp"
 
 /*
-	Exmaple of "slicing" in polymorphism. If the bae class destructor is not
+	Exmaple of "slicing" in polymorphism. If the base class destructor is not
 	made virtual, the following snippet doesn't work because only the Animal
 	destructor would be called.
 */
-int main ( void ) {
-	Animal*	a = new Cat();
-	Cat*	c = new Cat();
-	std::cout << std::endl;
-	delete a;
-	delete c;
-	return (0);
-}
-
-
-
 // int main ( void ) {
-// 	Cat	a;
-// 	Cat	b ( a ); // to see a diff, change the copy constructor of Cat
-
-// 	std::cout << "Address of [a] brain: " << a.getBrain() << std::endl;
-// 	std::cout << "Address of [b] brain: " << b.getBrain() << std::endl;
-
-// 	a.getBrain()->setIdea(0, "Blue");
-// 	a.getBrain()->setIdea(1, "Yellow");
-// 	a.getBrain()->setIdea(2, "Red");
-// 	a.getBrain()->setIdea(3, "Green");
-// 	b.getBrain()->setIdea(0, "One");
-// 	b.getBrain()->setIdea(1, "Two");
-// 	b.getBrain()->setIdea(2, "Three");
-// 	b.getBrain()->setIdea(3, "Four");
-
-// 	std::cout << "Cat [a] idea [0] " << a.getBrain()->getIdea(0) << std::endl;
-// 	std::cout << "Cat [a] idea [1] " << a.getBrain()->getIdea(1) << std::endl;
-// 	std::cout << "Cat [a] idea [2] " << a.getBrain()->getIdea(2) << std::endl;
-// 	std::cout << "Cat [a] idea [3] " << a.getBrain()->getIdea(3) << std::endl << std::endl;
-// 	std::cout << "Cat [b] idea [0] " << b.getBrain()->getIdea(0) << std::endl;
-// 	std::cout << "Cat [b] idea [1] " << b.getBrain()->getIdea(1) << std::endl;
-// 	std::cout << "Cat [b] idea [2] " << b.getBrain()->getIdea(2) << std::endl;
-// 	std::cout << "Cat [b] idea [3] " << b.getBrain()->getIdea(3) << std::endl << std::endl;
-// 	std::cout << "Cat [a] idea [0] " << a.getBrain()->getIdea(0) << std::endl;
-// 	std::cout << "Cat [a] idea [1] " << a.getBrain()->getIdea(1) << std::endl;
-// 	std::cout << "Cat [a] idea [2] " << a.getBrain()->getIdea(2) << std::endl;
-// 	std::cout << "Cat [a] idea [3] " << a.getBrain()->getIdea(3) << std::endl << std::endl;
+// 	Animal*	a = new Cat();
+// 	Cat*	c = new Cat();
+// 	std::cout << std::endl;
+// 	delete a;
+// 	delete c;
 // 	return (0);
 // }
+
+
+
+int main ( void ) {
+	Cat	a;
+	Cat	b ( a );
+
+	std::cout << "Address of [a] brain: " << a.getBrain() << std::endl;
+	std::cout << "Address of [b] brain: " << b.getBrain() << std::endl;
+
+	/* Set Ideas for the brain of Cat a */
+	a.getBrain()->setIdea(0, "Blue");
+	a.getBrain()->setIdea(1, "Yellow");
+	a.getBrain()->setIdea(2, "Red");
+	a.getBrain()->setIdea(3, "Green");
+
+	std::cout << "Cat [a] idea [0] " << a.getBrain()->getIdea(0) << std::endl;
+	std::cout << "Cat [a] idea [1] " << a.getBrain()->getIdea(1) << std::endl;
+	std::cout << "Cat [a] idea [2] " << a.getBrain()->getIdea(2) << std::endl;
+	std::cout << "Cat [a] idea [3] " << a.getBrain()->getIdea(3) << std::endl << std::endl;
+
+	/* Set Ideas for the brain of Cat B */
+	b.getBrain()->setIdea(0, "One");
+	b.getBrain()->setIdea(1, "Two");
+	b.getBrain()->setIdea(2, "Three");
+	b.getBrain()->setIdea(3, "Four");
+
+	std::cout << "Cat [b] idea [0] " << b.getBrain()->getIdea(0) << std::endl;
+	std::cout << "Cat [b] idea [1] " << b.getBrain()->getIdea(1) << std::endl;
+	std::cout << "Cat [b] idea [2] " << b.getBrain()->getIdea(2) << std::endl;
+	std::cout << "Cat [b] idea [3] " << b.getBrain()->getIdea(3) << std::endl << std::endl;
+
+	/* If copy constr would be shallow, setting the ideas of b would change also
+	the ideas of a (change it to show). It would also to a double free */
+	std::cout << "Cat [a] idea [0] " << a.getBrain()->getIdea(0) << std::endl;
+	std::cout << "Cat [a] idea [1] " << a.getBrain()->getIdea(1) << std::endl;
+	std::cout << "Cat [a] idea [2] " << a.getBrain()->getIdea(2) << std::endl;
+	std::cout << "Cat [a] idea [3] " << a.getBrain()->getIdea(3) << std::endl << std::endl;
+	return (0);
+}
 
 
 
@@ -77,7 +84,7 @@ int main ( void ) {
 // 			animals[i++] = new Cat();
 // 		}
 // 	}
-//	std::cout << std::endl;
+// 	std::cout << std::endl;
 // 	i = 0;
 // 	while (i < N) {
 // 		std::cout << "Animal [" << i << "]" << std::endl;
@@ -87,6 +94,8 @@ int main ( void ) {
 // }
 
 
+
+/* Brain test, to show that when they are copied they are not shallow */
 // #include "Brain.hpp"
 
 // int main ( void ) {
@@ -99,9 +108,9 @@ int main ( void ) {
 // 	c = d;
 // 	std::cout << c.getIdea(0) << std::endl;
 // 	std::cout << d.getIdea(0) << std::endl;
-
 // 	return (0);
 // }
+
 
 
 // int main()

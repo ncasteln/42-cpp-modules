@@ -6,34 +6,27 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/14 15:37:00 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/26 09:26:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 #include "Dog.hpp"
 
+/* Rassign operator contradiction. */
 int main ( void ) {
+	Cat	c;
+	Dog	d;
+	AAnimal	*pc = &c;
+	AAnimal	*pd = &d;
 
+	*pc = *pd;
+
+	std::cout << pd->getType() << std::endl << std::endl;
+	std::cout << pc->getType() << std::endl << std::endl;
 
 	return (0);
 }
-
-
-/* Rassign operator contradiction. */
-// int main ( void ) {
-// 	Cat	c;
-// 	Dog	d;
-// 	AAnimal	*pc = &c;
-// 	AAnimal	*pd = &d;
-
-// 	*pc = *pd;
-
-// 	std::cout << pd->getType() << std::endl;
-// 	std::cout << pc->getType() << std::endl;
-
-// 	return (0);
-// }
 
 
 
@@ -60,7 +53,7 @@ int main ( void ) {
 
 
 // int main ( void ) {
-// 	// AAnimal	a; // not possible anymore
+// 	// AAnimal	a; // not instantiable
 
 // 	Brain	b;
 // 	std::cout << std::endl;
