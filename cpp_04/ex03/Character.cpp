@@ -27,7 +27,10 @@ Character::~Character( void ) {
 	std::cout << "[Character] destructor" << std::endl;
 	for (int i = 0; i < 4 ; i++) {
 		if (this->_items[i])
+		{
+			delete this->_items[i];
 			this->_items[i] = NULL;
+		}
 	}
 }
 
@@ -71,7 +74,7 @@ std::string const& Character::getName( void ) const {
 	return (this->_name);
 }
 
-void Character::equip(AMateria *m) {
+void Character::equip( AMateria *m ) {
 	if (!m) {
 		std::cout << "[Character] nothing to equip..." << std::endl; // not requested
 		return ;
@@ -87,10 +90,10 @@ void Character::equip(AMateria *m) {
 			return ;
 		}
 	}
-	std::cout << "[Character] no materia equipped" << std::endl;
+	std::cout << "[Character] materia cannot be equipped, full inventory!" << std::endl;
 }
 
-void Character::unequip(int idx) {
+void Character::unequip( int idx ) {
 	if (idx > 3) {
 		std::cout << "[Character] idx [" << idx << "] invalid, only items between 0 and 3 are supported" << std::endl;
 		return ;
@@ -116,12 +119,12 @@ void Character::use(int idx, ICharacter& target) {
 		std::cout << "[Character] Materia @ index [ " << idx << " ] cannot be used (doesn't exist)" << std::endl;
 }
 
+// -------------------------------------------------------------- NOT REQUESTED
 /*
 	This member is not required by the subject, but I did to show that, when
 	I use the copy constructor, every Character has its own items, and they
 	are not shared.
 */
-// -------------------------------------------------------------- NOT REQUESTED
 AMateria** Character::getItemsAddress( void ) {
 	return (this->_items);
 }

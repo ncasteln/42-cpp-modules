@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/14 12:59:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:49:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ MateriaSource::MateriaSource( void ) {
 MateriaSource::~MateriaSource( void ) {
 	std::cout << "[MateriaSource] destructor" << std::endl;
 	for (int i = 0; i < 4; i++) {
-		// if (this->_src[i])
-		// 	delete this->_src[i];
+		if (this->_src[i])
+			delete this->_src[i];
 		this->_src[i] = NULL;
 	}
 }
@@ -47,14 +47,20 @@ MateriaSource& MateriaSource::operator=( const MateriaSource& rhs ) {
 }
 
 // -------------------------------------------------------------- MEM FUNCTIONS
+/*
+	See subject test in main() for more explanation. The implementation assumes
+	that AMateria* passed as param is allocated.
+*/
 void MateriaSource::learnMateria( AMateria* m ) {
 	for (int i = 0; i < 4 ; i++) {
 		if (!this->_src[i]) {
 			std::cout << "[MateriaSource] new materia learned" << std::endl;
-			this->_src[i] = m;
+			this->_src[i] = m->clone();
+			delete m;
 			return ;
 		}
 	}
+	delete m;
 	std::cout << "[MateriaSource] can't learn, slots are full!" << std::endl;
 }
 
@@ -63,7 +69,7 @@ AMateria* MateriaSource::createMateria( std::string const& type ) {
 		if (this->_src[i]) {
 			if (this->_src[i]->getType() == type) {
 				std::cout << "[MateriaSource] " << type << " materia created" << std::endl;
-				return (this->_src[i]); //->clone()
+				return (this->_src[i]->clone());
 			}
 		}
 	}

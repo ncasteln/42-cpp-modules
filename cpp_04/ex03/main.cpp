@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:11 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/26 09:53:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:05:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,124 @@
 #include "Character.hpp"
 #include "MateriaSource.hpp"
 
+/*	Subject test
+	The test provided by the subject contains a controversial problem about
+	memory allocation in the main() at src->learnMateria()); and
+	src->learnMateria()); basically, it is possible to implement functions
+	which fulfill this test, but then is not possible pass instances which are
+	on the stack.
+
+	Another way to see the problem is, that the main() is actually wrong: the
+	user didn't store properly the value returned by new(), which is a very bad
+	practice (learning from C, we never want to lost a pointer!).
+
+	There is not an absolute solution to it, just take a decision:
+	• Let the program work with heap. In this case, the things allocated in the
+	main will be deleted inside the MateriaSource destructor.
+	• Build a different test in which the user doesn't lost the pointer to
+	the allocated memory. We assume if someone allocates, then this has to take
+	responsability to delete.
+
+	In general, there is no universal solution to understand inside a function,
+	if the pointer passed as a parameter points to the heap or to the stack.
+	One solution could be passing a flag which indicates that the memory was
+	allocated (something like src->learnMateria(new Ice(), ALLOCATED)) or not,
+	so that the member can properly delete or not.
+	But the problem remains, and the user has not to make mistake by passing
+	the wrong flag.
+
+	***************************************************************************
+	I implemented the solution in which the program works ONLY if:
+	1) The AMateria passed to src->learnMateria() is allocated in main(). If it
+	is on the stack the program crashes. The AMateria allocated and passed is
+	copied, stored in MateriaSource, and the original used is freed.
+	2) When the Character unequip a created Materia, it has to be explicitly
+	freed in main(). If not, the destructor of the Character will do it.
+	3) Stuff like making 2 different Character trying to equip() the same
+	AMateria is not done by the user.
+	***************************************************************************
+*/
+
+
+
+/* main() of the subject, which 'holds' potential memory leaks */
+int main ( void ) {
+	IMateriaSource* src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+	ICharacter* me = new Character("me");
+	AMateria* tmp;
+
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
+
+	ICharacter* bob = new Character("bob");
+
+	me->use(0, *bob);
+	me->use(1, *bob);
+
+	delete bob;
+	delete me;
+	delete src;
+	return (0);
+}
+
+
+
+// /* 2 Characters which equip the same materia - it will crash */
+// int main ( void ) {
+// 	Character		wizard_0("Wizard_0");
+// 	Character		wizard_1("Wizard_1");
+// 	Ice*			i = new Ice();
+// 	MateriaSource	src;
+// 	src.learnMateria(i);
+
+// 	AMateria	*tmp_0 = src.createMateria("ice");
+
+// 	wizard_0.equip(tmp_0);
+// 	wizard_1.equip(tmp_0);	// this is done by someone who doesn't understand the context
+
+// 	return (0);
+// }
+
+
+
+/* Simple use of HEAP - no crash no leaks :) */
+// int main ( void ) {
+// 	Ice*			i = new Ice();
+// 	MateriaSource	src;
+// 	src.learnMateria(i);
+// 	return (0);
+// }
+
+
+
+/* Simple use of STACK - it will crash */
+// int main ( void ) {
+// 	Ice				i;
+// 	MateriaSource	src;
+// 	src.learnMateria(&i);
+// 	// crash;
+// 	return (0);
+// }
+
+
+
+/* Unequip materials */
 // int main ( void ) {
 // 	Character		nico("Nico");
-// 	MateriaSource	src; std::cout << std::endl;
-// 	Ice				ice0; std::cout << std::endl;
-// 	Ice				ice1; std::cout << std::endl;
-// 	Cure			cure0; std::cout << std::endl;
-// 	Cure			cure1; std::cout << std::endl;
-// 	Ice				ice2; std::cout << std::endl;
-// 	Ice				ice3; std::cout << std::endl;
+// 	MateriaSource	src;
 
-// 	src.learnMateria(&ice0); std::cout << &ice0 << std::endl << std::endl;
-// 	src.learnMateria(&ice1); std::cout << std::endl;
-// 	src.learnMateria(&cure0); std::cout << &cure0 << std::endl << std::endl;
-// 	src.learnMateria(&cure1); std::cout << std::endl;
-// 	src.learnMateria(&ice2); std::cout << std::endl;
-// 	src.learnMateria(&ice3); std::cout << std::endl;
+// 	AMateria*	i = new Ice();
+// 	src.learnMateria(i);	// this delete automatically new Ice() no need to do it in main()
 
-// 	nico.equip(src.createMateria("cure")); std::cout << std::endl;
-// 	nico.equip(src.createMateria("ice")); std::cout << std::endl;
+// 	AMateria*	tmp = src.createMateria("ice");
+// 	nico.equip(tmp);
+// 	nico.unequip(0);	// this leaves the item to the floor() / main() - need to be freed
 
-// 	nico.unequip(2); std::cout << std::endl;
-// 	nico.unequip(0); std::cout << std::endl;
-// 	nico.unequip(0); std::cout << std::endl;
+// 	delete tmp;
 // 	return (0);
 // }
 
@@ -60,49 +155,23 @@
 
 
 /* Reassignment operator Ice and AMateria */
-int main ( void ) {
-	Ice			i0;
-	Cure		c0;
-
-	// i0 = c0; // not possible
-	std::cout << i0.getType() << std::endl;
-	std::cout << c0.getType() << std::endl;
-	std::cout << std::endl;
-
-	Ice			i1;
-	Ice			i2;
-	i1 = i2;
-	std::cout << std::endl;
-
-	AMateria*	p = &i1;
-	*p = i0;
-	std::cout << std::endl;
-	return (0);
-}
-
-
-
-/* Subject test */
 // int main ( void ) {
-// 	IMateriaSource* src = new MateriaSource();
-// 	src->learnMateria(new Ice());
-// 	src->learnMateria(new Cure());
-// 	ICharacter* me = new Character("me");
-// 	AMateria* tmp;
+// 	Ice			i0;
+// 	Cure		c0;
 
-// 	tmp = src->createMateria("ice");
-// 	me->equip(tmp);
-// 	tmp = src->createMateria("cure");
-// 	me->equip(tmp);
+// 	// i0 = c0; // not possible
+// 	std::cout << i0.getType() << std::endl;
+// 	std::cout << c0.getType() << std::endl;
+// 	std::cout << std::endl;
 
-// 	ICharacter* bob = new Character("bob");
+// 	Ice			i1;
+// 	Ice			i2;
+// 	i1 = i2;
+// 	std::cout << std::endl;
 
-// 	me->use(0, *bob);
-// 	me->use(1, *bob);
-
-// 	delete bob;
-// 	delete me;
-// 	delete src;
+// 	AMateria*	p = &i1;
+// 	*p = i0;
+// 	std::cout << std::endl;
 // 	return (0);
 // }
 
@@ -110,125 +179,71 @@ int main ( void ) {
 
 /* Other tests */
 // int main ( void ) {
-// 	Character		nico("Nico");
-// 	Character		nico_clone("Nico the clone");
+// 	ICharacter*	nico = new Character("Nic");
+// 	ICharacter*	minishell = new Character("Minishell");
+// 	Ice*		ices = new Ice[8];
+// 	for (int idx = 0; idx < 8; idx++)
+// 		nico->equip(&ices[idx]);
+// 	nico->use(0, *minishell);
+// 	nico->use(1, *minishell);
+// 	nico->use(2, *minishell);
+// 	nico->use(3, *minishell);
+// 	nico->use(4, *minishell); // fail
 
-// 	Character*		heap_enemy = new Character("enemy");
-// 	Character*		heap_enemy_clone( heap_enemy );
+// 	nico->unequip(0); // if not unequipped, crash
+// 	nico->unequip(1);
+// 	nico->unequip(2);
+// 	nico->unequip(3);
 
-// 	MateriaSource*	heap_src = new MateriaSource();
-
-// 	AMateria*		heap_ice = new Ice();
-// 	AMateria*		heap_cure = new Cure();
-// 	Ice				stack_ice;
-// 	Cure			stack_cure;
-
-// 	AMateria		*tmp;
-// 	std::cout << std::endl;
-
-// 	heap_src->learnMateria(heap_ice);
-// 	heap_src->learnMateria(heap_cure);
-// 	heap_src->learnMateria(&stack_ice);
-// 	heap_src->learnMateria(&stack_cure);
-// 	std::cout << std::endl;
-
-// 	tmp = heap_src->createMateria("ice");	// which materia returns ?
-// 	nico.equip(tmp);
-// 	nico.equip(tmp);						// not requested
-// 	nico.equip(NULL);
-// 	std::cout << std::endl;
-
-// 	nico.use(0, *heap_enemy);
-// 	nico.use(1, *heap_enemy_clone);
-// 	nico.use(2, *heap_enemy);
-// 	nico.use(3, *heap_enemy_clone);
-// 	nico.use(99, *heap_enemy_clone);
-// 	std::cout << std::endl;
-
-// 	nico.unequip(0);
-// 	nico.unequip(1);
-// 	nico.unequip(2);
-// 	nico.unequip(3);
-// 	nico.unequip(99);
-// 	std::cout << std::endl;
-
-// 	delete heap_enemy;
-// 	delete heap_src;
-// 	delete heap_ice;
-// 	delete heap_cure;
+// 	delete minishell;
+// 	delete nico;
+// 	delete [] ices;
 // 	return (0);
 // }
 
 
 
-/* Complete STACK tests */
 // int main ( void ) {
 // 	Character		nico("Nico");
-// 	Character		enemy("enemy");
-// 	MateriaSource	src;
-// 	Ice				ice_stack;
-// 	AMateria*		m;
 
-// 	std::cout << std::endl;
+// 	MateriaSource	src; std::cout << std::endl;
 
-// 	src.learnMateria(&ice_stack);		// store address
-// 	std::cout << std::endl;
+// 	Ice*			ice0 = new Ice(); std::cout << std::endl;
+// 	Ice*			ice1 = new Ice(); std::cout << std::endl;
 
-// 	m = src.createMateria("ice");		// clone
-// 	nico.equip(m);
-// 	std::cout << std::endl;
+// 	Cure*			cure0 = new Cure(); std::cout << std::endl;
+// 	Cure*			cure1 = new Cure(); std::cout << std::endl;
 
-// 	nico.use(0, enemy);
-// 	std::cout << std::endl;
-
-// 	nico.unequip(0);
-// 	std::cout << std::endl;
-
-// 	return (0);
-// }
+// 	Ice*			ice2 = new Ice(); std::cout << std::endl;
+// 	Ice*			ice3 = new Ice(); std::cout << std::endl;
 
 
+// 	src.learnMateria(cure0); std::cout << std::endl;
+// 	src.learnMateria(cure1); std::cout << std::endl;
+// 	AMateria*	cure_created = src.createMateria("cure");			// will create from cure1
+// 	nico.equip(cure_created); std::cout << std::endl;				// items[0]
 
-/* Character class with AMateria tests */
-// int main ( void ) {
-// 	ICharacter	*nico = new Character("Nico");
-// 	AMateria	*ice_heap = new Ice();
-// 	Ice			ice_stack;
+// 	src.learnMateria(ice0); std::cout << std::endl;
+// 	AMateria*	ice_created = src.createMateria("ice");				// will create from ice0
+// 	src.learnMateria(ice1); std::cout << std::endl;
+// 	AMateria*	another_ice = src.createMateria("ice");				// will create from ice1
+// 	nico.equip(ice_created); std::cout << std::endl << std::endl;	// items[1]
+// 	nico.equip(another_ice); std::cout << std::endl << std::endl;	// items[2]
 
-// 	nico->equip(ice_heap);
-// 	nico->equip(&ice_stack);
+// 	src.learnMateria(ice2); std::cout << std::endl;					// not learned, but automatically freed
+// 	src.learnMateria(ice3); std::cout << std::endl << std::endl;	// not learned, but automatically freed
 
-// 	delete nico;
-// 	delete ice_heap;
-// 	return (0);
-// }
+// 	std::cout << nico.getItemsAddress()[0]->getType() << std::endl;
+// 	std::cout << nico.getItemsAddress()[1]->getType() << std::endl;
+// 	std::cout << nico.getItemsAddress()[2]->getType() << std::endl;
 
+// 	nico.unequip(0);		// IMPORTANT: the items unequipped fall into main()
+// 							// therefore they have to be deleted inside its scope.
+// 							// The rest is deleted inside the Character.
+// 							// "The subject says: The unequip() member function must NOT delete the Materia!"
+// 							// and at the same time "f course, the Materias must be deleted when a Character is destroyed."
 
-/* Complete HEAP tests */
-// int main ( void ) {
-// 	ICharacter		*nico = new Character("Nico");
-// 	ICharacter		*enemy = new Character("enemy");
-// 	IMateriaSource	*src = new MateriaSource();
-// 	AMateria		*m;
-// 	std::cout << std::endl;
-
-// 	src->learnMateria(new Ice());		// store address
-// 	std::cout << std::endl;
-
-// 	m = src->createMateria("ice");		// clone
-// 	nico->equip(m);
-// 	std::cout << std::endl;
-
-// 	nico->use(0, *enemy);
-// 	std::cout << std::endl;
-
-// 	nico->unequip(0);
-// 	std::cout << std::endl;
-
-// 	delete enemy;
-// 	delete src;
-// 	delete nico;
-// 	delete m;
+// 	delete cure_created;
 // 	return (0);
 // }
 
@@ -256,10 +271,10 @@ int main ( void ) {
 // 	std::cout << "nico _item address -> " << nico.getItemsAddress() << std::endl;
 // 	std::cout << "nico_to_reassign _item address -> " << nico_to_reassign.getItemsAddress() << std::endl << std::endl;
 
-// 	nico.unequip(0);
 // 	nico.use(0, enemy);				// the slot is empty
 // 	nico_to_reassign.use(0, enemy);	// the slot is not empty, therefore he can use it
 
+// 	nico.unequip(0);	// if unequiped() this will have to be freed in main()
 // 	delete i0;
 // 	return (0);
 // }

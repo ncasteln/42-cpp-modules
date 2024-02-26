@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/26 09:26:36 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/26 16:04:13 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ clean:
 	rm -rf $(OBJS) $(BAD_OBJS)
 
 fclean: clean
-	rm -rf $(NAME) $(NAME)_bad
+	rm -rf $(NAME)
 
 re: fclean all
 
