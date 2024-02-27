@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:37:02 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/19 15:02:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:23:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define __ROBOTOMYREQUESTFORM_HPP__
 
 #include "AForm.hpp"
-#include <cstdlib>
 
 class RobotomyRequestForm: public AForm
 {

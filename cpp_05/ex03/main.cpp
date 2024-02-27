@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 14:29:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:12:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,17 @@
 #include "PresidentialPardonForm.hpp"
 #include "Intern.hpp"
 
-/*
-	***** EVALUATION *****
-	• check Robotomy use of srand() and (TIME)
-	• Intern operator= is done in a different way without justification, it can
-	be done either so or like in the previous exercises
-
-*/
 // int main ( void ) {
 // 	Intern	i;
 // 	AForm	*f;
 // 	try {
 // 		f = i.makeForm("presidential pardon", "Nico");
 // 		std::cout << *f << std::endl;
-// 		delete f;
 // 	} catch (std::exception& e) {
 // 		std::cout << e.what() << std::endl;
 // 	}
 // 	std::cout << std::endl;
-// 	delete f;
+// 	if (f) delete f;
 // 	return (0);
 // }
 
@@ -52,49 +44,50 @@
 // 		std::cout << e.what() << std::endl;
 // 	}
 // 	std::cout << std::endl;
-// 	delete f;
+// 	if (f) delete f;
 // 	return (0);
 // }
 
 // ///////////////////////// copy constructor and op= ////////////////////////
-int main ( void ) {
-	Intern	i;
-	AForm*	f;
-	Intern	g( i );
-	try {
-		f = g.makeForm("robotomy request", "Nico");
-		if (f)
-			std::cout << *f << std::endl;
-		else
-			std::cout << "f is [ NULL ]" << std::endl;
-		std::cout << std::endl;
-	} catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
-	}
-	delete f;
-	return (0);
-}
-
-// ///////////////////////////// mix /////////////////////////////////////////
 // int main ( void ) {
-// 	Bureaucrat	*s = new Bureaucrat("Threat", 12);
-// 	Bureaucrat	*b = new Bureaucrat("Boss", 1);
-// 	Intern		*h = new Intern();
-// 	AForm		*p;
-// 	AForm		*null = NULL;
+// 	Intern	i;
+// 	AForm*	f;
+// 	Intern	g( i );
 // 	try {
-
-// 		p = h->makeForm("robotomy request", "Boss");
-// 		b->signForm(*p);
-// 		s->executeForm(*p);
+// 		f = g.makeForm("{  X*(X(W*(*&#$*$(#$&)  }", "Nico");
+// 		f = g.makeForm("robotomy request", "Nico");
+// 		if (f)
+// 			std::cout << *f << std::endl;
+// 		else
+// 			std::cout << "f is [ NULL ]" << std::endl;
+// 		std::cout << std::endl;
 // 	} catch (std::exception& e) {
 // 		std::cout << e.what() << std::endl;
 // 	}
-// 	delete s;
-// 	delete b;
-// 	delete h;
-// 	delete p;
-// 	delete null;
-// 	std::cout << std::endl;
+// 	if (f) delete f;
 // 	return (0);
 // }
+
+// ///////////////////////////// mix /////////////////////////////////////////
+int main ( void ) {
+	Bureaucrat	*s = new Bureaucrat("Threat", 12);
+	Bureaucrat	*b = new Bureaucrat("Boss", 1);
+	Intern		*h = new Intern();
+	AForm		*p;
+	AForm		*null = NULL;
+	try {
+
+		p = h->makeForm("robotomy request", "Boss");
+		b->signForm(*p);
+		s->executeForm(*p);
+	} catch (std::exception& e) {
+		std::cout << e.what() << std::endl;
+	}
+	if (s) delete s;
+	if (b) delete b;
+	if (h) delete h;
+	if (p) delete p;
+	if (null) delete null;
+	std::cout << std::endl;
+	return (0);
+}

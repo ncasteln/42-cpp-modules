@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 10:39:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:57:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,9 @@
 # define EXCEP_DECR		1
 # define EXCEP_INCR		2
 
-
 /*
-	****** TO REMEMBER WHEN EVAL ******
-	• highest grade possible == 1 / lowest == 150
-	• question: what to do with default constructor? Which value should it set?
-	• operator= is made not-usable because of const _name. In that way I can
+	operator= is made not-usable because of const _name. In that way I can
 	void someone that assign a Bureaucrat to another one by accidental mistake.
-	• Constructor of oxceptions is not required: I made only to create custom
-	throw() error messages.
 */
 class Bureaucrat
 {
@@ -59,11 +53,15 @@ class Bureaucrat
 		Bureaucrat& operator=( const Bureaucrat& );	// not-usable
 };
 
+/*
+	The constructor is not requested by the subject, it is made just to create
+	a more detailed error message.
+*/
 class Bureaucrat::GradeTooLowException: public std::exception
 {
 	public:
 		GradeTooLowException( int );
-		virtual const char* what() const throw();
+		const char* what() const throw();
 	private:
 		int _excep_n;
 };
@@ -72,7 +70,7 @@ class Bureaucrat::GradeTooHighException: public std::exception
 {
 	public:
 		GradeTooHighException( int );
-		virtual const char* what() const throw();
+		const char* what() const throw();
 	private:
 		int _excep_n;
 };

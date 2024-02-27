@@ -6,19 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 12:23:11 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:04:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
-/*
-	**** REMEMBER FOR EVAL ****
-	• nothing new for Bureaucrat
-	• form def constructor: sets a <form no name> and the lowest grade (150) for
-	"security reasons" in case someone doesn't explicit it.
-*/
 int main ( void ) {
 	/////////////////////// try ass operator= /////////////////////////////////
 	// try {

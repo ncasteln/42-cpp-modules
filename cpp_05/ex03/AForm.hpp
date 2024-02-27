@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:34:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/19 15:42:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:03:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ class AForm::GradeTooLowException: public std::exception
 {
 	public:
 		GradeTooLowException( int );
-		virtual const char* what() const throw();
+		const char* what() const throw();
 	private:
 		int _n;
 };
@@ -74,7 +74,7 @@ class AForm::GradeTooHighException: public std::exception
 {
 	public:
 		GradeTooHighException( int );
-		virtual const char* what() const throw();
+		const char* what() const throw();
 	private:
 		int _n;
 };
@@ -83,7 +83,7 @@ class AForm::FormSignException: public std::exception
 {
 	public:
 		FormSignException( int );
-		virtual const char* what() const throw();
+		const char* what() const throw();
 	private:
 		int _n;
 };

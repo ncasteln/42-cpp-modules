@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:55:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 10:47:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:06:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ class Bureaucrat::GradeTooLowException: public std::exception
 {
 	public:
 		GradeTooLowException( int );
-		virtual const char* what() const throw();
+		const char* what() const throw();
 	private:
 		int _excep_n;
 };
@@ -67,7 +67,7 @@ class Bureaucrat::GradeTooHighException: public std::exception
 {
 	public:
 		GradeTooHighException( int );
-		virtual const char* what() const throw();
+		const char* what() const throw();
 	private:
 		int _excep_n;
 };

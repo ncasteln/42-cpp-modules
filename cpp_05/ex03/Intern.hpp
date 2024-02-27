@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:07:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 14:29:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:59:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Intern
 
 		// ------------------------------------------------------------- OTHERS
 		AForm* makeForm( std::string name, std::string target );
+	private:
 };
 
 #endif /* __INTERN_HPP__ */

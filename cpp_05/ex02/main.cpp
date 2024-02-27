@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 14:21:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:27:24 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 
-/*
-	**** REMEMBER FOR EVAL ****
-	• "Either this method is pure and the grade checks are implemented in each
-	subclass, or this method performs the checks, then calls another method
-	in derived class that only executes the action." Don't understand if correct
-	how I do. Make isExecutable() -> execute() and no more virtual?
-*/
 int main ( void ) {
 	try {
 		///////////////////////// Shrubbery copy constr/op== //////////////////
@@ -40,12 +33,12 @@ int main ( void ) {
 		// std::cout << f2 << std::endl << std::endl;
 
 		///////////////////////// ShrubberyCreationForm ///////////////////////
-		Bureaucrat				b("Bonnie", 145);
-		Bureaucrat				c("Clide", 137);
-		ShrubberyCreationForm	s("Home");
+		// Bureaucrat				b("Bonnie", 145);
+		// Bureaucrat				c("Clide", 137);
+		// ShrubberyCreationForm	s("Home");
 
-		b.signForm(s);
-		c.executeForm(s);
+		// b.signForm(s);
+		// c.executeForm(s);
 
 		///////////////////////// Shrubbery not signed ////////////////////////
 		// Bureaucrat				c("Clide", 137);
@@ -74,11 +67,11 @@ int main ( void ) {
 		// c.executeForm(s);
 
 		///////////////////////// Robotomy ////////////////////////////////////
-		// Bureaucrat				c("Clide", 1);
-		// RobotomyRequestForm		f("Nico");
+		Bureaucrat				c("Clide", 1);
+		RobotomyRequestForm		f("Nico");
 
-		// c.signForm(f);
-		// c.executeForm(f);
+		c.signForm(f);
+		c.executeForm(f);
 	} catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
 	}

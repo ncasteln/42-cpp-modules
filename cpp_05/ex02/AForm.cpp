@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:34:32 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 14:18:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:13:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void AForm::isExecutable( Bureaucrat const & executor ) const {
 
 // ---------------------------------------------------------------------- EXCEP
 AForm::GradeTooLowException::GradeTooLowException( int n ): _n(n) {}
+AForm::GradeTooHighException::GradeTooHighException( int n ): _n(n) {}
+AForm::FormSignException::FormSignException( int n ): _n(n) {}
 
 const char* AForm::GradeTooLowException::what() const throw() {
 	if (this->_n == EXCEP_NO_PERM)
@@ -83,15 +85,11 @@ const char* AForm::GradeTooLowException::what() const throw() {
 	return ("unknow exception");
 }
 
-AForm::GradeTooHighException::GradeTooHighException( int n ): _n(n) {}
-
 const char* AForm::GradeTooHighException::what() const throw() {
 	if (this->_n == EXCEP_HIGH)
 		return ("grade too high");
 	return ("unknow exception");
 }
-
-AForm::FormSignException::FormSignException( int n ): _n(n) {}
 
 const char* AForm::FormSignException::what() const throw() {
 	if (this->_n == EXCEP_SIGNED)

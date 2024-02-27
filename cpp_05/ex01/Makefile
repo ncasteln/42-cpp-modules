@@ -6,12 +6,12 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/20 16:32:56 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/02/27 17:05:51 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
-CFLAGS		=	-Wall -Wextra -std=c++98 -Werror
+CXXFLAGS	=	-Wall -Wextra -std=c++98 -Werror -Wshadow
 
 SRC			=	main.cpp \
 				Bureaucrat.cpp \
@@ -23,10 +23,10 @@ OBJS		=	$(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADERS)
-	c++ $(CFLAGS) $(OBJS) -o $(NAME) -I./
+	c++ $(CXXFLAGS) $(OBJS) -o $(NAME) -I./
 
 %.o: %.cpp $(HEADERS)
-	c++ $(CFLAGS) -c $< -o $@ -I./
+	c++ $(CXXFLAGS) -c $< -o $@ -I./
 
 clean:
 	rm -rf $(OBJS)

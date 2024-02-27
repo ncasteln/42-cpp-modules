@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:12:11 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/27 08:22:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:28:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,21 +273,38 @@
 
 
 
+// int main ( void ) {
+// 	MateriaSource	src;
+// 	MateriaSource	src_cpy ( src );
+// 	Ice				ice;
+// 	Cure			cure;
+
+// 	src.learnMateria(&ice);
+// 	src_cpy.learnMateria(&cure);
+
+// 	src.createMateria("cure");
+// 	src_cpy.createMateria("ice");
+
+// 	Character	nico("Nic");
+// 	Character	enemy("enemy");
+// 	nico.use(0, enemy);
+// 	nico.use(100, enemy);
+// 	return (0);
+// }
+
+
 int main ( void ) {
+	Character		nico;
 	MateriaSource	src;
-	MateriaSource	src_cpy ( src );
-	Ice				ice;
-	Cure			cure;
+	Ice				i;
 
-	src.learnMateria(&ice);
-	src_cpy.learnMateria(&cure);
+	src.learnMateria(&i);
+	AMateria *tmp = src.createMateria("ice");
 
-	src.createMateria("cure");
-	src_cpy.createMateria("ice");
+	nico.equip(tmp);
+	AMateria *save = nico.getItemAddress(0);
+	nico.unequip(0);
 
-	Character	nico("Nic");
-	Character	enemy("enemy");
-	nico.use(0, enemy);
-	nico.use(100, enemy);
+	delete save;
 	return (0);
 }

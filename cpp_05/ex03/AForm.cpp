@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:34:32 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 12:26:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:10:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ const char* AForm::FormSignException::what() const throw() {
 
 // ------------------------------------------------------------------ OVERLOADS
 std::ostream& operator<<( std::ostream& cout, const AForm& f ) {
-	cout << "AForm " << f.getName() << ": " << std::endl;
-	cout << "Grade required to be signed: " << f.getGradeToSign() << std::endl;
-	cout << "Grade required to be executed: " << f.getGradeToExecute() << std::endl;
-	cout << "Grade signed: ";
+	cout << "| AForm " << f.getName() << ": " << std::endl;
+	cout << "| Grade required to be signed: " << f.getGradeToSign() << std::endl;
+	cout << "| Grade required to be executed: " << f.getGradeToExecute() << std::endl;
+	cout << "| Grade signed: ";
 	if (f.getIsSigned())
 		cout << "[ true ]" << std::endl;
 	else
