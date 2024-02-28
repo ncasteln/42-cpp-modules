@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/20 17:24:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:51:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,50 @@
 
 #include <string>
 #include <iostream>
+#include <exception>
+#include <cstdlib>
 
-# define CHAR	0
-# define INT	1
-# define FLOAT	2
-# define DOUBLE	3
+# define CHAR		1
+# define SPECIAL	2
+# define FLOAT		3
+# define DOUBLE		4
+# define INT		5
 
 class ScalarConverter
 {
 	public:
-		// --------------------------------------------------- MEMBER FUNCTIONS
 		static void convert( std::string );
-		static int getType( std::string );
 
-	private:
-		// --------------------------------------------- CANONICAL CONSTRUCTORS
+		// ----------------------------------------------------------- GET TYPE
+		static int getType( std::string );
+		static int isChar( std::string );
+		static int isFloatOrDouble( std::string );
+		static int isInt( std::string );
+		static int isSpecial( std::string );
+
+		// --------------------------------------------------------- EXCEPTIONS
+		class InvalidInput;
 		ScalarConverter( void );
 		~ScalarConverter( void );
 		ScalarConverter( const ScalarConverter& );
 		ScalarConverter& operator=( ScalarConverter& );
+	private:
+		// --------------------------------------------- CANONICAL CONSTRUCTORS
+};
+
+enum e_except {
+	E_DOUBLE_POINT,
+	E_INV_DIGIT,
+	E_UNKNOWN
+};
+
+class ScalarConverter::InvalidInput: public std::exception
+{
+	public:
+		InvalidInput( e_except );
+		const char* what() const throw();
+	private:
+		const e_except _e;
 };
 
 #endif
