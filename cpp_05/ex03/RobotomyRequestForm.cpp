@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "RobotomyRequestForm.hpp"
+#include <cstdlib>
+#include <ctime>
 
 // ------------------------------------------------------ CANONICAL CONSTRUCTORS
 RobotomyRequestForm::RobotomyRequestForm( void ) {
@@ -37,8 +39,8 @@ RobotomyRequestForm::RobotomyRequestForm( const std::string target ):
 int RobotomyRequestForm::execute( Bureaucrat const & executor ) const {
 	this->AForm::isExecutable(executor);
 	std::cout << "* VROOOOOM RUMBLE VROO-ROO-RRROOOM PURRRR TUCKTUCK clangKLANG clangKLANG RAT-A-TAT-TAT WHIRRRRRR *" << std::endl;
-	srand(time(NULL));
-	if ((rand() % 2) % 2)
+	std::srand(std::time(NULL));
+	if ((std::rand() % 2) % 2)
 		std::cout << this->_target << " has been robotomized" << std::endl;
 	else
 		std::cout << this->_target << " has NOT been robotomized" << std::endl;

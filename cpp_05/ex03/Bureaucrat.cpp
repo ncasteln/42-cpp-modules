@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:59:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/22 12:25:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:45:56 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ void Bureaucrat::signForm( AForm& f ) {
 void Bureaucrat::executeForm( AForm const & f ) {
 	std::cout << "Bureaucrat " << this->_name << " try to execute form " << f.getName() << ": ";
 	if (f.execute(*this)) {
-		std::cerr << "Error: " << this->_name << " was not able to execute " << f.getName();
-		std::cerr << ": std::ofstream.open() failed" << std::endl;
+		std::cerr << this->_name << " was not able to execute " << f.getName();
 		return ;
 	}
 	std::cout << this->_name << " executed " << f.getName() << std::endl;

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:34:32 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/27 12:13:31 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:50:00 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,8 @@ bool AForm::getIsSigned( void ) const { return (this->_isSigned); }
 void AForm::beSigned( Bureaucrat& b ) {
 	if (this->getIsSigned())
 		throw FormSignException(EXCEP_SIGNED);
-	if (this->getGradeToSign() < b.getGrade()) {
+	if (this->getGradeToSign() < b.getGrade())
 		throw GradeTooLowException(EXCEP_LOW);
-	}
 	this->_isSigned = true;
 }
 

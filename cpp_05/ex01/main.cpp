@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/27 12:04:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:53:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main ( void ) {
 	// 	std::cout << g << std::endl;
 	// }
 	// catch (std::exception& e) {
-	// 	std::cout << e.what() <<  std::endl;
+	// 	std::cerr << e.what() <<  std::endl;
 	// }
 	// std::cout << std::endl;
 
@@ -42,7 +42,7 @@ int main ( void ) {
 		b.signForm(f_ok);
 	}
 	catch (std::exception& e) {
-		std::cout << e.what() <<  std::endl;
+		std::cerr << e.what() <<  std::endl;
 	}
 	std::cout << std::endl;
 
@@ -51,7 +51,7 @@ int main ( void ) {
 		Bureaucrat	b("Bonnie", -10);
 	}
 	catch (std::exception& e) {
-		std::cout << e.what() <<  std::endl;
+		std::cerr << e.what() <<  std::endl;
 	}
 	std::cout << std::endl;
 
@@ -64,7 +64,7 @@ int main ( void ) {
 		b.signForm(f_catch);
 	}
 	catch (std::exception& e) {
-		std::cout << e.what() <<  std::endl;
+		std::cerr << e.what() <<  std::endl;
 	}
 	std::cout << std::endl;
 
@@ -80,7 +80,7 @@ int main ( void ) {
 		Form		f_high("f_high", -25,-25);
 	}
 	catch (std::exception& e) {
-		std::cout << e.what() <<  std::endl;
+		std::cerr << e.what() <<  std::endl;
 	}
 	std::cout << std::endl;
 
@@ -89,7 +89,7 @@ int main ( void ) {
 		Form		f("f", 9999, 9999);
 	}
 	catch (std::exception& e) {
-		std::cout << e.what() <<  std::endl;
+		std::cerr << e.what() <<  std::endl;
 	}
 	std::cout << std::endl;
 

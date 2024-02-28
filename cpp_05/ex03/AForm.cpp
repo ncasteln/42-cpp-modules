@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:34:32 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/27 17:10:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:46:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // ------------------------------------------------------ CANONICAL CONSTRUCTORS
 AForm::AForm( void ):
-	_name("<Aform no name>"),
+	_name("<Default Form name>"),
 	_gradeToSign(1),
 	_gradeToExecute(1),
 	_isSigned(false) {

@@ -6,12 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:40:27 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/27 16:14:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:52:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
 #include "Bureaucrat.hpp"
+#include <iostream>
 
 // ------------------------------------------------------ CANONICAL CONSTRUCTORS
 ShrubberyCreationForm::ShrubberyCreationForm( void ) {
@@ -35,13 +36,29 @@ ShrubberyCreationForm::ShrubberyCreationForm( const std::string target ):
 	std::cout << "[ShrubberyCreationForm] constructor" << std::endl;
 }
 
+// ------------------------------------------------------------------ INHERITED
 int ShrubberyCreationForm::execute( Bureaucrat const& executor ) const {
 	std::ofstream	fsout;
 
 	this->AForm::isExecutable(executor);
-	fsout.open((this->_target + "_shrubbery").c_str(), std::fstream::out | std::fstream::trunc);
-	if (fsout.fail())
+	try {
+		fsout.open((this->_target + "_shrubbery").c_str(), std::fstream::out | std::fstream::trunc);
+		if (!fsout.is_open())
+			throw std::ios_base::failure("\nfsout.is_open()");
+		this->printTree(fsout);
+		if (fsout.fail())
+			throw std::ios_base::failure("\nfsout.fail()");
+	} catch (const std::ios_base::failure& e) {
+		std::cerr << e.what() << std::endl;
+		fsout.close();
 		return (1);
+	}
+	fsout.close();
+	return (0);
+}
+
+// --------------------------------------------------------------------- OTHERS
+void ShrubberyCreationForm::printTree( std::ofstream& fsout ) const {
 	fsout << "              * *" << std::endl;
 	fsout << "           *    *  *" << std::endl;
 	fsout << "      *  *    *     *  *" << std::endl;
@@ -59,6 +76,4 @@ int ShrubberyCreationForm::execute( Bureaucrat const& executor ) const {
 	fsout << "              ;###" << std::endl;
 	fsout << "            ,####." << std::endl;
 	fsout << "...........######............." << std::endl;
-	fsout.close();
-	return (0);
 }

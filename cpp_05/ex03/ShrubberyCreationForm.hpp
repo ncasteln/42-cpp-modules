@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:37:02 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/27 16:14:46 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:45:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ class ShrubberyCreationForm: public AForm
 
 		// ---------------------------------------------------------- INHERITED
 		int execute( Bureaucrat const & ) const;
+
 	private:
 		std::string _target;
 		ShrubberyCreationForm& operator=( const ShrubberyCreationForm& ); // not-usable
+
+		// ------------------------------------------------------------- OTHERS
+		void printTree( std::ofstream& fsout ) const;
 };
 
 #endif /* __SHRUBBERYCREATIONFORM_HPP__ */

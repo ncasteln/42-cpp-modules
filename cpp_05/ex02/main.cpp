@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:54:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/27 12:27:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/02/28 09:03:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@
 int main ( void ) {
 	try {
 		///////////////////////// Shrubbery copy constr/op== //////////////////
-		// Bureaucrat				b("Bonnie", 1);
-		// ShrubberyCreationForm	f0("Home");
+		ShrubberyCreationForm	f0("Home");
+		ShrubberyCreationForm	f1( f0 );
 
-		// b.signForm(f0);
-		// std::cout << f0 << std::endl << std::endl;
-
-		// ShrubberyCreationForm	f1( f0 );
-		// std::cout << f1 << std::endl << std::endl;
+		std::cout << f0 << std::endl << std::endl;
+		std::cout << f1 << std::endl << std::endl;
 
 		// ShrubberyCreationForm	f2("_hell_");
-		// f2 = f1;
+		// f2 = f1;	// not-usable
 		// std::cout << f2 << std::endl << std::endl;
 
 		///////////////////////// ShrubberyCreationForm ///////////////////////
@@ -52,30 +49,29 @@ int main ( void ) {
 
 		// c.executeForm(s);
 
-		///////////////////////// Grade too low for Shrubbery /////////////////
+		/////////////////////// Grade too low for Shrubbery /////////////////
 		// Bureaucrat				c("Clide", 145);
 		// ShrubberyCreationForm	s("Home");
 
 		// c.signForm(s);
 		// c.executeForm(s);
 
-		///////////////////////// Grade too low for Shrubbery /////////////////
+		/////////////////////// Grade too low for Shrubbery /////////////////
 		// Bureaucrat				c("Clide", 1);
 		// ShrubberyCreationForm	s("Home");
 
 		// c.signForm(s);
 		// c.executeForm(s);
 
-		///////////////////////// Robotomy ////////////////////////////////////
-		Bureaucrat				c("Clide", 1);
-		RobotomyRequestForm		f("Nico");
+		/////////////////////// Robotomy ////////////////////////////////////
+		// Bureaucrat				c("Clide", 1);
+		// RobotomyRequestForm		f("Nico");
 
-		c.signForm(f);
-		c.executeForm(f);
+		// c.signForm(f);
+		// c.executeForm(f);
 	} catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 	std::cout << std::endl;
-
 	return (0);
 }
