@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/28 18:53:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:01:31 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,159 +25,187 @@ ScalarConverter& ScalarConverter::operator=( ScalarConverter& rhs) {
 	// implement
 }
 
-// ----------------------------------------------------------- MEMBER FUNCTIONS
-void ScalarConverter::convert( std::string s ) {
-	int type = ScalarConverter::getType(s);
-	if (!type) throw InvalidInput(E_UNKNOWN); // just because everything return (0);
-	if (type == CHAR) {
-
-	}
-	if (type == FLOAT) {
-		float f = static_cast<float>(std::atof(s.c_str())); // print out to understand if is really float otherwise convert
-	}
-	if (type == INT) {
-		// int i = atoi();
-	}
-
-
-	std::cout << "[ Conversion of " << s << " ]" << std::endl;
-	std::cout << "char   : " << std::endl;
-	std::cout << "int    : " << std::endl;
-	std::cout << "float  : " << std::endl;
-	std::cout << "double : " << std::endl;
+// -------------------------------------------------------------------- DISPLAY
+void ScalarConverter::display( char c, int i, float f, double d ) {
+	if (isprint(c))
+		std::cout << "char   : '" << c << "'" << std::endl;
+	else
+		std::cout << "char   : Not displayable" << std::endl;
+	std::cout << "int    : " << i << std::endl;
+	std::cout << std::fixed << std::setprecision(1) << "float  : " << f << "f" << std::endl;
+	std::cout << std::fixed << std::setprecision(1) << "double : " << d << std::endl;
 	std::cout << std::endl;
 }
 
-// ----------------------------------------------------------------- EXCEPTIONS
-ScalarConverter::InvalidInput::InvalidInput( e_except e ): _e(e) {};
+// ----------------------------------------------------------------- CONVERSION
+void ScalarConverter::convert( std::string s ) {
+	int type = ScalarConverter::getType(s);
+	// int (*getType[5])( std::string );
+	// void (*handles[4]) ( std::string );
 
-const char* ScalarConverter::InvalidInput::what() const throw() {
-	if (this->_e == E_DOUBLE_POINT)
-		return ("double decimal point");
-	if (this->_e == E_INV_DIGIT)
-		return ("invalid digit");
-	return ("unknown exception");
+
+	// getType[0] = &ScalarConverter::isChar;
+	// getType[1] = &ScalarConverter::isString;
+	// getType[2] = &ScalarConverter::isFloat;
+	// getType[3] = &ScalarConverter::isDouble;
+	// getType[4] = &ScalarConverter::isInt;
+
+	// handles[0] = &ScalarConverter::handleCharInt;
+	// handles[1] = &ScalarConverter::handleString;
+	// handles[2] = &ScalarConverter::handleFloat;
+	// handles[3] = &ScalarConverter::handleDouble;
+
+	// int i = 0;
+	// while (i < 5) {
+	// 	if (getType[i](s)) {
+	// 		if (i == 0 || i == 4)
+	// 			handles[i](s);
+	// 	}
+	// 	i++;
+	// }
+	// return (0);
+
+
+
+	if (!type) {
+		// catch error ? define unknow?
+		std::cerr << "Error: unknow type" << std::endl;
+		return ;
+	}
+
+	std::cout << "[ Conversion of " << s << " ]" << std::endl;
+	if (type == CHAR || type == INT)
+		ScalarConverter::handleCharInt(s);
+	else if (type == STRING) {
+		ScalarConverter::handleString(s);
+	}
+	else if (type == FLOAT) {
+		ScalarConverter::handleFloat(s);
+	}
+	else if (type == DOUBLE) {
+		ScalarConverter::handleDouble(s);
+	}
 }
 
+void ScalarConverter::handleCharInt( std::string s ) { // can arrive anything besides of 0-9
+	std::cout << "[ " << "CHAR / INT" << " ]" << std::endl ;
+	int i = std::atoi(s.c_str());
+	char c = 0;
+	if (i <= 127)
+		c = static_cast<char>(i);
+	float f = static_cast<float>(i);
+	double d = i;
+	display(c, i, f, d);
+}
+
+void ScalarConverter::handleFloat( std::string s ) {
+	std::cout << "[ " << "FLOAT" << " ]" << std::endl ;
+	float f = static_cast<float>(std::atof(s.c_str()));
+
+	int i = static_cast<int>(f); // ----> explicit demotion !
+	char c = 0;
+	if (i <= 127)
+		c = static_cast<char>(f); // -----> explicit demotion!
+	double d = static_cast<double>(f);
+	ScalarConverter::display(c, i, f, d);
+}
+
+void ScalarConverter::handleDouble( std::string s ) {
+	std::cout << "[ " << "DOUBLE" << " ]" << std::endl ;
+	double d = std::atof(s.c_str());
+
+	int i = static_cast<int>(d); // ----> explicit demotion !
+	char c = 0;
+	if (i <= 127)
+		c = static_cast<char>(d); // -----> explicit demotion!
+	float f = static_cast<float>(d);
+	ScalarConverter::display(c, i, f, d);
+}
+
+
 /*
-	0.f				OK
-	0000.f			OK
-	00001.f			OK
-	-1.f			OK
-	****************************************
-	0.				OK
-	0000.			OK
-	00001.			OK
-	-1.				OK
-	****************************************
-	1UL or 1L		???
-	-inff +inff		OK
-	-inf +inf		OK
-	nan nanf		OK
-	****************************************
-	'c' 0-255		OK
-	"42"			OK
-	"0.42f"			OK
-	"0.42"			OK
-	****************************************
-	"0.1.2"			OK
-	"nothing"		OK
-	"1234k"			OK
-	"fake.42f"		OK
+./converter nan   -------->		char: impossible // int:  impossible // float:   nanf // double: nan
+./converter -inff -------->		char: impossible // int:  impossible // float:  -inff // double: -inf
+./converter +inff -------->		char: impossible // int:  impossible // float:  +inff // double: +inf
+./converter +inf  -------->		char: impossible // int:  impossible // float:  +inff // double: +inf
+./converter -inf  -------->		char: impossible // int:  impossible // float:  -inff // double: -inf
+./converter nanf  -------->		char: impossible // int:  impossible // float:   nanf // double: nan
 */
+void ScalarConverter::handleString( std::string s ) {
+	std::cout << "[ " << "STRING" << " ]" << std::endl ;
+	// if (s == "nan")
+	// 	display("", "", s, s);
+}
+
+
+// ------------------------------------------------------------------- GET TYPE
 int ScalarConverter::getType( std::string s ) {
-	int (*f[4])( std::string );
+	int (*f[5])( std::string );
 	f[0] = &ScalarConverter::isChar;
-	f[1] = &ScalarConverter::isSpecial;
-	f[2] = &ScalarConverter::isFloatOrDouble;
-	f[3] = &ScalarConverter::isInt;
-	std::string types[5] = { "CHAR", "SPECIAL", "FLOAT or DOUBLE", "INT" }; // just to visualize
+	f[1] = &ScalarConverter::isString;
+	f[2] = &ScalarConverter::isFloat;
+	f[3] = &ScalarConverter::isDouble;
+	f[4] = &ScalarConverter::isInt;
 	int i = 0;
-	while (i < 4) {
-		if (f[i](s)) {
-			std::cout << "[ " << types[i] << " ] " << std::endl;
+	while (i < 5) {
+		if (f[i](s))
 			return (f[i](s));
-		}
 		i++;
 	}
 	return (0);
 }
 
 int ScalarConverter::isChar( std::string s ) {
-	if (s.size() == 1)
+	if (s.size() == 1 && !isdigit(s[0]))		//  ----- let 0-9 fall into INT case
 		return (CHAR);
+
+	/* unify CHAR and INT */
+
 	return (0);
 }
 
-int ScalarConverter::isFloatOrDouble( std::string s ) {					// clean doing together but maybe better separate
-	if (s.find('.') != std::string::npos) {								// if there is a dot
-		if (s.find('.') != s.rfind('.'))								// if the left most dot position is different from the right most means there are 2
-			throw InvalidInput(E_DOUBLE_POINT);
-		std::string::iterator it = s.end();
-		while (--it != s.begin()) {
-			if ((it == --s.end()) && (*it == 'f'))						// if there is f of float jut jump it
-				it--;
-			else if ((it == s.begin()) && (*it == '+' || *it == '-'))	// + and - at the beginning are ok, but just one of them
-				it--;
-			else if (!isdigit(*it) && *it != '.')						// check if there is no word inside
-				throw InvalidInput(E_INV_DIGIT);
-		}
-		if (*(--s.end()) == 'f')										// is float or dobule
-			return (FLOAT);
-		return (DOUBLE);
+int ScalarConverter::isString( std::string s ) {
+	bool dot = true;
+
+	/* Check if there is at least a dot, and if there are more than one */
+	if (s.find('.') == std::string::npos)
+		dot = false;
+	if (dot && (s.find('.') != s.rfind('.')))
+		return (STRING);
+
+	/* Only one sign is accepted, otherwise is a string */
+	std::string::iterator it = s.begin();
+	if (*it == '-' || *it == '+')
+		it++;
+
+	/* Cover edge case of .f */
+	if (*it == '.' && *(it + 1) == 'f')
+		return (STRING);
+
+	while (it != s.end()) {
+		if (it == --(s.end()) && dot && *it == 'f')	// f at the end, only if a dot was detected
+			break ;
+		if (!isdigit(*it) && *it != '.')
+			return (STRING);
+		it++;
 	}
+	return (0);
+}
+
+int ScalarConverter::isFloat( std::string s ) {
+	if (s.find('.') != std::string::npos)
+		if (*(--(s.end())) == 'f')
+			return (FLOAT);
+	return (0);
+}
+
+int ScalarConverter::isDouble( std::string s ) {
+	if (s.find('.') != std::string::npos)
+		return (DOUBLE);
 	return (0);
 }
 
 int ScalarConverter::isInt( std::string s ) {
-	std::string::iterator it = s.begin();
-	while (it != s.end()) {
-		if (it == s.begin() && (*it == '+' || *it == '-'))
-			it++;
-		else if (isdigit(*it))
-			it++;
-		else
-			throw InvalidInput(E_INV_DIGIT);
-	}
 	return (INT);
 }
 
-/* nanf * -inff * +inff * nan * -inf * +inf */
-int ScalarConverter::isSpecial( std::string s ) {
-	if (s == "nan" || s == "nanf"
-	|| s == "-inff" || s == "+inff"
-	|| s == "-inf" || s == "+inf")
-		return (SPECIAL);
-	return (0);
-}
-
-/*
-./converter nan   -------->		char: impossible // int:  impossible // float:  nanf // double: nan
-./converter -inff -------->		char: impossible // int:  impossible // float:  -inff // double: -inf
-./converter +inff -------->		char: impossible // int:  impossible // float:  +inff // double: +inf
-./converter +inf  -------->		char: impossible // int:  impossible // float:  +inff // double: +inf
-./converter -inf  -------->		char: impossible // int:  impossible // float:  -inff // double: -inf
-./converter nanf  -------->		char: impossible // int:  impossible // float:  nanf // double: nan
-*/
-
-// old getType()
-	// if (ScalarConverter::isChar(s)) {
-	// 	std::cout << "[ CHAR ]" << std::endl;
-	// 	return (CHAR);
-	// }
-	// else if (ScalarConverter::isSpecial(s)) {
-	// 	std::cout << "[ SPECIAL ]" << std::endl;
-	// 	return (SPECIAL);
-	// }
-	// else if (ScalarConverter::isFloatOrDouble(s) == FLOAT) {
-	// 	std::cout << "[ FLOAT ]" << std::endl;
-	// 	return (FLOAT);
-	// }
-	// else if (ScalarConverter::isFloatOrDouble(s) == DOUBLE) {
-	// 	std::cout << "[ DOUBLE ]" << std::endl;
-	// 	return (DOUBLE);
-	// }
-	// else if (ScalarConverter::isInt(s)) {
-	// 	std::cout << "[ INT ]" << std::endl;
-	// 	return (INT);
-	// }

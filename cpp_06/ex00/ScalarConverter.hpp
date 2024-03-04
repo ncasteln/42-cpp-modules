@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/02/28 18:51:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/03/04 13:46:35 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 #include <iostream>
 #include <exception>
 #include <cstdlib>
+#include <iomanip>
 
 # define CHAR		1
-# define SPECIAL	2
+# define STRING		2
 # define FLOAT		3
 # define DOUBLE		4
 # define INT		5
@@ -27,38 +28,29 @@
 class ScalarConverter
 {
 	public:
+		// --------------------------------------------------------- CONVERSION
 		static void convert( std::string );
+		static void handleCharInt( std::string );
+		static void handleFloat( std::string );
+		static void handleDouble( std::string );
+		static void handleString( std::string );
 
 		// ----------------------------------------------------------- GET TYPE
 		static int getType( std::string );
 		static int isChar( std::string );
-		static int isFloatOrDouble( std::string );
+		static int isString( std::string );
+		static int isFloat( std::string );
+		static int isDouble( std::string );
 		static int isInt( std::string );
-		static int isSpecial( std::string );
 
-		// --------------------------------------------------------- EXCEPTIONS
-		class InvalidInput;
+		// ------------------------------------------------------------ DISPLAY
+		static void display( char, int, float, double );
+	private:
+		// --------------------------------------------- CANONICAL CONSTRUCTORS
 		ScalarConverter( void );
 		~ScalarConverter( void );
 		ScalarConverter( const ScalarConverter& );
 		ScalarConverter& operator=( ScalarConverter& );
-	private:
-		// --------------------------------------------- CANONICAL CONSTRUCTORS
-};
-
-enum e_except {
-	E_DOUBLE_POINT,
-	E_INV_DIGIT,
-	E_UNKNOWN
-};
-
-class ScalarConverter::InvalidInput: public std::exception
-{
-	public:
-		InvalidInput( e_except );
-		const char* what() const throw();
-	private:
-		const e_except _e;
 };
 
 #endif
