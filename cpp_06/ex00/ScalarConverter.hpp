@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/04 13:46:35 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/04 16:24:48 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ class ScalarConverter
 
 		// ------------------------------------------------------------ DISPLAY
 		static void display( char, int, float, double );
+		static void displaySpecial( std::string );
 	private:
 		// --------------------------------------------- CANONICAL CONSTRUCTORS
 		ScalarConverter( void );

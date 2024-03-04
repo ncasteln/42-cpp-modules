@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/04 14:01:31 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/04 16:30:02 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,57 +34,33 @@ void ScalarConverter::display( char c, int i, float f, double d ) {
 	std::cout << "int    : " << i << std::endl;
 	std::cout << std::fixed << std::setprecision(1) << "float  : " << f << "f" << std::endl;
 	std::cout << std::fixed << std::setprecision(1) << "double : " << d << std::endl;
-	std::cout << std::endl;
+}
+
+void ScalarConverter::displaySpecial( std::string s ) {
+	std::cout << "char   : impossible" << std::endl;
+	std::cout << "int    : impossible" << std::endl;
+	std::cout << "float  : " << s << (s == "impossible" ? "" : "f") << std::endl; // just to write less, when imposible no f is printed
+	std::cout << "double : " << s << std::endl;
 }
 
 // ----------------------------------------------------------------- CONVERSION
 void ScalarConverter::convert( std::string s ) {
 	int type = ScalarConverter::getType(s);
-	// int (*getType[5])( std::string );
-	// void (*handles[4]) ( std::string );
-
-
-	// getType[0] = &ScalarConverter::isChar;
-	// getType[1] = &ScalarConverter::isString;
-	// getType[2] = &ScalarConverter::isFloat;
-	// getType[3] = &ScalarConverter::isDouble;
-	// getType[4] = &ScalarConverter::isInt;
-
-	// handles[0] = &ScalarConverter::handleCharInt;
-	// handles[1] = &ScalarConverter::handleString;
-	// handles[2] = &ScalarConverter::handleFloat;
-	// handles[3] = &ScalarConverter::handleDouble;
-
-	// int i = 0;
-	// while (i < 5) {
-	// 	if (getType[i](s)) {
-	// 		if (i == 0 || i == 4)
-	// 			handles[i](s);
-	// 	}
-	// 	i++;
-	// }
-	// return (0);
-
-
-
 	if (!type) {
 		// catch error ? define unknow?
-		std::cerr << "Error: unknow type" << std::endl;
+		std::cerr << "Error: unknown type" << std::endl;
 		return ;
 	}
 
 	std::cout << "[ Conversion of " << s << " ]" << std::endl;
 	if (type == CHAR || type == INT)
 		ScalarConverter::handleCharInt(s);
-	else if (type == STRING) {
+	else if (type == STRING)
 		ScalarConverter::handleString(s);
-	}
-	else if (type == FLOAT) {
+	else if (type == FLOAT)
 		ScalarConverter::handleFloat(s);
-	}
-	else if (type == DOUBLE) {
+	else if (type == DOUBLE)
 		ScalarConverter::handleDouble(s);
-	}
 }
 
 void ScalarConverter::handleCharInt( std::string s ) { // can arrive anything besides of 0-9
@@ -94,8 +70,8 @@ void ScalarConverter::handleCharInt( std::string s ) { // can arrive anything be
 	if (i <= 127)
 		c = static_cast<char>(i);
 	float f = static_cast<float>(i);
-	double d = i;
-	display(c, i, f, d);
+	double d = static_cast<double>(i);
+	ScalarConverter::display(c, i, f, d);
 }
 
 void ScalarConverter::handleFloat( std::string s ) {
@@ -124,17 +100,21 @@ void ScalarConverter::handleDouble( std::string s ) {
 
 
 /*
+./converter nanf  -------->		char: impossible // int:  impossible // float:   nanf // double: nan
 ./converter nan   -------->		char: impossible // int:  impossible // float:   nanf // double: nan
 ./converter -inff -------->		char: impossible // int:  impossible // float:  -inff // double: -inf
 ./converter +inff -------->		char: impossible // int:  impossible // float:  +inff // double: +inf
 ./converter +inf  -------->		char: impossible // int:  impossible // float:  +inff // double: +inf
 ./converter -inf  -------->		char: impossible // int:  impossible // float:  -inff // double: -inf
-./converter nanf  -------->		char: impossible // int:  impossible // float:   nanf // double: nan
 */
 void ScalarConverter::handleString( std::string s ) {
 	std::cout << "[ " << "STRING" << " ]" << std::endl ;
-	// if (s == "nan")
-	// 	display("", "", s, s);
+	if (s == "nan" || s == "+inf" || s == "-inf")
+		ScalarConverter::displaySpecial(s);
+	else if (s == "nanf" || s == "+inff" || s == "-inff")
+		ScalarConverter::displaySpecial(s.erase(s.size() - 1));
+	else
+		ScalarConverter::displaySpecial("impossible");
 }
 
 
@@ -156,11 +136,8 @@ int ScalarConverter::getType( std::string s ) {
 }
 
 int ScalarConverter::isChar( std::string s ) {
-	if (s.size() == 1 && !isdigit(s[0]))		//  ----- let 0-9 fall into INT case
+	if (s.size() == 1 && !isdigit(s[0]))		//  let 0-9 fall into INT case
 		return (CHAR);
-
-	/* unify CHAR and INT */
-
 	return (0);
 }
 
