@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/04 16:24:48 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/04 17:27:56 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <exception>
 #include <cstdlib>
 #include <iomanip>
+#include <limits>
 
 # define CHAR		1
 # define STRING		2

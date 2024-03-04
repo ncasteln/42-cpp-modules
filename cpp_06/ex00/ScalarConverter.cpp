@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/04 16:30:02 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/04 17:34:21 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,19 @@ void ScalarConverter::convert( std::string s ) {
 
 void ScalarConverter::handleCharInt( std::string s ) { // can arrive anything besides of 0-9
 	std::cout << "[ " << "CHAR / INT" << " ]" << std::endl ;
+	double d = std::atof(s.c_str()); // checking overflow
+	if (d > std::numeric_limits<int>::max() || d < std::numeric_limits<int>::min())
+	{
+		std::cout << "overflow!" << std::endl;
+		//overflow
+	}
+
 	int i = std::atoi(s.c_str());
+
 	char c = 0;
 	if (i <= 127)
 		c = static_cast<char>(i);
 	float f = static_cast<float>(i);
-	double d = static_cast<double>(i);
 	ScalarConverter::display(c, i, f, d);
 }
 
