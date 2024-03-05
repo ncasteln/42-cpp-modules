@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/04 18:56:49 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/05 10:12:43 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,6 @@ ScalarConverter& ScalarConverter::operator=( ScalarConverter& rhs) {
 	// implement
 }
 
-// -------------------------------------------------------------------- DISPLAY
-void ScalarConverter::display( char c, int i, float f, double d ) {
-	if (isprint(c))
-		std::cout << "char   : '" << c << "'" << std::endl;
-	else
-		std::cout << "char   : Not displayable" << std::endl;
-	std::cout << "int    : " << i << std::endl;
-	std::cout << std::fixed << std::setprecision(1) << "float  : " << f << "f" << std::endl;
-	std::cout << std::fixed << std::setprecision(1) << "double : " << d << std::endl;
-}
-
-void ScalarConverter::displaySpecial( std::string s ) {
-	std::cout << "char   : impossible" << std::endl;
-	std::cout << "int    : impossible" << std::endl;
-	std::cout << "float  : " << s << (s == "impossible" ? "" : "f") << std::endl; // just to write less, when imposible no f is printed
-	std::cout << "double : " << s << std::endl;
-}
-
 // ----------------------------------------------------------------- CONVERSION
 void ScalarConverter::convert( std::string s ) {
 	int type = ScalarConverter::getType(s);
@@ -51,22 +33,29 @@ void ScalarConverter::convert( std::string s ) {
 		std::cerr << "Error: unknown type" << std::endl;
 		return ;
 	}
-
 	std::cout << "[ Conversion of " << s << " ]" << std::endl;
 	if (type == CHAR)
 		ScalarConverter::handleChar(s);
 	else if (type == INT)
 		ScalarConverter::handleInt(s);
-	else if (type == STRING)
-		ScalarConverter::handleString(s);
-	else if (type == FLOAT || type == DOUBLE)
-		ScalarConverter::handleDoubleFloat(s);
 	else if (type == LONG)
 		ScalarConverter::handleLong(s);
+	else if (type == FLOAT)
+		ScalarConverter::handleFloat(s);
+	else if (type == DOUBLE)
+		ScalarConverter::handleDouble(s);
+	else if (type == STRING)
+		ScalarConverter::handleString(s);
 }
 
-void ScalarConverter::handleChar( std::string s ) { // everything size == 1
-	std::cout << "[ " << "CHAR" << " ]" << std::endl ;
+
+/*
+	To make the function cleaner we could use displayChar() and use atoi
+	first to get the int. But since the subjects asks to firstly cast the
+	value to its actual type, I-ve done in the following way.
+*/
+void ScalarConverter::handleChar( std::string s ) {
+	std::cout << "[ " << "CHAR" << " ]" << std::endl;
 	char c = *s.c_str();
 	if (isprint(c))
 		std::cout << "char    : '" << c << "'" << std::endl;
@@ -78,7 +67,17 @@ void ScalarConverter::handleChar( std::string s ) { // everything size == 1
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;
 }
 
+void ScalarConverter::handleInt( std::string s ) {
+	std::cout << "[ " << "INT" << " ]" << std::endl ;
+	int i = std::atoi(s.c_str());
+	ScalarConverter::displayChar(i);
+	std::cout << "int     : " << i << std::endl;
+	std::cout << "float   : " << std::fixed << std::setprecision(1) << static_cast<float>(i) << "f" << std::endl;
+	std::cout << "double  : " << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;
+}
+
 void ScalarConverter::handleLong( std::string s ) {
+	std::cout << "[ " << "LONG" << " ]" << std::endl ;
 	double d = std::atof(s.c_str());
 	if (std::isinf(d)) {
 		displaySpecial("impossible");
@@ -91,63 +90,52 @@ void ScalarConverter::handleLong( std::string s ) {
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << d << std::endl;
 }
 
-void ScalarConverter::handleInt( std::string s ) { // can arrive anything besides of 0-9
-	std::cout << "[ " << "INT" << " ]" << std::endl ;
+void ScalarConverter::handleFloat( std::string s ) {
+	std::cout << "[ " << "FLOAT" << " ]" << std::endl ;
 
-	// double d = std::atof(s.c_str()); // checking overflow
-
-	// int i = std::atoi(s.c_str());
-
-	// char c = 0;
-	// if (i <= 127)
-	// 	c = static_cast<char>(i);
-	// float f = static_cast<float>(i);
-	// ScalarConverter::display(c, i, f, d);
-}
-
-// void ScalarConverter::handleFloat( std::string s ) {
-// 	std::cout << "[ " << "FLOAT" << " ]" << std::endl ;
-// 	float f = static_cast<float>(std::atof(s.c_str()));
-
-// 	int i = static_cast<int>(f); // ----> explicit demotion !
-// 	char c = 0;
-// 	if (i <= 127)
-// 		c = static_cast<char>(f); // -----> explicit demotion!
-// 	double d = static_cast<double>(f);
-// 	ScalarConverter::display(c, i, f, d);
-// }
-
-
-/*
-	MAX() 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0
-*/
-void ScalarConverter::handleDoubleFloat( std::string s ) {
-	std::cout << "[ " << "DOUBLE / FLOAT" << " ]" << std::endl ;
-
-	double d = std::atof(s.c_str());
-	if (std::isinf(d)) {
-		// displaySpecial("impossible");
+	float f = static_cast<float>(std::atof(s.c_str()));
+	double d;
+	if (std::isinf(f)) { // check if the result of conversion is infinite, in that case double is taken with atof
+		d = std::atof(s.c_str());
 		std::cout << "char    : impossible" << std::endl;
 		std::cout << "int     : impossible" << std::endl;
-		return ;
 	}
-	float f = static_cast<float>(d);
+	else
+		d = static_cast<double>(f); // otherwise is casted
 
+	// check of int overflow, if true impossible is printed
+	if (d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
+		std::cout << "char    : impossible" << std::endl;
+		std::cout << "int     : impossible" << std::endl;
+	}
+	else { // i and c are calculated, c can be out of range too or not displayable
+		int i = static_cast<int>(d);
+		ScalarConverter::displayChar(i);
+		std::cout << "int     : " << i << std::endl;
+	}
+	std::cout << "float   : " << std::fixed << std::setprecision(1) << f << std::endl;
+	std::cout << "double  : " << std::fixed << std::setprecision(1) << d << std::endl;
+}
+
+// see FLOAT to understand the logic
+// important to remember, in case of double or float overflows, inf is printed!
+// !!!!!
+// important: DOUBLE and FLOAT functions are very similar. Is it maybe possible to
+// 			  simplify and make a unique function for both? Is it going against to
+//			  the rules of the subject???
+// !!!!!
+void ScalarConverter::handleDouble( std::string s ) {
+	std::cout << "[ " << "DOUBLE" << " ]" << std::endl ;
+
+	double d = std::atof(s.c_str());
+	float f = static_cast<float>(d); // everytime from double, because if double is inf all the others are inf/impossible
 	if (d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
 		std::cout << "char    : impossible" << std::endl;
 		std::cout << "int     : impossible" << std::endl;
 	}
 	else {
 		int i = static_cast<int>(d);
-		if (i <= 127) {
-			char c = static_cast<char>(i);
-			if (isprint(c))
-				std::cout << "char    : " << c << std::endl;
-			else
-				std::cout << "char    : Not displayable" << std::endl;
-		}
-		else
-			std::cout << "char    : impossible" << std::endl;
+		ScalarConverter::displayChar(i);
 		std::cout << "int     : " << i << std::endl;
 	}
 	std::cout << "float   : " << std::fixed << std::setprecision(1) << f << std::endl;
@@ -156,9 +144,9 @@ void ScalarConverter::handleDoubleFloat( std::string s ) {
 
 /*
 	Handles nan, nanf, +inf, +inff, -inf, -inff.
-	NaN in CPP rises in case of some invalid operations like 0/0. Can be
+	[NaN] in CPP rises in case of some invalid operations like 0/0. Can be
 	checked with std::isnan(n) from <cmath>.
-	inf rises in case of overflowing, and can be checked with std::isinf(n)
+	[inf] rises in case of overflowing, and can be checked with std::isinf(n)
 */
 void ScalarConverter::handleString( std::string s ) {
 	std::cout << "[ " << "STRING" << " ]" << std::endl ;
@@ -188,8 +176,11 @@ int ScalarConverter::getType( std::string s ) {
 	return (0);
 }
 
+/*
+	Take everything of size == 1, including digits from 0 to 9.
+*/
 int ScalarConverter::isChar( std::string s ) {
-	if (s.size() == 1)		// && !isdigit(s[0]) -----  let 0-9 fall into INT case
+	if (s.size() == 1)
 		return (CHAR);
 	return (0);
 }
@@ -235,6 +226,10 @@ int ScalarConverter::isDouble( std::string s ) {
 	return (0);
 }
 
+/*
+	isLong has been created to catch int overflow. double is used to verify the
+	overflow.
+*/
 int ScalarConverter::isLong( std::string s ) {
 	double d = std::atof(s.c_str());
 	if (d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max())
@@ -243,6 +238,48 @@ int ScalarConverter::isLong( std::string s ) {
 }
 
 int ScalarConverter::isInt( std::string s ) {
+	(void)s;
 	return (INT);
 }
 
+// -------------------------------------------------------------------- DISPLAY
+void ScalarConverter::displayChar( int i ) {
+	char c = 0;
+	if (i >= 0 && i <= 127) {
+		c = static_cast<char>(i);
+		if (isprint(c))
+			std::cout << "char    : " << c << std::endl;
+		else
+			std::cout << "char    : not printable" << std::endl;
+	}
+	else
+		std::cout << "char    : impossible" << std::endl;
+}
+
+/*
+	Displays special values like nan, infinity and overflows. The f is not
+	printed when "impossible" is passed as a parameter.
+*/
+void ScalarConverter::displaySpecial( std::string s ) {
+	std::cout << "char   : impossible" << std::endl;
+	std::cout << "int    : impossible" << std::endl;
+	std::cout << "float  : " << s << (s == "impossible" ? "" : "f") << std::endl;
+	std::cout << "double : " << s << std::endl;
+}
+
+void ScalarConverter::displayLimits( void ) {
+	std::cout << "CHAR (8 bits) min: " << 0 << std::endl;
+	std::cout << "CHAR (8 bits) max: " << 127 << std::endl << std::endl;
+
+	std::cout << "INT (32 bits) min: " << std::numeric_limits<int>::min() << std::endl;
+	std::cout << "INT (32 bits) max: " << std::numeric_limits<int>::max() << std::endl << std::endl;
+
+	std::cout << "FLOAT (32 bits) min: " << std::fixed << std::numeric_limits<float>::min() << std::endl;
+	std::cout << "FLOAT (32 bits) max: " << std::fixed << std::numeric_limits<float>::max() << std::endl << std::endl;
+
+	std::cout << "LONG (64 bits) min: " << std::numeric_limits<long>::min() << std::endl;
+	std::cout << "LONG (64 bits) max: " << std::numeric_limits<long>::max() << std::endl << std::endl;
+
+	std::cout << "DOUBLE (64 bits) min: " << std::fixed << std::numeric_limits<double>::min() << std::endl;
+	std::cout << "DOUBLE (64 bits) max: " << std::fixed << std::numeric_limits<double>::max() << std::endl << std::endl;
+}
