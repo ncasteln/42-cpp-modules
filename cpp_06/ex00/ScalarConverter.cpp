@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/05 10:12:43 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/05 16:37:58 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ ScalarConverter& ScalarConverter::operator=( ScalarConverter& rhs) {
 void ScalarConverter::convert( std::string s ) {
 	int type = ScalarConverter::getType(s);
 	if (!type) {
-		// catch error ? define unknow?
 		std::cerr << "Error: unknown type" << std::endl;
 		return ;
 	}
@@ -47,7 +46,6 @@ void ScalarConverter::convert( std::string s ) {
 	else if (type == STRING)
 		ScalarConverter::handleString(s);
 }
-
 
 /*
 	To make the function cleaner we could use displayChar() and use atoi
@@ -76,6 +74,10 @@ void ScalarConverter::handleInt( std::string s ) {
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;
 }
 
+/*
+	Why verify if is it long? Because although the overflow of int is already
+	verified, we can still cast the value as float or double.
+*/
 void ScalarConverter::handleLong( std::string s ) {
 	std::cout << "[ " << "LONG" << " ]" << std::endl ;
 	double d = std::atof(s.c_str());
@@ -90,9 +92,13 @@ void ScalarConverter::handleLong( std::string s ) {
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << d << std::endl;
 }
 
+/*
+	Similar to handleChar() and handleInt() functions, the float and double are
+	very similar to each other, but the subject explicits the exact steps that
+	should be performed, therefore the repetition is left as it is.
+*/
 void ScalarConverter::handleFloat( std::string s ) {
 	std::cout << "[ " << "FLOAT" << " ]" << std::endl ;
-
 	float f = static_cast<float>(std::atof(s.c_str()));
 	double d;
 	if (std::isinf(f)) { // check if the result of conversion is infinite, in that case double is taken with atof
@@ -117,13 +123,6 @@ void ScalarConverter::handleFloat( std::string s ) {
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << d << std::endl;
 }
 
-// see FLOAT to understand the logic
-// important to remember, in case of double or float overflows, inf is printed!
-// !!!!!
-// important: DOUBLE and FLOAT functions are very similar. Is it maybe possible to
-// 			  simplify and make a unique function for both? Is it going against to
-//			  the rules of the subject???
-// !!!!!
 void ScalarConverter::handleDouble( std::string s ) {
 	std::cout << "[ " << "DOUBLE" << " ]" << std::endl ;
 
@@ -229,6 +228,8 @@ int ScalarConverter::isDouble( std::string s ) {
 /*
 	isLong has been created to catch int overflow. double is used to verify the
 	overflow.
+	IMPORTANT!!! use double or long to catch it ?
+				here I am using double
 */
 int ScalarConverter::isLong( std::string s ) {
 	double d = std::atof(s.c_str());
@@ -237,12 +238,20 @@ int ScalarConverter::isLong( std::string s ) {
 	return (0);
 }
 
+/*
+	isInt() is not necessary but was nice to have it to work with function
+	pointers in getType() function.
+*/
 int ScalarConverter::isInt( std::string s ) {
 	(void)s;
 	return (INT);
 }
 
 // -------------------------------------------------------------------- DISPLAY
+/*
+	The function is created to avoid repetition between codes, since it is a
+	common repeated pattern.
+*/
 void ScalarConverter::displayChar( int i ) {
 	char c = 0;
 	if (i >= 0 && i <= 127) {
@@ -267,6 +276,10 @@ void ScalarConverter::displaySpecial( std::string s ) {
 	std::cout << "double : " << s << std::endl;
 }
 
+/*
+	Not required by the subject, it is still useful to check the range limits
+	of the required types.
+*/
 void ScalarConverter::displayLimits( void ) {
 	std::cout << "CHAR (8 bits) min: " << 0 << std::endl;
 	std::cout << "CHAR (8 bits) max: " << 127 << std::endl << std::endl;

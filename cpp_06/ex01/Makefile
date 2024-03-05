@@ -6,11 +6,11 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/05 10:31:49 by nico             ###   ########.fr        #
+#    Updated: 2024/03/05 14:14:27 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	convert
+NAME		=	a.out
 
 # @-Wconversion - prevent implicit cast when accuracy is lost
 CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror

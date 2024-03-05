@@ -6,21 +6,11 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/05 09:17:36 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/05 16:38:20 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
-
-
-/*
-	TO HANDLE:
-	- Empty string
-	- Modify stucture to take char and int together (cleaner)
-	- handle specials
-	- handle limits
-	- unisgned char instead of char --?
-*/
 
 /*
 	.f				OK
@@ -50,13 +40,29 @@
 	"1234k"			OK
 	"fake.42f"		OK
 */
+/*
 
+	RESUME
+	As subj says, the class doesn't store anything, it has only static member
+	functions and is not instantiable. The goal is create a class which can
+	take a string, understand its type and convert/display to char, int, float
+	and double. Therefore it performs the followings:
+	1) Check the actual type
+	2) Convert to the actual type
+	3) Cast to the other types and display
+*/
+
+/*
+	TO HANDLE:
+	- Empty string
+	- Modify stucture of floats/double and int/char(cleaner)
+	- Complete constructors
+*/
 int main ( int argc, char** argv ) {
 	if (argc != 2) {
 		std::cerr << "Error: invalid argc" << std::endl;
 		return (1);
 	}
-	ScalarConverter::displayLimits();
 	ScalarConverter::convert(argv[1]);
 	return (0);
 }

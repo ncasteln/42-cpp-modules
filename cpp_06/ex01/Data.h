@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:34:40 by nico              #+#    #+#             */
-/*   Updated: 2024/03/05 10:53:38 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/05 14:54:10 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define _DATA_H_
 
 typedef struct Data {
-	char* name;
-	int age;
+	int i;
+	float f;
+	double d;
 } Data;
 
 #endif
