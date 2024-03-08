@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/05 16:38:20 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/08 18:24:17 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@
 
 /*
 	TO HANDLE:
-	- Empty string
-	- Modify stucture of floats/double and int/char(cleaner)
 	- Complete constructors
 */
 int main ( int argc, char** argv ) {

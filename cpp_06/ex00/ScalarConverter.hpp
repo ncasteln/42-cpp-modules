@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/05 10:06:44 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/08 18:24:36 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ class ScalarConverter
 		ScalarConverter( void );
 		~ScalarConverter( void );
 		ScalarConverter( const ScalarConverter& );
-		ScalarConverter& operator=( ScalarConverter& );
+		void operator=( ScalarConverter& );
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/05 16:37:58 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/08 18:25:48 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ ScalarConverter::ScalarConverter( void ) {}
 
 ScalarConverter::~ScalarConverter( void ) {}
 
-ScalarConverter::ScalarConverter( const ScalarConverter& ) {
-	// implement
-}
+ScalarConverter::ScalarConverter( const ScalarConverter& obj ) { (void)obj; }
 
-ScalarConverter& ScalarConverter::operator=( ScalarConverter& rhs) {
-	// implement
-}
+void ScalarConverter::operator=( ScalarConverter& rhs) { (void)rhs; };
 
 // ----------------------------------------------------------------- CONVERSION
 void ScalarConverter::convert( std::string s ) {
+	if (s.empty()) {
+		displaySpecial("impossible");
+		return ;
+	}
 	int type = ScalarConverter::getType(s);
 	if (!type) {
 		std::cerr << "Error: unknown type" << std::endl;

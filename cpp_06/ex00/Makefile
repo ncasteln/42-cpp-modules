@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
+#    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/02/28 10:45:01 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/03/08 18:25:51 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	convert
 
 # @-Wconversion - prevent implicit cast when accuracy is lost
-CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror
+CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Werror
 
 SRC			=	main.cpp \
 				ScalarConverter.cpp
