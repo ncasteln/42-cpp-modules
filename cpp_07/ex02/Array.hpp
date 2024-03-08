@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 08:51:08 by nico              #+#    #+#             */
-/*   Updated: 2024/03/08 15:29:27 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/08 18:20:50 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define __ARRAY_HPP__
 
 #include <exception>
-#include <iostream>
 
 template <typename T>
 class Array {
@@ -55,10 +54,12 @@ class Array {
 				throw OutOfRange();
 			return (_array[n]);
 		};
-		/*	Necessary when the instance is const
-			1st const is necessary to make the instance not-mutable, together
-			with the 2nd const. Without it would be possible to modify the
-			elements.
+		/*	Necessary when the instance is const.
+			[1st const] Returning a const ref, means that then is not possible
+			to modify (it won't compile).
+			[2nd const] The member is a "const function", means it doesn't
+			modify the instance (imagine like writing the following:
+			void Animal::func( const Animal* this, int n ) const {...}; ).
 		*/
 		const T& operator[]( size_t n ) const {
 			if (n >= _size)

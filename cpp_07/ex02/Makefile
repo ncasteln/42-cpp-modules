@@ -6,13 +6,13 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/08 09:36:30 by nico             ###   ########.fr        #
+#    Updated: 2024/03/08 18:21:19 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
 
-CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror
+CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Werror
 
 SRC			=	main.cpp
 HEADERS		=	Array.hpp
