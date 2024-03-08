@@ -1,18 +1,58 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 09:35:59 by nico              #+#    #+#             */
-/*   Updated: 2024/03/08 13:51:23 by nico             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "Array.hpp"
 #include <iostream>
-#include <string>
+#include <Array.hpp>
+// #include <cstdlib>
+// #include <ctime>
+
+// #define MAX_VAL 750
+// int main(int, char**)
+// {
+//     Array<int> numbers(MAX_VAL);
+//     int* mirror = new int[MAX_VAL];
+//     srand(static_cast<size_t>(time(NULL)));
+//     for (int i = 0; i < MAX_VAL; i++)
+//     {
+//         const int value = rand();
+//         numbers[i] = value;
+//         mirror[i] = value;
+//     }
+//     //SCOPE
+//     {
+//         Array<int> tmp = numbers;	// copy constructor
+//         Array<int> test(tmp);		// same
+//     }
+
+//     for (int i = 0; i < MAX_VAL; i++)
+//     {
+//         if (mirror[i] != numbers[i])
+//         {
+//             std::cerr << "didn't save the same value!!" << std::endl;
+//             return 1;
+//         }
+//     }
+//     try	// invalid access
+//     {
+//         numbers[-2] = 0;
+//     }
+//     catch(const std::exception& e)
+//     {
+//         std::cerr << e.what() << '\n';
+//     }
+//     try // invalid access
+//     {
+//         numbers[MAX_VAL] = 0;
+//     }
+//     catch(const std::exception& e)
+//     {
+//         std::cerr << e.what() << '\n';
+//     }
+
+//     for (int i = 0; i < MAX_VAL; i++)
+//     {
+//         numbers[i] = rand();
+//     }
+//     delete [] mirror;//
+//     return 0;
+// }
 
 int main ( void ) {
 	Array<char> empty;
@@ -48,9 +88,18 @@ int main ( void ) {
 
 	//////////////////////////// const instance ///////////////////////////////
 	const Array<double> immutable(10);
-	std::cout << "immutable[5] before: " << immutable[5] << std::endl;
-	// immutable[5] = 900.9; // uncomment doesn't compile
-	std::cout << "immutable[5] after : " << immutable[5] << std::endl;
+	try {
+		std::cout << "immutable[5] before: " << immutable[5] << std::endl;
+		// immutable[5] = 900.9; // uncomment doesn't compile
+		std::cout << "immutable[5] after : " << immutable[5] << std::endl;
+	} catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;
+	}
+	// same behavior as...
+	// const int arr[2] = { 5, 7 };
+	// arr[0] = 90;
+	// arr[1] = 90;
+	// which is not possible
 	std::cout << std::endl;
 
 	/////////////// copy constructor && assignment op//////////////////////////
@@ -83,7 +132,15 @@ int main ( void ) {
 
 	///////////////////////////// out of bounds ///////////////////////////////
 	std::cout  << "[ Out of range ]" << std::endl;
-	ft[100000] = 9999999;
-	// std::cout  << ft[100000] << std::endl;
+	try {
+		std::cout  << ft[100000] << std::endl;
+	} catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;
+	}
+	try {
+		ft[100000] = 9999999;
+	} catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;
+	}
 	return (0);
 }
