@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 08:51:08 by nico              #+#    #+#             */
-/*   Updated: 2024/03/08 18:20:50 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/08 19:17:46 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,13 @@ class Array {
 		class OutOfRange;
 };
 
-/* Example of syntax, in which the implementation is separated by the declaration. */
+/*
+	The function implementations are hybrid, here are just 2 of them, the other
+	are in the class body. It is just an experiment to verify the cleanest way.
+	Another way could be create a .tpp file which includes all the extensions.
+	#include "Array.tpp"
+*/
+
 template <typename T>
 size_t Array<T>::size ( void ) const {
 	return (_size);
@@ -88,4 +94,4 @@ class Array<T>::OutOfRange: public std::exception {
 		};
 };
 
-#endif
+#endif /* __ARRAY_HPP__ */

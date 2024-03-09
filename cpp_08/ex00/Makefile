@@ -6,18 +6,16 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/08 18:28:19 by nico             ###   ########.fr        #
+#    Updated: 2024/03/09 15:34:22 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	convert
+NAME		=	a.out
 
-# @-Wconversion - prevent implicit cast when accuracy is lost
-CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Werror
+CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror
 
-SRC			=	main.cpp \
-				ScalarConverter.cpp
-HEADERS		=	ScalarConverter.hpp
+SRC			=	main.cpp
+HEADERS		=	easyfind.hpp
 OBJS		=	$(SRC:.cpp=.o)
 
 all: $(NAME)

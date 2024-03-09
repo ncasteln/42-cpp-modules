@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 18:20:59 by nico              #+#    #+#             */
-/*   Updated: 2024/03/08 18:21:04 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/08 19:12:55 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,15 @@
 //     return 0;
 // }
 
+
 int main ( void ) {
+	//////////// not intantiable because no default type set //////////////////
+	// #include <typeinfo>
+	// Array<> default_type;
+	// std::cout << "Size of default_type[]: " << default_type.size() << std::endl;
+	// std::cout << typeid(default_type).name() << std::endl;
+	// std::cout << std::endl;
+
 	Array<char> empty;
 	std::cout << "Size of empty[]: " << empty.size() << std::endl;
 	std::cout << std::endl;
