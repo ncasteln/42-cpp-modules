@@ -6,49 +6,37 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:34:51 by nico              #+#    #+#             */
-/*   Updated: 2024/03/09 16:59:09 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/11 07:08:26 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __EASYFIND_HPP__
 # define __EASYFIND_HPP__
 
-#include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
+#include <iterator>		// std::distance
+#include <stack>
+
+/*
+	The type returned by the function is not specified by the subject. I could
+	choose between [long int] to evidence the position of the first occurrence,
+	or [typename T::iterator], and verify the result outside.
+*/
+template <typename T>
+long int easyfind( T& container, int n ) {
+	typename T::iterator it = std::find(container.begin(), container.end(), n);
+	if (std::distance(it, container.end()) == 0)
+		return (-1);
+	return (std::distance(container.begin(), it));
+}
 
 /*	Example of template function specialization syntax
 	template <typename T> void f( T a ) {};
 	template <> void f<int>( int a ) {};
 */
+template <>
+long int easyfind<std::stack<int> >( std::stack<int>& container, int n ) {
 
-/* deque - list - queue - stack - vector */
-
-template <typename Iter>
-void iter( Iter begin, Iter end ) {
-	while (begin != end)
-		begin++;
 }
-
-template <typename T>
-void easyfind( T& container, int n ) {
-	std::cout << "Generic" << std::endl;
-
-	// T::iterator it =
-	std::find(container.begin(), container.end(), n) == container.end();
-	// if (*p == container.end())
-	// 	std::cout << "NEIN" << std::endl;
-	// else
-	// 	std::cout << "JA" << std::endl;
-}
-
-// template <> void easyfind< std::vector<int> >( std::vector<int> v, int n ) {
-// 	std::cout << "Vector" << std::endl;
-// }
-
-// template <> void easyfind< std::list<int> >( std::list<int> v, int n ) {
-// 	std::cout << "List" << std::endl;
-// }
 
 #endif
