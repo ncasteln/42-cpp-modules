@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 08:25:49 by nico              #+#    #+#             */
-/*   Updated: 2024/03/12 13:10:08 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/12 14:32:30 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,30 @@ template <typename T>
 class MutantStack: public std::stack<T> // automatic deque used
 {
 	public:
-		typedef typename std::stack<T>::container_type::iterator iterator; // access ::iterator scope inside the container_type
+		typedef typename std::stack<T>::container_type::iterator iterator;
+		// access ::iterator scope inside the container_type
 		// by looking inside this-> is visible the container c
 		// its member functions can be used inside the class here but are inaccessible outside
 		// the use of typedef is necessary because of the main() otherwise, the same result
-		// could be achieved by using std::stack<int>::container_type::iterator
-
+		// could be achieved by using std::stack<int>::container_type::iterator as return type
 		MutantStack( void ) {};
 		~MutantStack( void ) {};
-		iterator begin( void ) {
-			return (this->c.begin());
-		};
-		iterator end( void ) {
-			return (this->c.end());
-		};
+		MutantStack( const MutantStack& );
+		MutantStack& operator=( const MutantStack& );
+		iterator begin( void ) { return (this->c.begin()); };	// begin of the stack == bottom
+		iterator end( void ) { return (this->c.end()); };		// end of the stack == top
 };
 
-// ------------------------------------------------------------- ITERATOR SCOPE
-/*	FROM THE DOCUMENTATION ABOUT ITERATORS
-	class MyIterator : public std::iterator<std::input_iterator_tag, int> {
-		private:
-			int* p;
-		public:
-			MyIterator(int* x) :p(x) {}
-			MyIterator(const MyIterator& mit) : p(mit.p) {}
-			MyIterator& operator++() {++p;return *this;}
-			MyIterator operator++(int) {MyIterator tmp(*this); operator++(); return tmp;}
-			bool operator==(const MyIterator& rhs) const {return p==rhs.p;}
-			bool operator!=(const MyIterator& rhs) const {return p!=rhs.p;}
-			int& operator*() {return *p;}
-	};
-*/
+/* Copy constructor */
+template <typename T>
+MutantStack<T>::MutantStack( const MutantStack& obj ): std::stack<T>(obj) {};
+
+/* Assignment operator */
+template <typename T>
+MutantStack<T>& MutantStack<T>::operator=( const MutantStack& rhs ) {
+	this->c = rhs.c;
+	return (*this);
+};
 
 #endif
 
