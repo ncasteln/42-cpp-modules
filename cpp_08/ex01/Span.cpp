@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 07:19:55 by nico              #+#    #+#             */
-/*   Updated: 2024/03/11 17:34:04 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/12 08:23:34 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,10 @@ Span::Span( void ) {}
 
 Span::~Span( void ) {}
 
-Span::Span( const Span& obj ) {
-	// implement
-	//
-	//
-	//
-	//
-	//
-	//
-	(void)obj;
+Span::Span( const Span& obj ):
+	_N(obj._N),
+	_container(obj._container),
+	_it(this->_container.begin()) {
 }
 
 Span& Span::operator= ( const Span& rhs ) {
@@ -40,14 +35,10 @@ Span& Span::operator= ( const Span& rhs ) {
 	return (*this);
 }
 
-Span::Span( unsigned int N ): _N(N), _container( N ), _it(this->_container.begin()) {
-	// add rule for N = 0
-	//
-	//
-	//
-	//
-	//
-	//
+Span::Span( unsigned int N ):
+	_N(N),
+	_container(N),
+	_it(this->_container.begin()) {
 }
 
 // ----------------------------------------------------------- MEMBER FUNCTIONS
@@ -56,6 +47,9 @@ Span::Span( unsigned int N ): _N(N), _container( N ), _it(this->_container.begin
 	I have a BIG error during compiling, why? Because of [const] keyword.
 */
 long Span::shortestSpan( void ) const {
+	if (this->_N < 2)
+		throw SpanExcept();
+
 	std::vector<int> cpy(this->_container);
 
 	std::sort(cpy.begin(), cpy.end());
@@ -82,6 +76,8 @@ long Span::shortestSpan( void ) const {
 	int limits.
 */
 long Span::longestSpan( void ) const {
+	if (this->_N < 2)
+		throw SpanExcept();
 	std::vector<int>::const_iterator min = std::min_element(this->_container.begin(), this->_container.end());
 	std::vector<int>::const_iterator max = std::max_element(this->_container.begin(), this->_container.end());
 	long span = static_cast<long>(*max) - static_cast<long>(*min);
@@ -89,9 +85,14 @@ long Span::longestSpan( void ) const {
 }
 
 // ------------------------------------------------------- ADD NUMBER FUNCTIONS
+/*
+	To populate the vector I could use a simple [this->_container.push_back(n);]
+	but since I needed the position of the next-item-to-fill (to throw exceptions),
+	I directly use it here.
+*/
 void Span::addNumber( int n ) {
 	if (this->_it == this->_container.end())
-		throw SizeLimit();
+		throw SizeLimitExcept();
 	*(this->_it) = n;
 	this->_it++;
 }
@@ -99,15 +100,20 @@ void Span::addNumber( int n ) {
 /*
 	std::generate accept a range of iterators and a function which has the job
 	to generate an item, which will be stored in the appropriate slot.
+	It is not used the begin() iterator of the container, because it depends
+	the function fillContainer() could be called after a couple of call of
+	addNumber().
 */
 static int randomNumber( void ) {
 	if (std::rand() % 2)
 		return (std::rand() % std::numeric_limits<int>::max() * -1);
 	return (std::rand() % std::numeric_limits<int>::max());
 }
-void Span::populateContainer( void ) {
+void Span::fillContainer( void ) {
+	if (this->_it == this->_container.end())
+		throw SizeLimitExcept();
 	std::srand(static_cast<unsigned int>(std::time(NULL)));
-	std::generate(this->_container.begin(), this->_container.end(), randomNumber);
+	std::generate(this->_it, this->_container.end(), randomNumber);
 }
 
 // ---------------------------------------------------------- DISPLAY FUNCTIONS
@@ -120,6 +126,10 @@ void Span::displayContainer( void ) const {
 }
 
 // --------------------------------------------------------------------- EXCEPT
-const char* Span::SizeLimit::what() const throw() {
-	return ("Error: size limit reached");
+const char* Span::SizeLimitExcept::what() const throw() {
+	return ("Error: maximum size reached");
+}
+
+const char* Span::SpanExcept::what() const throw() {
+	return ("Error: impossible to calculate span");
 }
