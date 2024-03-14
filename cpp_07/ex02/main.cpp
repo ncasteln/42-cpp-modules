@@ -6,12 +6,14 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 18:20:59 by nico              #+#    #+#             */
-/*   Updated: 2024/03/08 19:12:55 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/14 17:58:42 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <Array.hpp>
+
+/* Subject main() */
 // #include <cstdlib>
 // #include <ctime>
 
@@ -115,11 +117,6 @@ int main ( void ) {
 	} catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
 	}
-	// same behavior as...
-	// const int arr[2] = { 5, 7 };
-	// arr[0] = 90;
-	// arr[1] = 90;
-	// which is not possible
 	std::cout << std::endl;
 
 	/////////////// copy constructor && assignment op//////////////////////////
