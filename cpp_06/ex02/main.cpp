@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/05 16:25:08 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/14 13:52:43 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include "B.hpp"
 #include "C.hpp"
 
-#include <cstdlib>
-#include <ctime>
+#include <cstdlib>	//std::rand/srand()
+#include <ctime>	//std::time()
 #include <iostream>
 
 /*	SUBJECT
@@ -31,7 +31,7 @@ static Base* generate(void) {
 		return (new A);
 	if (r == 1)
 		return (new B);
-	if (r == 2)
+	else
 		return (new C);
 }
 
@@ -42,9 +42,9 @@ static void identify(Base* p) {
 	std::cout << "[ Identify using Base pointer ]" << std::endl;
 	if (dynamic_cast<A*>(p))
 		std::cout << "[ A ]" << std::endl;
-	if (dynamic_cast<B*>(p))
+	else if (dynamic_cast<B*>(p))
 		std::cout << "[ B ]" << std::endl;
-	if (dynamic_cast<C*>(p))
+	else if (dynamic_cast<C*>(p))
 		std::cout << "[ C ]" << std::endl;
 }
 
@@ -85,16 +85,19 @@ static void identify(Base& p) {
 
 	While with identify(Base*) is possible to verify if NULL is returned from
 	dynamic_cast, using identify(Base&) we have to catch the exception thrown in
-	case of failure.
+	case of failure, which is std::bad_cast.
 
-	The pourpose of the exercise is to understand dynamic_cast, which is performed
-	runtime. The compiler is not instructed before about the casting. For other
-	info check Base.hpp file.
+	The subject specifies that we have not to use OCC for ALL those classes.
+
+	QUESTIONS:
+	- virtual for destructor, why exactly is needed? Not properly clear
 */
 int main ( void ) {
 	Base*	p = generate();
 	identify(p);
+
 	std::cout << std::endl;
+
 	identify(*p);
 	return (0);
 }

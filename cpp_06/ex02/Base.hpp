@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:00:15 by nico              #+#    #+#             */
-/*   Updated: 2024/03/05 15:55:17 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/14 13:51:39 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 # define __BASE_HPP__
 
 /*
+	The pourpose of the exercise is to understand dynamic_cast, which is performed
+	runtime. The compiler is not instructed before about the casting.
+
 	In order to be a polymorphic type, your class must have at least one virtual
 	function. If your classes are not polymorphic types, the base-to-derived use
 	of dynamic_cast will not compile.
 	In other words: virtual destructor is needed to perform dynamic_cast<>
 
-	Exmaple.
-	dynamic_cast<Base*>(derObj) --------> derived to base
-	dynamic_cast<Derived*>(baseObj) ----> base to derived
+	-	dynamic_cast<Base*>(derObj) --------> derived to base
+	-	dynamic_cast<Derived*>(baseObj) ----> base to derived
 */
 class Base
 {

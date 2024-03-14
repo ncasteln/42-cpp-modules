@@ -13,8 +13,8 @@
 #ifndef __SERIALIZER_HPP__
 # define __SERIALIZER_HPP__
 
-#include "Data.h"
-#include <stdint.h>
+#include "Data.hpp"
+#include <stdint.h>	// uintptr_t
 
 /*
 	[uintptr_t] an unsigned integer type with the property that any valid
@@ -24,7 +24,7 @@
 
 	[serialization] is the process of converting an object or data structure into
 	a format that can be easily stored or transmitted and later reconstructed.
-	The reverse process, which involves reconstructing the object is called
+	The reverse process, which involves reconstructing the object, is called
 	deserialization.
 
 	[reinterpret_cast] to perform type conversions on unrelated types.You should

@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.hpp                                        :+:      :+:    :+:   */
+/*   Data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 09:12:11 by nico              #+#    #+#             */
-/*   Updated: 2024/03/14 14:10:02 by nico             ###   ########.fr       */
+/*   Created: 2024/03/05 10:34:40 by nico              #+#    #+#             */
+/*   Updated: 2024/03/14 13:34:50 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __DISPLAY_HPP__
-# define __DISPLAY_HPP__
+#ifndef __DATA_HPP__
+# define __DATA_HPP__
 
-#include <iostream>
+#include <string>
 
-/*
-	A function template called by iter was not required but in some way
-	suggested. IMPORTANT: when called by ::iter we need to specify the type
-	that ::display takes in order to work.
-*/
-template <typename T> void display( T item ) {
-	std::cout << "[ " << item << " ] ";
-}
+typedef struct Data {
+	int i;
+	float f;
+	double d;
+	std::string s;
+}	Data;
 
-#endif
+#endif /* __DATA_HPP__ */

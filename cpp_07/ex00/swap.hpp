@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/08 08:35:56 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/14 14:01:21 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 /*
 	Since the templates are compiled only by request, the declaration and
-	definition have to be in the same file.
+	definition have to be in the same file (or use something like .tpp file).
+
 	template <typename T> and template <class T> have exactly the same effect,
 	they are just different keywords.
 */

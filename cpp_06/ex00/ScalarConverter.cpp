@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/08 18:25:48 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/14 13:23:30 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ void ScalarConverter::convert( std::string s ) {
 		return ;
 	}
 	int type = ScalarConverter::getType(s);
-	if (!type) {
-		std::cerr << "Error: unknown type" << std::endl;
-		return ;
-	}
-	std::cout << "[ Conversion of " << s << " ]" << std::endl;
+	std::cout << "[ Conversion of \"" << s << "\" ]" << std::endl;
 	if (type == CHAR)
 		ScalarConverter::handleChar(s);
 	else if (type == INT)
@@ -45,6 +41,8 @@ void ScalarConverter::convert( std::string s ) {
 		ScalarConverter::handleDouble(s);
 	else if (type == STRING)
 		ScalarConverter::handleString(s);
+	else
+		throw std::invalid_argument("unknown type");
 }
 
 /*
@@ -69,6 +67,9 @@ void ScalarConverter::handleInt( std::string s ) {
 	std::cout << "[ " << "INT" << " ]" << std::endl ;
 	int i = std::atoi(s.c_str());
 	ScalarConverter::displayChar(i);
+
+//?????	std::cout << std::fixed << std::setprecision(400) << static_cast<float>(i) << std::endl;
+
 	std::cout << "int     : " << i << std::endl;
 	std::cout << "float   : " << std::fixed << std::setprecision(1) << static_cast<float>(i) << "f" << std::endl;
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;

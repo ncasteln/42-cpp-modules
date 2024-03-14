@@ -6,7 +6,7 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/08 18:21:37 by nico             ###   ########.fr        #
+#    Updated: 2024/03/14 14:12:13 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,14 @@ CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Werror
 
 SRC			=	main.cpp
 HEADERS		=	iter.hpp \
-				display.hpp
+				display.hpp \
+				addOne.hpp
 OBJS		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADERS)
-	c++ $(CXXFLAGS) $(OBJS) -o $(NAME) -I./
+	c++ $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp $(HEADERS)
 	c++ $(CXXFLAGS) -c $< -o $@ -I./

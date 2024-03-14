@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Data.h                                             :+:      :+:    :+:   */
+/*   addOne.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 10:34:40 by nico              #+#    #+#             */
-/*   Updated: 2024/03/05 14:54:10 by nico             ###   ########.fr       */
+/*   Created: 2024/03/08 09:12:11 by nico              #+#    #+#             */
+/*   Updated: 2024/03/14 14:14:52 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _DATA_H_
-# define _DATA_H_
+#ifndef __ADDONE_HPP__
+# define __ADDONE_HPP__
 
-typedef struct Data {
-	int i;
-	float f;
-	double d;
-} Data;
+template <typename T> void addOne( T& item ) {
+	item += 1;
+}
 
 #endif
