@@ -6,13 +6,13 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/10 14:50:54 by nico             ###   ########.fr        #
+#    Updated: 2024/03/15 11:03:54 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
 
-CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror
+CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Werror
 
 SRC			=	main.cpp
 HEADERS		=	easyfind.hpp
@@ -21,7 +21,7 @@ OBJS		=	$(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADERS)
-	c++ $(CXXFLAGS) $(OBJS) -o $(NAME) -I./
+	c++ $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp $(HEADERS)
 	c++ $(CXXFLAGS) -c $< -o $@ -I./

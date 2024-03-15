@@ -6,13 +6,12 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:34:29 by nico              #+#    #+#             */
-/*   Updated: 2024/03/11 15:25:28 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/15 11:17:54 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "easyfind.hpp"
 
-#include <algorithm>	// std::for_each
 #include <iostream>
 
 #include <vector>
@@ -21,7 +20,6 @@
 
 #include <ctime>		// std::time()
 #include <cstdlib>		// std::srand/rand()
-
 
 // ------------------------------------------------------- VECTOR, LIST & DEQUE
 static void displayItems( int item ) {
@@ -51,3 +49,20 @@ int main ( void ) {
 	std::cout << "Item found @ index [ " << itemIndex << " ]" << std::endl;
 	return (0);
 }
+
+
+
+/* Length of container == 0 */
+// int main ( void ) {
+// 	int N = 0;
+// 	std::vector<int> container(N);	// change container to list or deque, nothing changes
+// 	int toFind = 10;
+// 	std::cout << "[ Searching first occurrence of " << toFind <<  " ]" << std::endl;
+// 	long int itemIndex = easyfind(container, toFind);
+// 	if (itemIndex == -1) {
+// 		std::cerr << "Item not found" << std::endl;
+// 		return (1);
+// 	}
+// 	std::cout << "Item found @ index [ " << itemIndex << " ]" << std::endl;
+// 	return (0);
+// }
