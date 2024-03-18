@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:16:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/18 07:54:43 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/18 09:12:28 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,25 @@ int main( int argc, char** argv ) {
 		return (1);
 	while (getline(infile, line) && infile.good()) { // infile.good() check if no errors occure
 		try {
-			std::cout << "Parsing: " << line << std::endl;
-
+			std::cout << "Parsing ---> " << line << std::endl;
+			BitcoinExchange current(line);
+			std::cout << "[ SUCCESS ]" << std::endl << std::endl;
 		} catch (std::exception& e) {
-			std::cerr << e.what() << std::endl;
+			std::cerr << "Error: " << e.what() << std::endl << std::endl;
 		}
 	}
 	db.close();
 	infile.close();
 	return (0);
 }
+
+/* TO CHECK AND TO DO
+	- empty line cases
+
+*/
+
+/* AFTER PARSING */
+// once is correct format the db is read
+// either like current.findIn(db) OR current.match(db_line)
+// each line of db is transformed using more or less the same constructor
+// probably with the small change of the separator "," instead of "|"

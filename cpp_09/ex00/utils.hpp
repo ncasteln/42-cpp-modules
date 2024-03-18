@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Date.h                                             :+:      :+:    :+:   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 17:06:11 by nico              #+#    #+#             */
-/*   Updated: 2024/03/18 07:54:34 by nico             ###   ########.fr       */
+/*   Created: 2024/03/18 08:34:01 by nico              #+#    #+#             */
+/*   Updated: 2024/03/18 08:57:51 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __DATE_H__
-# define __DATE_H__
+#ifndef __UTILS_HPP__
+# define __UTILS_HPP__
 
-typedef struct Date {
-	int year;
-	int month;
-	int day;
-}	Date;
+#include <string>
+#include <map>
 
-#endif /* __DATE_H__ */
+std::string& trim( std::string& s, const char* to_trim );
+
+#endif

@@ -6,7 +6,7 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/15 11:19:04 by nico             ###   ########.fr        #
+#    Updated: 2024/03/18 08:33:45 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,11 @@ NAME		=	btc
 
 CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror
 
-SRC			=	main.cpp
-HEADERS		=	BitcoinExchange.hpp
+SRC			=	main.cpp \
+				BitcoinExchange.cpp \
+				utils.cpp
+HEADERS		=	BitcoinExchange.hpp \
+				utils.hpp
 OBJS		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
