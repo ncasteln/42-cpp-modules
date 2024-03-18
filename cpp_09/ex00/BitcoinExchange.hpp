@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:17:21 by nico              #+#    #+#             */
-/*   Updated: 2024/03/18 12:58:16 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/18 15:20:59 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <iostream>
 #include <limits>
 #include <fstream>
+#include <iomanip>
 
 #include <cstdlib>
 #include <ctime>
@@ -30,16 +31,17 @@
 enum e_type {
 	INPUT,
 	DATABASE,
-	UNKNOW
+	UNKNOWN
 };
 
 class BitcoinExchange
 {
 	private:
 		std::map<std::string, int> _date;
-		double _value;
+		float _value;
 		const e_type _type;
 
+		// OCC
 		BitcoinExchange( void ); // made private because i never want to init a default one
 	public:
 		// OCC
@@ -52,11 +54,12 @@ class BitcoinExchange
 
 		// GETTERS
 		std::map<std::string, int> getDate( void );
-		double getValue( void );
+		float getValue( void );
 
 		// MEMBER FUNCTIONS
 		void mapDate( std::string to_split );	//make private?
 		bool isValidDate( void );				//make private?
+		bool isValidValue( std::string );
 		void matchDate( std::ifstream& db );
 
 		// EXCEPTIONS

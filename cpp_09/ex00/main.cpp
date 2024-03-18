@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:16:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/18 13:04:44 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/18 15:14:54 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int main( int argc, char** argv ) {
 
 			BitcoinExchange current(line, INPUT);
 			current.matchDate(db);
-			// current.matchDate("./data.csv");
 
 			std::cout << current << SEPARATOR << std::endl;
 		} catch (std::exception& e) {
@@ -83,6 +82,8 @@ int main( int argc, char** argv ) {
 /* TO CHECK AND TO DO
 	- empty line cases
 	- ctrl-c with getline()
+	- double or float ???
+	- print only one digit or what ??? related to quest before
 */
 
 /* AFTER PARSING */
