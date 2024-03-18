@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:16:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/18 09:12:28 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/18 13:04:44 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 
 #include "BitcoinExchange.hpp"
-#include <fstream>
+#include <fstream> // maybe remove
 #include <iostream>
 
 static int openFileStream(int argc, std::ifstream& db, char* ifname, std::ifstream& infile) {
@@ -39,7 +39,7 @@ static int openFileStream(int argc, std::ifstream& db, char* ifname, std::ifstre
 		std::cerr << "Error: invalid argc" << std::endl;
 		return (1);
 	}
-	db.open("./data.csv",std::ifstream::in);
+	db.open("./data.csv", std::ifstream::in);
 	if (!db) {	// ios::operator! same as db.fail()
 		std::cerr << "Error: fail opening database" << std::endl;
 		return (1);
@@ -61,12 +61,18 @@ int main( int argc, char** argv ) {
 	if (openFileStream(argc, db, argv[1], infile))
 		return (1);
 	while (getline(infile, line) && infile.good()) { // infile.good() check if no errors occure
+		if (line.empty())
+			continue ;
 		try {
-			std::cout << "Parsing ---> " << line << std::endl;
-			BitcoinExchange current(line);
-			std::cout << "[ SUCCESS ]" << std::endl << std::endl;
+			std::cout << "Parsing ---> [" << line << "]" << std::endl;
+
+			BitcoinExchange current(line, INPUT);
+			current.matchDate(db);
+			// current.matchDate("./data.csv");
+
+			std::cout << current << SEPARATOR << std::endl;
 		} catch (std::exception& e) {
-			std::cerr << "Error: " << e.what() << std::endl << std::endl;
+			std::cerr << "Error: " << e.what() << std::endl << SEPARATOR << std::endl;
 		}
 	}
 	db.close();
@@ -76,7 +82,7 @@ int main( int argc, char** argv ) {
 
 /* TO CHECK AND TO DO
 	- empty line cases
-
+	- ctrl-c with getline()
 */
 
 /* AFTER PARSING */
