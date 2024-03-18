@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:59:26 by nico              #+#    #+#             */
-/*   Updated: 2024/03/18 15:20:51 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/18 15:23:58 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,12 @@ bool BitcoinExchange::isValidValue( std::string value ) {
 		return (false);
 	if (value == ".")
 		return (false);
+
+	/*
+		THE VALUE MUST BE A FLOAT OR POSITIVE INTEGER
+		BETWEEN 0 AND 1000 !!!
+	*/
+
 	double d = std::atof(value.c_str());
 	if (d > std::numeric_limits<int>::max() || d < 0) // invalid if more than MAXINT and if negative
 		return (false);
