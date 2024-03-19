@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:17:21 by nico              #+#    #+#             */
-/*   Updated: 2024/03/19 11:37:19 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/19 14:38:51 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ class BitcoinExchange
 
 		// OVERLOAD OPERATORS
 		bool operator>( BitcoinExchange& );
+		bool operator<( BitcoinExchange& );
 		bool operator==( BitcoinExchange& );
 
 		// EXCEPTIONS
@@ -72,9 +73,7 @@ class BitcoinExchange
 		enum e_err_list {
 			E_NOSEP,
 			E_INVDATE,
-			E_INVVAL,
-			E_DBOPEN,
-			E_READ
+			E_INVVAL
 		};
 };
 

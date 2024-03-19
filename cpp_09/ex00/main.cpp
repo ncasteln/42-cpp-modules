@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:16:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/19 11:47:44 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/19 14:43:35 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,35 +44,36 @@ int main( int argc, char** argv ) {
 	while (getline(instream, in_line)) { //  && instream.good() check if no errors occure
 		try {
 			if (in_line.empty()) continue ;
-
 			std::cout << "Parsing ---> [" << in_line << "]" << std::endl;
 			BitcoinExchange input(in_line, INPUT);
 
 			dbstream.clear();				// clear error flags
 			dbstream.seekg(0);				// reset offset position to zero (instead of close/reopen)
 			BitcoinExchange prev(DATABASE);	// need to create to remember the lower and not the higher
-
 			while (getline(dbstream, db_line)) {
 				try {
 					BitcoinExchange db(db_line, DATABASE); // i never want that throw exceptions
-					if (input == db) {
-						input.displayResult(db.getValue());
-						std::cout << "STOP      @ " << std::endl << db << std::endl;
-						std::cout << "TO RETURN : " << std::endl << db << std::endl;
-						break ;
-					}
-					else if (input > db) {
+					if (input > db) {
 						// go on but save the previous
 						prev = db;
 					}
-					else {
+					else if (input < db) {
+						std::cout << "[ minor ]" << std::endl;
 						std::cout << "STOP      @ " << std::endl << db << std::endl;
 						std::cout << "TO RETURN : " << std::endl << prev << std::endl;
 						input.displayResult(prev.getValue());
 						break ;
 					}
+					else {
+						std::cout << "[ equal ]" << std::endl;
+						std::cout << "STOP      @ " << std::endl << db << std::endl;
+						std::cout << "TO RETURN : " << std::endl << db << std::endl;
+						input.displayResult(db.getValue());
+						break ;
+					}
 				} catch (std::exception& e) {
-
+					// if (std::ios_base::eofbit)
+					// 	input.displayResult(prev.getValue());
 				}
 			}
 		} catch (std::exception& e) {
@@ -91,11 +92,70 @@ int main( int argc, char** argv ) {
 	- double or float ???
 	- print only one digit or what ??? related to quest before
 	- PROBLEM with exception: what to do in case of open() or reading errors? I think I would to exit()
-		// if (instream.fail()) // correct practice ?
+		// if (instream.fail()) // correct practice ? put a try {} outside ????
 		// 	throw std::ios_base::failure("fail occured while reading instream");
 	- >= and <= ???
 	- check limits begin and end of database
 		// date bigger then the biggest
 		// date lower then the lowest
+
+*/
+
+
+
+/*
+int main( int argc, char** argv ) {
+	std::ifstream dbstream;
+	std::ifstream instream;
+	std::string in_line;
+	std::string db_line;
+
+	if (openFileStream(argc, dbstream, argv[1], instream))
+		return (1);
+	while (getline(instream, in_line)) { //  && instream.good() check if no errors occure
+		try {
+			if (in_line.empty()) continue ;
+			std::cout << "Parsing ---> [" << in_line << "]" << std::endl;
+			BitcoinExchange input(in_line, INPUT);
+
+			dbstream.clear();				// clear error flags
+			dbstream.seekg(0);				// reset offset position to zero (instead of close/reopen)
+			BitcoinExchange prev(DATABASE);	// need to create to remember the lower and not the higher
+			while (getline(dbstream, db_line)) {
+				try {
+					BitcoinExchange db(db_line, DATABASE); // i never want that throw exceptions
+					if (input == db) {
+						std::cout << "[ equal ]" << std::endl;
+						std::cout << "STOP      @ " << std::endl << db << std::endl;
+						std::cout << "TO RETURN : " << std::endl << db << std::endl;
+						input.displayResult(db.getValue());
+						break ;
+					}
+					else if (input > db) {
+						// go on but save the previous
+						prev = db;
+					}
+					else {
+						std::cout << "[ minor ]" << std::endl;
+						std::cout << "STOP      @ " << std::endl << db << std::endl;
+						std::cout << "TO RETURN : " << std::endl << prev << std::endl;
+						input.displayResult(prev.getValue());
+						break ;
+					}
+				} catch (std::exception& e) {
+					// if (std::ios_base::eofbit)
+					// 	input.displayResult(prev.getValue());
+				}
+			}
+		} catch (std::exception& e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+		}
+		std::cout << LINE << std::endl;
+	}
+	dbstream.close();
+	instream.close();
+	return (0);
+}
+
 
 */

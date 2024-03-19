@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:59:26 by nico              #+#    #+#             */
-/*   Updated: 2024/03/19 11:44:52 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/19 14:40:47 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ BitcoinExchange::BitcoinExchange( const BitcoinExchange& obj ):
 BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& rhs ) {
 	this->_value = rhs._value;
 	this->_date = std::map<std::string, int>(rhs._date);
+	return (*this);
 }
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
@@ -123,7 +124,7 @@ bool BitcoinExchange::isValidValue( std::string value ) {
 	if (value == ".")
 		return (false);
 	double d = std::atof(value.c_str());
-	if (d > 1000 || d < 0) // invalid if not between 0 and 1000
+	if (this->_type == INPUT && (d > 1000 || d < 0)) // invalid if not between 0 and 1000
 		return (false);
 	this->_value = static_cast<float>(d);
 	return (true);
@@ -142,6 +143,12 @@ bool BitcoinExchange::operator>( BitcoinExchange& rhs ) {
 	return (false);
 }
 
+bool BitcoinExchange::operator<( BitcoinExchange& rhs ) {
+	if (*this > rhs)
+		return (false);
+	return (true);
+}
+
 bool BitcoinExchange::operator==( BitcoinExchange& rhs ) {
 	if (this->getDate()["year"] != rhs.getDate()["year"]) return (false);
 	if (this->getDate()["month"] != rhs.getDate()["month"]) return (false);
@@ -156,8 +163,6 @@ const char* BitcoinExchange::InvalidFormat::what() const throw() {
 	if (this->_n == E_NOSEP) return ("no separator");
 	if (this->_n == E_INVDATE) return ("invalid date");
 	if (this->_n == E_INVVAL) return ("invalid value");
-	if (this->_n == E_DBOPEN) return ("fail opening database");
-	if (this->_n == E_READ) return ("fail reading database");
 	return ("unkonwn error");
 }
 
