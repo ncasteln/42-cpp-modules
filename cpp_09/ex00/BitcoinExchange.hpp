@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:17:21 by nico              #+#    #+#             */
-/*   Updated: 2024/03/19 10:29:11 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/19 11:37:19 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ enum e_type {
 class BitcoinExchange
 {
 	private:
-		std::map<std::string, int> _date;
-		float _value;
 		const e_type _type;
+		float _value;
+		std::map<std::string, int> _date;
 
 		// OCC
 		BitcoinExchange( void ); // made private because i never want to init a default one
@@ -50,6 +50,7 @@ class BitcoinExchange
 		BitcoinExchange& operator=( const BitcoinExchange& );	// private ?
 
 		// PARAM CONSTRUCTOR
+		BitcoinExchange( e_type );
 		BitcoinExchange( std::string, e_type );
 
 		// GETTERS
@@ -60,15 +61,16 @@ class BitcoinExchange
 		void mapDate( std::string to_split );	//make private?
 		bool isValidDate( void );				//make private?
 		bool isValidValue( std::string );
+		void displayResult( const float exchange_rate );
 
 		// OVERLOAD OPERATORS
-		bool operator>( const BitcoinExchange& );
-		bool operator<( const BitcoinExchange& );
+		bool operator>( BitcoinExchange& );
+		bool operator==( BitcoinExchange& );
 
 		// EXCEPTIONS
 		class InvalidFormat;
 		enum e_err_list {
-			E_NOPIPE,
+			E_NOSEP,
 			E_INVDATE,
 			E_INVVAL,
 			E_DBOPEN,

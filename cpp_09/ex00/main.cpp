@@ -6,29 +6,9 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:16:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/19 10:32:53 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/19 11:47:44 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*	RULES
-	- The program uses a dbstream which holds the value of the bitcoins over time
-	- Takes a file as argument with a specific format
-	- It calculates the value for each line
-*/
-
-// parse database
-	// open
-// parse instream
-	// open
-	// while()
-		// read line
-		// separate by pipe and store in <map>
-		// check date format (OR excep)
-		// check value format (OR excep)
-		// find the correct pair in dbstream
-		// output
-// close files
-
 
 #include "BitcoinExchange.hpp"
 #include <fstream> // maybe remove
@@ -66,19 +46,39 @@ int main( int argc, char** argv ) {
 			if (in_line.empty()) continue ;
 
 			std::cout << "Parsing ---> [" << in_line << "]" << std::endl;
-			BitcoinExchange current(in_line, INPUT);
-			std::cout << current << LINE << std::endl;
+			BitcoinExchange input(in_line, INPUT);
 
-			dbstream.clear();	// clear error flags
-			dbstream.seekg(0);	// reset offset position to zero (instead of close/reopen)
+			dbstream.clear();				// clear error flags
+			dbstream.seekg(0);				// reset offset position to zero (instead of close/reopen)
+			BitcoinExchange prev(DATABASE);	// need to create to remember the lower and not the higher
+
 			while (getline(dbstream, db_line)) {
-				std::cout << "Database ---> [" << db_line << "]" << std::endl;
-				BitcoinExchange match(db_line, DATABASE);
-				// overload an operator>
+				try {
+					BitcoinExchange db(db_line, DATABASE); // i never want that throw exceptions
+					if (input == db) {
+						input.displayResult(db.getValue());
+						std::cout << "STOP      @ " << std::endl << db << std::endl;
+						std::cout << "TO RETURN : " << std::endl << db << std::endl;
+						break ;
+					}
+					else if (input > db) {
+						// go on but save the previous
+						prev = db;
+					}
+					else {
+						std::cout << "STOP      @ " << std::endl << db << std::endl;
+						std::cout << "TO RETURN : " << std::endl << prev << std::endl;
+						input.displayResult(prev.getValue());
+						break ;
+					}
+				} catch (std::exception& e) {
+
+				}
 			}
 		} catch (std::exception& e) {
-			std::cerr << "Error: " << e.what() << std::endl << LINE << std::endl;
+			std::cerr << "Error: " << e.what() << std::endl;
 		}
+		std::cout << LINE << std::endl;
 	}
 	dbstream.close();
 	instream.close();
@@ -94,11 +94,8 @@ int main( int argc, char** argv ) {
 		// if (instream.fail()) // correct practice ?
 		// 	throw std::ios_base::failure("fail occured while reading instream");
 	- >= and <= ???
+	- check limits begin and end of database
+		// date bigger then the biggest
+		// date lower then the lowest
 
 */
-
-/* AFTER PARSING */
-// once is correct format the dbstream is read
-// either like current.findIn(dbstream) OR current.match(dbstream_line)
-// each line of dbstream is transformed using more or less the same constructor
-// probably with the small change of the separator "," instead of "|"

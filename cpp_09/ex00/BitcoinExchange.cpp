@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:59:26 by nico              #+#    #+#             */
-/*   Updated: 2024/03/19 10:33:31 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/19 11:44:52 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@ BitcoinExchange::BitcoinExchange( void ): _type(UNKNOWN) {}
 
 BitcoinExchange::~BitcoinExchange( void ) {}
 
-BitcoinExchange::BitcoinExchange( const BitcoinExchange& obj ): _type(UNKNOWN) { // check unknow and take decision
-	// implement
+BitcoinExchange::BitcoinExchange( const BitcoinExchange& obj ):
+	_type(obj._type),
+	_value(obj._value),
+	_date(std::map<std::string, int>(obj._date)) {
 }
 
 BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& rhs ) {
-	// implement
+	this->_value = rhs._value;
+	this->_date = std::map<std::string, int>(rhs._date);
 }
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
+BitcoinExchange::BitcoinExchange( e_type sep ): _type(sep) {}
+
 /*
 	An instance of BitcoinExchange is an object which holds the date, mapped
 	into y-m-d, a value, and the type of line, either database or input, which
@@ -33,7 +38,7 @@ BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& rhs ) {
 */
 BitcoinExchange::BitcoinExchange( std::string line, e_type sep ): _type(sep) {
 	if (line.find(sep) == std::string::npos)
-		throw InvalidFormat(E_NOPIPE);
+		throw InvalidFormat(E_NOSEP);
 
 	/* date is extracted and trimmed */
 	std::string date = line.substr(0, line.find(sep));
@@ -125,23 +130,30 @@ bool BitcoinExchange::isValidValue( std::string value ) {
 }
 
 // ----------------------------------------------------- OPERATORS OVERALOADING
-/*	EXAMPLES (is bigger when is in the future)
-	(this)   > (rhs)
+/*	TRUE EXAMPLES (is bigger when is in the future)
+	(db)     > (in)
 	2001-1-1 > 2000-1-1 [true]
+	2001-1-15 > 2001-1-1 [true]
 */
-bool BitcoinExchange::operator>( const BitcoinExchange& rhs ) {
-	// if (this->getDate()["year"] > rhs.getDate["year"])
+bool BitcoinExchange::operator>( BitcoinExchange& rhs ) {
+	if (this->getDate()["year"] > rhs.getDate()["year"]) return (true);
+	if (this->getDate()["month"] > rhs.getDate()["month"]) return (true);
+	if (this->getDate()["day"] > rhs.getDate()["day"]) return (true);
+	return (false);
 }
 
-bool BitcoinExchange::operator<( const BitcoinExchange& rhs ) {
-
+bool BitcoinExchange::operator==( BitcoinExchange& rhs ) {
+	if (this->getDate()["year"] != rhs.getDate()["year"]) return (false);
+	if (this->getDate()["month"] != rhs.getDate()["month"]) return (false);
+	if (this->getDate()["day"] != rhs.getDate()["day"]) return (false);
+	return (true);
 }
 
 // ----------------------------------------------------------------- EXCEPTIONS
 BitcoinExchange::InvalidFormat::InvalidFormat( enum e_err_list n ): _n(n) {};
 
 const char* BitcoinExchange::InvalidFormat::what() const throw() {
-	if (this->_n == E_NOPIPE) return ("no pipe separator");
+	if (this->_n == E_NOSEP) return ("no separator");
 	if (this->_n == E_INVDATE) return ("invalid date");
 	if (this->_n == E_INVVAL) return ("invalid value");
 	if (this->_n == E_DBOPEN) return ("fail opening database");
@@ -150,12 +162,20 @@ const char* BitcoinExchange::InvalidFormat::what() const throw() {
 }
 
 // -------------------------------------------------------------------- DISPLAY
+void BitcoinExchange::displayResult( const float exchange_rate ) {
+	std::cout
+		<< this->getDate()["year"] << "-"
+		<< this->getDate()["month"] << "-"
+		<< this->getDate()["day"] << " => "
+		<< this->getValue() * exchange_rate << std::endl;
+}
+
 std::ostream& operator<<( std::ostream& cout, BitcoinExchange& obj ) {
 	cout
 		<< "Year  : " << obj.getDate()["year"] << std::endl
 		<< "Month : " << obj.getDate()["month"] << std::endl
 		<< "Day   : " << obj.getDate()["day"] << std::endl
-		<< "Value : " << std::fixed << std::setprecision(1) << obj.getValue() << std::endl;
+		<< "Value : " << std::fixed << std::setprecision(2) << obj.getValue() << std::endl;
 	return (cout);
 
 }
