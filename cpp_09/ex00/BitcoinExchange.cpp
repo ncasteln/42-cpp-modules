@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:59:26 by nico              #+#    #+#             */
-/*   Updated: 2024/03/18 15:23:58 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/19 10:33:31 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& rhs ) {
 	into y-m-d, a value, and the type of line, either database or input, which
 	is const and cannot be changed.
 */
-BitcoinExchange::BitcoinExchange( std::string line, e_type type ): _type(type) {
-	if (line.find('|') == std::string::npos)
+BitcoinExchange::BitcoinExchange( std::string line, e_type sep ): _type(sep) {
+	if (line.find(sep) == std::string::npos)
 		throw InvalidFormat(E_NOPIPE);
 
 	/* date is extracted and trimmed */
-	std::string date = line.substr(0, line.find('|'));
+	std::string date = line.substr(0, line.find(sep));
 	trim(date, " \t");
 
 	/* if some of the char are not part of the string 0987654321- throw except */
@@ -51,7 +51,7 @@ BitcoinExchange::BitcoinExchange( std::string line, e_type type ): _type(type) {
 	/////////////////////////////////////////////////////////////////////////////
 
 	/* value is extracted and trimmed */
-	std::string value = line.substr(line.find('|') + 1, line.length() - 1);
+	std::string value = line.substr(line.find(sep) + 1, line.length() - 1);
 	trim(value, " \t");
 	if (!this->isValidValue(value))
 		throw InvalidFormat(E_INVVAL);
@@ -112,30 +112,29 @@ bool BitcoinExchange::isValidDate( void ) {
 bool BitcoinExchange::isValidValue( std::string value ) {
 	if (value.empty()) // right side of pipe is not accepted if empty()
 		return (false);
+	// tricky the following: means, if the char which are not those, HAVE A position in the string...
 	if (value.find_first_not_of(".0987654321") != std::string::npos) // if some of the char are not part of the string 0987654321- throw except
 		return (false);
 	if (value == ".")
 		return (false);
-
-	/*
-		THE VALUE MUST BE A FLOAT OR POSITIVE INTEGER
-		BETWEEN 0 AND 1000 !!!
-	*/
-
 	double d = std::atof(value.c_str());
-	if (d > std::numeric_limits<int>::max() || d < 0) // invalid if more than MAXINT and if negative
+	if (d > 1000 || d < 0) // invalid if not between 0 and 1000
 		return (false);
 	this->_value = static_cast<float>(d);
 	return (true);
 }
 
-void BitcoinExchange::matchDate( std::ifstream& db ) {
-	db.clear();		// clear all error flags including .eof
-	db.seekg(0);	// return to the beginning
-	std::string db_line;
-	while (getline(db, db_line) && db.good()) {
-		// check every line of the DB
-	}
+// ----------------------------------------------------- OPERATORS OVERALOADING
+/*	EXAMPLES (is bigger when is in the future)
+	(this)   > (rhs)
+	2001-1-1 > 2000-1-1 [true]
+*/
+bool BitcoinExchange::operator>( const BitcoinExchange& rhs ) {
+	// if (this->getDate()["year"] > rhs.getDate["year"])
+}
+
+bool BitcoinExchange::operator<( const BitcoinExchange& rhs ) {
+
 }
 
 // ----------------------------------------------------------------- EXCEPTIONS
@@ -146,6 +145,7 @@ const char* BitcoinExchange::InvalidFormat::what() const throw() {
 	if (this->_n == E_INVDATE) return ("invalid date");
 	if (this->_n == E_INVVAL) return ("invalid value");
 	if (this->_n == E_DBOPEN) return ("fail opening database");
+	if (this->_n == E_READ) return ("fail reading database");
 	return ("unkonwn error");
 }
 

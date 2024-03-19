@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:17:21 by nico              #+#    #+#             */
-/*   Updated: 2024/03/18 15:22:24 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/19 10:29:11 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 #include <cstdlib>
 #include <ctime>
 
-#define SEPARATOR	"---------------------------------------------------------"
+#define LINE	"---------------------------------------------------------"
 
 enum e_type {
-	INPUT,
-	DATABASE,
+	INPUT = '|',
+	DATABASE = ',',
 	UNKNOWN
 };
 
@@ -60,7 +60,10 @@ class BitcoinExchange
 		void mapDate( std::string to_split );	//make private?
 		bool isValidDate( void );				//make private?
 		bool isValidValue( std::string );
-		void matchDate( std::ifstream& db );
+
+		// OVERLOAD OPERATORS
+		bool operator>( const BitcoinExchange& );
+		bool operator<( const BitcoinExchange& );
 
 		// EXCEPTIONS
 		class InvalidFormat;
@@ -68,7 +71,8 @@ class BitcoinExchange
 			E_NOPIPE,
 			E_INVDATE,
 			E_INVVAL,
-			E_DBOPEN
+			E_DBOPEN,
+			E_READ
 		};
 };
 
