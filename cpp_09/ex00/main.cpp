@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:16:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/20 10:03:22 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/20 11:23:07 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,37 @@ int read_dbstream(BitcoinExchange& input, BitcoinExchange& prev) {
 	if (open_ifstream(dbstream, "./data.csv")) // for every input it is closed and opened
 		return (std::cerr << "Error: fail opening database stream" << std::endl, 1);
 	while (getline(dbstream, db_buff)) {
-		// try {
-			if (db_buff.empty()) continue ;
-			if (dbstream.fail()) {
-				std::cerr << "Error: stream state error occured" << std::endl;
-				dbstream.close();
-				return (1);
-			}
+		if (db_buff.empty()) continue ;
+		if (dbstream.fail()) {
+			std::cerr << "Error: stream state error occured" << std::endl;
+			dbstream.close();
+			return (1);
+		}
 
-			/* db is constructed like the other input instances, but it is not parsed
-			since it is not my "responsability" */
+		/* db is constructed like the other input instances, but it is not parsed
+		since it is not my "responsability" */
+		try {
 			BitcoinExchange db(db_buff, DATABASE);
-
 			if (input == db) {
 				input.displayMatch(db.getValue());
 				break ;
 			}
 			else if (input < db) {
-				input.displayMatch(prev.getValue());
+				if (prev.getValue() == -1) // catches when input is in the past in compairson with the first db date
+					input.displayMatch(db.getValue());
+				else
+					input.displayMatch(prev.getValue());
 				break ;
 			}
 			else if (input > db)
 				prev = db; // go on but save the previous
-
-		// }
-		// catch (std::exception& e) {
-		// 	// if (std::ios_base::eofbit) {
-		// 	// 	input.displayMatch(prev.getValue());
-		// 	// }
-		// 	std::cerr << "??? :" << e.what() << std::endl;
-		// }
+		} catch ( std::exception& e ) {
+			/* TRY AND CATCH are only ued to jump the first line of the
+			database ( or other line with invalid format ) which holds date,exchange_rate string,
+			otherwise is not necessary since the database is assumed that contains always correct values */
+		}
 	};
-	if (dbstream.eof())
+	if (dbstream.eof()) // catch dates that go over the highest in the future
 		input.displayMatch(prev.getValue());
 	dbstream.close();
 	return (0);
@@ -81,9 +80,10 @@ int read_instream(std::ifstream& instream, std::string& in_buff) {
 			if (in_buff.empty()) continue ;
 
 			std::cout << "Parsing ---> [" << in_buff << "]" << std::endl;
-			BitcoinExchange input(in_buff, INPUT); // throws exceptions in case of errors in storing the inputline
 
+			BitcoinExchange input(in_buff, INPUT); // throws exceptions in case of errors in storing the inputline
 			BitcoinExchange prev(DATABASE);	// need to create to remember the lower and not the higher
+
 			if (read_dbstream(input, prev)) // check return value ?
 				return (1);
 		} catch (std::exception& e) {

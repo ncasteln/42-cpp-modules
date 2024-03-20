@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:17:21 by nico              #+#    #+#             */
-/*   Updated: 2024/03/20 09:54:53 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/20 10:08:13 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ class BitcoinExchange
 	public:
 		// OCC
 		~BitcoinExchange( void );
-		BitcoinExchange( const BitcoinExchange& );				// private ?
-		BitcoinExchange& operator=( const BitcoinExchange& );	// private ?
+		BitcoinExchange( const BitcoinExchange& );
+		BitcoinExchange& operator=( const BitcoinExchange& );
 
 		// PARAM CONSTRUCTOR
 		BitcoinExchange( e_type );
