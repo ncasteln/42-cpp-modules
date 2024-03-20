@@ -6,13 +6,13 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/18 08:33:45 by nico             ###   ########.fr        #
+#    Updated: 2024/03/20 09:50:34 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	btc
 
-CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror
+CXXFLAGS	=	-g -std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror
 
 SRC			=	main.cpp \
 				BitcoinExchange.cpp \

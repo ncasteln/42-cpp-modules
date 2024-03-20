@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:17:21 by nico              #+#    #+#             */
-/*   Updated: 2024/03/19 14:38:51 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/20 09:54:53 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ class BitcoinExchange
 		void mapDate( std::string to_split );	//make private?
 		bool isValidDate( void );				//make private?
 		bool isValidValue( std::string );
-		void displayResult( const float exchange_rate );
+		void displayMatch( const float exchange_rate );
 
 		// OVERLOAD OPERATORS
 		bool operator>( BitcoinExchange& );

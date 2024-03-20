@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:59:26 by nico              #+#    #+#             */
-/*   Updated: 2024/03/19 14:40:47 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/20 10:03:14 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ BitcoinExchange::~BitcoinExchange( void ) {}
 BitcoinExchange::BitcoinExchange( const BitcoinExchange& obj ):
 	_type(obj._type),
 	_value(obj._value),
-	_date(std::map<std::string, int>(obj._date)) {
-}
+	_date(std::map<std::string, int>(obj._date)) {}
 
 BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& rhs ) {
 	this->_value = rhs._value;
@@ -30,7 +29,10 @@ BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& rhs ) {
 }
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
-BitcoinExchange::BitcoinExchange( e_type sep ): _type(sep) {}
+BitcoinExchange::BitcoinExchange( e_type sep ):
+	_type(sep),
+	_value(-1),
+	_date(std::map<std::string, int>()) {}
 
 /*
 	An instance of BitcoinExchange is an object which holds the date, mapped
@@ -38,7 +40,7 @@ BitcoinExchange::BitcoinExchange( e_type sep ): _type(sep) {}
 	is const and cannot be changed.
 */
 BitcoinExchange::BitcoinExchange( std::string line, e_type sep ): _type(sep) {
-	if (line.find(sep) == std::string::npos)
+	if (line.find(sep) == std::string::npos && this->_type == INPUT)
 		throw InvalidFormat(E_NOSEP);
 
 	/* date is extracted and trimmed */
@@ -46,12 +48,12 @@ BitcoinExchange::BitcoinExchange( std::string line, e_type sep ): _type(sep) {
 	trim(date, " \t");
 
 	/* if some of the char are not part of the string 0987654321- throw except */
-	if (date.find_first_not_of("-0987654321") != std::string::npos)
+	if (date.find_first_not_of("-0987654321") != std::string::npos && this->_type == INPUT)
 		throw InvalidFormat(E_INVDATE);
 	/* the date need to be splitted and stored into _date */
 	this->mapDate(date);
 	/* if date is not valid throw */
-	if (!this->isValidDate())
+	if (!this->isValidDate() && this->_type == INPUT)
 		throw InvalidFormat(E_INVDATE);
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -59,7 +61,7 @@ BitcoinExchange::BitcoinExchange( std::string line, e_type sep ): _type(sep) {
 	/* value is extracted and trimmed */
 	std::string value = line.substr(line.find(sep) + 1, line.length() - 1);
 	trim(value, " \t");
-	if (!this->isValidValue(value))
+	if (!this->isValidValue(value) && this->_type == INPUT)
 		throw InvalidFormat(E_INVVAL);
 }
 
@@ -124,7 +126,7 @@ bool BitcoinExchange::isValidValue( std::string value ) {
 	if (value == ".")
 		return (false);
 	double d = std::atof(value.c_str());
-	if (this->_type == INPUT && (d > 1000 || d < 0)) // invalid if not between 0 and 1000
+	if ((d > 1000 || d < 0) && this->_type == INPUT) // invalid if not between 0 and 1000
 		return (false);
 	this->_value = static_cast<float>(d);
 	return (true);
@@ -133,7 +135,7 @@ bool BitcoinExchange::isValidValue( std::string value ) {
 // ----------------------------------------------------- OPERATORS OVERALOADING
 /*	TRUE EXAMPLES (is bigger when is in the future)
 	(db)     > (in)
-	2001-1-1 > 2000-1-1 [true]
+	2000-1-5 > 2000-1-1 [true]
 	2001-1-15 > 2001-1-1 [true]
 */
 bool BitcoinExchange::operator>( BitcoinExchange& rhs ) {
@@ -167,7 +169,7 @@ const char* BitcoinExchange::InvalidFormat::what() const throw() {
 }
 
 // -------------------------------------------------------------------- DISPLAY
-void BitcoinExchange::displayResult( const float exchange_rate ) {
+void BitcoinExchange::displayMatch( const float exchange_rate ) {
 	std::cout
 		<< this->getDate()["year"] << "-"
 		<< this->getDate()["month"] << "-"
