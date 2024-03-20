@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:59:26 by nico              #+#    #+#             */
-/*   Updated: 2024/03/20 10:47:12 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/20 13:03:28 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ BitcoinExchange::BitcoinExchange( std::string line, e_type sep ): _type(sep) {
 	std::string date = line.substr(0, line.find(sep));
 	trim(date, " \t");
 
-	/* if some of the char are not part of the string 0987654321- throw except */
+	/* if some of the char of date is not part of the string 0987654321- throw except */
 	if (date.find_first_not_of("-0987654321") != std::string::npos)
 		throw InvalidFormat(E_INVDATE);
 	/* the date need to be splitted and stored into _date */

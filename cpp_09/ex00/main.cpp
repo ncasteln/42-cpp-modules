@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:16:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/20 11:23:07 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/20 11:26:47 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int main( int argc, char** argv ) {
 }
 
 /* TO CHECK AND TO DO
+	- in utils there is only one util, should move it in another place ?
 	- empty line cases
 	- double or float ???
 	- PROBLEM with exception: what to do in case of open() or reading errors? I think I would to exit()
