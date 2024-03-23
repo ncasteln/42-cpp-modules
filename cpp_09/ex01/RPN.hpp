@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:27:01 by nico              #+#    #+#             */
-/*   Updated: 2024/03/23 16:36:50 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/23 18:08:37 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 class RPN
 {
 	private:
-		std::stack<int> _a;
-		std::stack<int> _b; // holds only small expressions
-		std::stack<char> _c; // holds the whole expression
+		std::stack<int> _a; // holds only small expressions
+		std::stack<char> _b; // holds the whole expression
+		int _result;
 	public:
 		RPN( void );
 		~RPN( void );
@@ -36,13 +36,15 @@ class RPN
 		int isOperator( char c ) const;
 		void resolveExpr( void );
 		void resolveStack( std::stack<int>& stack, char operand );
+		int getResult( void ) const;
 
 		void displayStacks( void );
 
 		class InvalidInput;
 		enum err_list {
 			E_EMPTY,
-			E_INVCHAR
+			E_INVCHAR,
+			E_INVEXPR
 		};
 };
 

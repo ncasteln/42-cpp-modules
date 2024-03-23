@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:28:57 by nico              #+#    #+#             */
-/*   Updated: 2024/03/23 16:14:55 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/23 18:08:31 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
 	try {
 		RPN rpn(argv[1]);
 		rpn.resolveExpr();
-		rpn.displayStacks();
+		std::cout << "Result [ " << rpn.getResult() << " ]" << std::endl;
 	} catch (std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
 		return (1);
