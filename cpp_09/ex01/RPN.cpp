@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:27:44 by nico              #+#    #+#             */
-/*   Updated: 2024/03/22 18:00:21 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/23 16:18:19 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ RPN& RPN::operator=( const RPN& rhs ) {
 /*	TO DO
 	- trim eventual whitespaces at the beginning
 	- emptyline cases
-	- case "34+5-" --- actually it still works because they are from 0 to 9 what do ?
-		// NOT COMPLETELY TRUE - because the numbers becomes bigger than 9
 	- case "+"
+	- overflows
 */
 /*	RULES
 	- how check this ?	during stack operations or before ?
@@ -45,6 +44,8 @@ RPN& RPN::operator=( const RPN& rhs ) {
 /*	The job of this constructor is to prepare the two stack. The expression is
 	stored in the stack B, whose top will be the first item of the expression. */
 RPN::RPN( std::string expr ) {
+	if (expr.empty())
+		throw InvalidInput(E_EMPTY);
 	std::string::iterator it = expr.end();
 	do {
 		--it;
@@ -67,57 +68,53 @@ int RPN::isOperand( char c ) {
 
 void RPN::resolveExpr( void ) {
 	while (!_c.empty()) {
-		do {
+		while (!isOperand(_c.top())) {
 			char tmp = _c.top();
 			_b.push(tmp);
 			_c.pop();
-		} while (!isOperand(_b.top()));
-		resolveStackB();
-	};
-	displayStacks();
+		}
+		if (_b.size() == 2)
+			resolveStackB(_c.top());
+		else if (_b.size() == 1) {
+			char tmp = _b.top() - '0';
+			_a.push(tmp);
+			_b.pop();
+			resolveStackA(_c.top());
+		}
+		else
+			resolveStackA(_c.top());
+		_c.pop();
+	}
 }
 
-void RPN::resolveStackB( void ) {
-	char operand = _b.top();
+void RPN::resolveStackB( char operand ) {
+	int b = _b.top() - '0';
 	_b.pop();
-
-	if (_b.size() == 2) {
-		int a = _b.top() - 48;	// for this can be done a template maybe ??????????
-		_b.pop();
-		int b = _b.top() - 48;
-		_b.pop();
-		if (operand == '+') _a.push(a + b);
-		if (operand == '-') _a.push(a - b);
-		if (operand == '*') _a.push(a * b);
-		if (operand == '/') _a.push(a / b);
-	}
-	else if (_b.size() == 1) {
-		int tmp = _b.top() - 48;
-		_b.pop();
-		_a.push(tmp);
-		resolveStackA(operand);
-	}
-	else { // 0
-		resolveStackA(operand);
-	}
+	int a = _b.top() - '0';
+	_b.pop();
+	if (operand == '+') _a.push(a + b);
+	if (operand == '-') _a.push(a - b);
+	if (operand == '*') _a.push(a * b);
+	if (operand == '/') _a.push(a / b);
 }
 
-void RPN::resolveStackA( char operand ) {
-	int a = _a.top();
-	_a.pop();
+int RPN::resolveStackA( char operand ) {
 	int b = _a.top();
 	_a.pop();
-	if (operand == '+') _a.push(b + a);
-	if (operand == '-') _a.push(b - a);
-	if (operand == '*') _a.push(b * a);
-	if (operand == '/') _a.push(b / a);
+	int a = _a.top();
+	_a.pop();
+	if (operand == '+') _a.push(a + b);
+	if (operand == '-') _a.push(a - b);
+	if (operand == '*') _a.push(a * b);
+	if (operand == '/') _a.push(a / b);
 }
 
 // ----------------------------------------------------------------- EXCEPTIONS
-RPN::InvalidInput::InvalidInput( int err_num ): _err_num(err_num) {}
+RPN::InvalidInput::InvalidInput( err_list n ): _n(n) {}
 
 const char* RPN::InvalidInput::what() const throw() {
-	if (_err_num == E_INVCHAR) return ("invalid character");
+	if (_n == E_EMPTY) return ("empty line input");
+	if (_n == E_INVCHAR) return ("invalid character");
 	return ("unknown exception");
 }
 
@@ -153,57 +150,10 @@ void RPN::displayStacks( void ) {
 	std::cout << "-----------------" << std::endl;
 }
 
-std::ostream& operator<<( std::ostream& cout, std::stack<char> stack ) {
+std::ostream& operator<<( std::ostream& cout, std::stack<int> stack ) { // make it template to work with char or int
 	while (!stack.empty()) {
 		cout << "[ " << stack.top() << " ]" << std::endl;
 		stack.pop();
 	}
 	return (cout);
 }
-
-
-/*
-RPN::RPN( std::string expr ) {
-	std::string::iterator it = expr.end();
-	do {
-		--it;
-		if (*it == ' ')
-			continue ;
-		else if (isdigit(*it) || isOperand(*it))
-			_b.push(*it);
-		else
-			throw InvalidInput(E_INVCHAR);
-	} while (it != expr.begin());
-	// displayStacks(_a, _b); // remove
-};
-
-void RPN::resolveExpr( void ) {
-	int result = 0; // initialize to zero is it right ?
-	while (!_b.empty()) {
-		displayStacks(_a, _b);
-		while (true) { // maybe cause this a check has to be done before ----- ?
-			char tmp = _b.top();
-			_b.pop();
-			_a.push(tmp);
-			if (isOperand(_a.top()))
-				break ;
-		}
-		result += resolveStackA();
-	}
-	std::cout << result << std::endl;
-}
-
-int RPN::resolveStackA( void ) {
-	char operand = _a.top();
-	_a.pop();
-	int a = _a.top() - 48;
-	_a.pop();
-	int b = _a.top()- 48;
-	_a.pop();
-	if (operand == '+') return (a + b);
-	if (operand == '-') return (a - b);
-	if (operand == '*') return (a * b);
-	if (operand == '/') return (a / b);
-}
-
-*/

@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:27:01 by nico              #+#    #+#             */
-/*   Updated: 2024/03/22 17:47:45 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/23 16:19:13 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,27 @@ class RPN
 
 		int isOperand( char c );
 		void resolveExpr( void );
-		void resolveStackB( void );
-		void resolveStackA( char operand );
+		void resolveStackB( char operand );
+		int resolveStackA( char operand );
 
 		void displayStacks( void );
 
 		class InvalidInput;
 		enum err_list {
+			E_EMPTY,
 			E_INVCHAR
 		};
 };
 
-class RPN::InvalidInput: std::exception {
+class RPN::InvalidInput: public std::exception
+{
 	private:
-		int _err_num;
+		err_list _n;
 	public:
-		InvalidInput( int err_num );
+		InvalidInput( err_list n );
 		const char* what() const throw();
 };
 
-std::ostream& operator<<( std::ostream& cout, std::stack<char> stack );
+std::ostream& operator<<( std::ostream& cout, std::stack<int> stack );
 
 #endif
