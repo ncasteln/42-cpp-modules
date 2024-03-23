@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:27:01 by nico              #+#    #+#             */
-/*   Updated: 2024/03/23 16:19:13 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/23 16:36:50 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class RPN
 {
 	private:
 		std::stack<int> _a;
-		std::stack<char> _b; // holds only small expressions
+		std::stack<int> _b; // holds only small expressions
 		std::stack<char> _c; // holds the whole expression
 	public:
 		RPN( void );
@@ -33,10 +33,9 @@ class RPN
 
 		RPN( std::string expr );
 
-		int isOperand( char c );
+		int isOperator( char c ) const;
 		void resolveExpr( void );
-		void resolveStackB( char operand );
-		int resolveStackA( char operand );
+		void resolveStack( std::stack<int>& stack, char operand );
 
 		void displayStacks( void );
 

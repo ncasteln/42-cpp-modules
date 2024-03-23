@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:27:44 by nico              #+#    #+#             */
-/*   Updated: 2024/03/23 16:18:19 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/23 16:46:36 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ RPN& RPN::operator=( const RPN& rhs ) {
 /*	RULES
 	- how check this ?	during stack operations or before ?
 		// during: maybe the rule is, if in [stack A] there are 2 elements, there is a problem
-		// before: n_digits has to be (n_operands + 1) otherwise is INVALID
+		// before: n_digits has to be (n_ops + 1) otherwise is INVALID
 	- Create 2 stacks A and B, the B is full at the beginning; the top is the first element of the expr
 	while (!_b().empty()) && maybe there is just one member in [a]
-		1) PUSH everyhting from B to A until the TOP of A is an operand
+		1) PUSH everyhting from B to A until the TOP of A is an op
 		2) resolve calculation of A
 */
 /*	The job of this constructor is to prepare the two stack. The expression is
@@ -51,7 +51,7 @@ RPN::RPN( std::string expr ) {
 		--it;
 		if (*it == ' ')
 			continue ;
-		else if (isdigit(*it) || isOperand(*it))
+		else if (isdigit(*it) || isOperator(*it))
 			_c.push(*it);
 		else
 			throw InvalidInput(E_INVCHAR);
@@ -60,7 +60,7 @@ RPN::RPN( std::string expr ) {
 };
 
 // ----------------------------------------------------------- MEMBER FUNCTIONS
-int RPN::isOperand( char c ) {
+int RPN::isOperator( char c ) const {
 	if (c == '+' || c == '-' || c == '*' || c == '/')
 		return (1);
 	return (0);
@@ -68,45 +68,35 @@ int RPN::isOperand( char c ) {
 
 void RPN::resolveExpr( void ) {
 	while (!_c.empty()) {
-		while (!isOperand(_c.top())) {
-			char tmp = _c.top();
+		while (!isOperator(_c.top())) {
+			int tmp = _c.top() - 48;
 			_b.push(tmp);
 			_c.pop();
 		}
+
 		if (_b.size() == 2)
-			resolveStackB(_c.top());
+			resolveStack(_b, _c.top());
 		else if (_b.size() == 1) {
-			char tmp = _b.top() - '0';
+			int tmp = _b.top();
 			_a.push(tmp);
 			_b.pop();
-			resolveStackA(_c.top());
+			resolveStack(_a, _c.top());
 		}
 		else
-			resolveStackA(_c.top());
+			resolveStack(_a, _c.top());
 		_c.pop();
 	}
 }
 
-void RPN::resolveStackB( char operand ) {
-	int b = _b.top() - '0';
-	_b.pop();
-	int a = _b.top() - '0';
-	_b.pop();
-	if (operand == '+') _a.push(a + b);
-	if (operand == '-') _a.push(a - b);
-	if (operand == '*') _a.push(a * b);
-	if (operand == '/') _a.push(a / b);
-}
-
-int RPN::resolveStackA( char operand ) {
-	int b = _a.top();
-	_a.pop();
-	int a = _a.top();
-	_a.pop();
-	if (operand == '+') _a.push(a + b);
-	if (operand == '-') _a.push(a - b);
-	if (operand == '*') _a.push(a * b);
-	if (operand == '/') _a.push(a / b);
+void RPN::resolveStack( std::stack<int>& stack, char op ) {
+	// int r = stack.top();
+	// stack.pop();
+	// int l = stack.top();
+	// stack.pop();
+	// if (op == '+') _a.push(l + r);
+	// if (op == '-') _a.push(l - r);
+	// if (op == '*') _a.push(l * r);
+	// if (op == '/') _a.push(l / r);
 }
 
 // ----------------------------------------------------------------- EXCEPTIONS
@@ -121,7 +111,7 @@ const char* RPN::InvalidInput::what() const throw() {
 // -------------------------------------------------------------------- DISPLAY
 void RPN::displayStacks( void ) {
 	std::stack<int> a( _a );
-	std::stack<char> b( _b );
+	std::stack<int> b( _b );
 	std::stack<char> c ( _c );
 
 	std::cout << "\033[32mA    |  B  |    C\033[0m" << std::endl;
@@ -157,3 +147,47 @@ std::ostream& operator<<( std::ostream& cout, std::stack<int> stack ) { // make 
 	}
 	return (cout);
 }
+
+
+
+
+/*
+
+void RPN::resolveExpr( void ) {
+	while (!_c.empty()) {
+		while (!isOperator(_c.top())) {
+			int tmp = _c.top() - 48;
+			_b.push(tmp);
+			_c.pop();
+		}
+
+		if (_b.size() == 2)
+			resolveStack(_b, _c.top());
+		else if (_b.size() == 1) {
+			int tmp = _b.top();
+			_a.push(tmp);
+			_b.pop();
+			resolveStack(_a, _c.top());
+		}
+		else
+			resolveStack(_a, _c.top());
+		_c.pop();
+	}
+}
+
+
+void RPN::resolveStack( std::stack<int>& stack, char op ) {
+	int r = stack.top();
+	stack.pop();
+	int l = stack.top();
+	stack.pop();
+	if (op == '+') _a.push(l + r);
+	if (op == '-') _a.push(l - r);
+	if (op == '*') _a.push(l * r);
+	if (op == '/') _a.push(l / r);
+}
+
+
+
+
+*/
