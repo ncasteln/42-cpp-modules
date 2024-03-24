@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:27:44 by nico              #+#    #+#             */
-/*   Updated: 2024/03/23 18:07:56 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/24 10:34:49 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,26 @@ RPN& RPN::operator=( const RPN& rhs ) {
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
 /*	TO DO
-	- trim eventual whitespaces at the beginning
-	- emptyline cases
-	- case "+"
 	- overflows
-*/
-/*	RULES
-	- how check this ?	during stack operations or before ?
-		// during: maybe the rule is, if in [stack A] there are 2 elements, there is a problem
-		// before: n_digits has to be (n_ops + 1) otherwise is INVALID
-	- Create 2 stacks A and B, the B is full at the beginning; the top is the first element of the expr
-	while (!_a().empty()) && maybe there is just one member in [a]
-		1) PUSH everyhting from B to A until the TOP of A is an op
-		2) resolve calculation of A
+	- something / 0 like 5/0 (infinity) or 0/0 (NaN)
 */
 /*	The job of this constructor is to prepare the two stack. The expression is
-	stored in the stack B, whose top will be the first item of the expression. */
+	stored in the stack B, whose top will be the first item of the input. */
 RPN::RPN( std::string expr ) {
-	if (expr.empty())
+	if (expr.empty()) // catches "" (empty string)
 		throw InvalidInput(E_EMPTY);
 	std::string::iterator it = expr.end();
 	do {
 		--it;
-		if (*it == ' ')
+		if (isspace(*it)) // includes newline and other special char for spaces
 			continue ;
 		else if (isdigit(*it) || isOperator(*it))
 			_b.push(*it);
 		else
 			throw InvalidInput(E_INVCHAR);
 	} while (it != expr.begin());
-	displayStacks();
+	if (_b.empty()) // catches strings composed only by spaces, means no _b stack is built
+		throw InvalidInput(E_EMPTY);
 };
 
 // ----------------------------------------------------------- MEMBER FUNCTIONS
@@ -66,27 +56,30 @@ int RPN::isOperator( char c ) const {
 	return (0);
 }
 
-void RPN::resolveExpr( void ) {
-	displayStacks(); // --------------- remove
+int RPN::resolveExpr( void ) {
 	while (!_b.empty()) {
 		while (!isOperator(_b.top())) {
 			int tmp = _b.top() - 48;
 			_a.push(tmp);
 			_b.pop();
-		}
-		if (_a.size() == 1) {
-			if (_b.size() == 0)
-				_result = _a.top();
-			else
+			if (_b.empty())  //!_b.empty() added for single number cases therwise becomes empty and segfaults
 				throw InvalidInput(E_INVEXPR);
+		}
+		displayStacks();
+		if (_a.size() == 1) {
+			if (!_b.empty())
+				throw InvalidInput(E_INVEXPR);
+			break ;
 		}
 		resolveStack(_a, _b.top());
 		_b.pop();
-		displayStacks(); // --------------- remove
 	}
+	return (_a.top());
 }
 
 void RPN::resolveStack( std::stack<int>& stack, char op ) {
+	if (stack.empty()) // catches the case in which the expression is only operators like "+" or " + - + - +"
+		throw InvalidInput(E_INVEXPR);
 	int r = stack.top();
 	stack.pop();
 	int l = stack.top();
@@ -94,18 +87,24 @@ void RPN::resolveStack( std::stack<int>& stack, char op ) {
 	if (op == '+') _a.push(l + r);
 	if (op == '-') _a.push(l - r);
 	if (op == '*') _a.push(l * r);
-	if (op == '/') _a.push(l / r);
+	if (op == '/') {
+		if (l == 0 && r == 0)
+			throw InvalidInput(E_NAN); // those 2 are catched runtime, so they'll come before an eventual invalid expression
+		else if (r == 0)
+			throw InvalidInput(E_INFINITY);
+		_a.push(l / r);
+	}
 }
-
-int RPN::getResult( void ) const { return (_result); }
 
 // ----------------------------------------------------------------- EXCEPTIONS
 RPN::InvalidInput::InvalidInput( err_list n ): _n(n) {}
 
 const char* RPN::InvalidInput::what() const throw() {
-	if (_n == E_EMPTY) return ("empty line input");
+	if (_n == E_EMPTY) return ("empty expression");
 	if (_n == E_INVCHAR) return ("invalid character");
 	if (_n == E_INVEXPR) return ("invalid expression");
+	if (_n == E_INFINITY) return ("expression results in infinity");
+	if (_n == E_NAN) return ("expression results in NaN");
 	return ("unknown exception");
 }
 
@@ -132,45 +131,3 @@ void RPN::displayStacks( void ) {
 	};
 	std::cout << "-----------------" << std::endl;
 }
-
-std::ostream& operator<<( std::ostream& cout, std::stack<int> stack ) { // make it template to work with char or int
-	while (!stack.empty()) {
-		cout << "[ " << stack.top() << " ]" << std::endl;
-		stack.pop();
-	}
-	return (cout);
-}
-
-
-
-// void RPN::resolveExpr( void ) {
-// 	while (!_b.empty()) {
-// 		while (!isOperator(_b.top())) {
-// 			int tmp = _b.top() - 48;
-// 			_a.push(tmp);
-// 			_b.pop();
-// 		}
-// 		if (_a.size() == 2)
-// 			resolveStack(_a, _b.top());
-// 		else if (_a.size() == 1) {
-// 			int tmp = _a.top();
-// 			_a.push(tmp);
-// 			_a.pop();
-// 			resolveStack(_a, _b.top());
-// 		}
-// 		else
-// 			resolveStack(_a, _b.top());
-// 		_b.pop();
-// 	}
-// }
-
-// void RPN::resolveStack( std::stack<int>& stack, char op ) {
-// 	int r = stack.top();
-// 	stack.pop();
-// 	int l = stack.top();
-// 	stack.pop();
-// 	if (op == '+') _a.push(l + r);
-// 	if (op == '-') _a.push(l - r);
-// 	if (op == '*') _a.push(l * r);
-// 	if (op == '/') _a.push(l / r);
-// }

@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:28:57 by nico              #+#    #+#             */
-/*   Updated: 2024/03/23 18:08:31 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/24 10:34:38 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int main(int argc, char** argv) {
 		return (std::cerr << "Error: invalid argc" << std::endl, 1);
 	try {
 		RPN rpn(argv[1]);
-		rpn.resolveExpr();
-		std::cout << "Result [ " << rpn.getResult() << " ]" << std::endl;
+		int result = rpn.resolveExpr();
+		std::cout << "Result [ " << result << " ]" << std::endl;
 	} catch (std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
 		return (1);
