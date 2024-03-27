@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/14 13:23:30 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/27 09:30:17 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void ScalarConverter::handleFloat( std::string s ) {
 		ScalarConverter::displayChar(i);
 		std::cout << "int     : " << i << std::endl;
 	}
-	std::cout << "float   : " << std::fixed << std::setprecision(1) << f << std::endl;
+	std::cout << "float   : " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << d << std::endl;
 }
 
@@ -138,7 +138,7 @@ void ScalarConverter::handleDouble( std::string s ) {
 		ScalarConverter::displayChar(i);
 		std::cout << "int     : " << i << std::endl;
 	}
-	std::cout << "float   : " << std::fixed << std::setprecision(1) << f << std::endl;
+	std::cout << "float   : " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << d << std::endl;
 }
 

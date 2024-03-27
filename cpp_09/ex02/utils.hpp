@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 11:28:57 by nico              #+#    #+#             */
-/*   Updated: 2024/03/26 08:04:50 by nico             ###   ########.fr       */
+/*   Created: 2024/03/27 08:41:05 by nico              #+#    #+#             */
+/*   Updated: 2024/03/27 08:43:41 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RPN.hpp"
+#ifndef __UTILS_HPP__
+# define __UTILS_HPP__
 
-int main(int argc, char** argv) {
-	if (argc != 2)
-		return (std::cerr << "Error: invalid argc" << std::endl, 1);
-	try {
-		RPN rpn(argv[1]);
-		int result = rpn.resolveExpr();
-		std::cout << "Result [ " << result << " ]" << std::endl;
-	} catch (std::exception& e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		return (1);
-	}
-	return (0);
-}
+#include <iostream>
+#include <algorithm>
+
+void displayVectorInt( int item );
+void displayVectorPair( std::pair<int, int> item );
+
+#endif /* __UTILS_HPP__ */

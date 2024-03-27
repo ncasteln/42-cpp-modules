@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:27:01 by nico              #+#    #+#             */
-/*   Updated: 2024/03/24 10:20:59 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/26 08:20:49 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <exception>
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
 class RPN
 {
@@ -34,7 +35,8 @@ class RPN
 
 		int isOperator( char c ) const;
 		int resolveExpr( void );
-		void resolveStack( std::stack<int>& stack, char operand );
+		void resolveStack( std::stack<int>& stack, char op );
+		int resolveOperation( int left, int right, char op );
 
 		void displayStacks( void );
 
@@ -43,8 +45,8 @@ class RPN
 			E_EMPTY,
 			E_INVCHAR,
 			E_INVEXPR,
-			E_INFINITY,
-			E_NAN
+			E_ZERO,
+			E_OVERFLOW
 		};
 };
 

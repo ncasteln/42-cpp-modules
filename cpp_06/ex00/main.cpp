@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/14 13:24:39 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/27 09:09:46 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@
 	*** VERIFY
 	- Constructors
 	- why MAX_INT is converted into float as 2147483648.0f and not 2147483647.0f ???
+	- I have a fucking BUG in floats!!! try ./convert 340282346638528859811704183484516925440.000000f
+	the f is not printed why ???
 */
 int main ( int argc, char** argv ) {
 	try {
