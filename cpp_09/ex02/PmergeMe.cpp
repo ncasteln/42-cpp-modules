@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:14:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/27 16:05:43 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/28 11:55:38 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,19 @@ void PmergeMe::fordJohnson( void ) {
 	std::cout << std::setw(25) << std::left << "[ AFTER SORT and REV ]" << pv << std::endl;
 
 	std::vector<int> main_chain = createMainChain(pv);
-	std::cout << std::setw(25) << std::left << "[ MAIN CHAIN ]" << main_chain << std::endl;
-
 	int last = -1;
 	if (_vect.size() % 2 != 0)
 		last = _vect.back();
 	std::vector<int> pend_chain = createPendChain(pv, last);
-	std::cout << std::setw(25) << std::left << "[ PEND CHAIN ]" << pend_chain << std::endl << std::endl;
 
-	// the first element of pend_chain is SURE smaller than the first of main_chain
-	main_chain.insert(main_chain.begin(), *pend_chain.begin());
-	pend_chain.erase(pend_chain.begin());
+	std::cout << std::endl << "[------- before insertion -------]" << std::endl;
 	std::cout << std::setw(25) << std::left << "[ MAIN CHAIN ]" << main_chain << std::endl;
 	std::cout << std::setw(25) << std::left << "[ PEND CHAIN ]" << pend_chain << std::endl;
 
-	jacobsthalInsertion(main_chain, pend_chain);
+	std::vector<int> insertion_order = createInsertionOrder(main_chain, pend_chain);
+	std::cout << std::setw(25) << std::left << "[ ins_order ] " << insertion_order << std::endl;
+
+	insertion(main_chain, pend_chain, insertion_order);
 }
 
 PmergeMe::pair_vect_t PmergeMe::createPairVect( void ) {
@@ -121,31 +119,90 @@ std::vector<int> PmergeMe::createPendChain( pair_vect_t pv, int last ) {
 	while (it != pv.end())
 		pend_chain.push_back((*it++).second); // pend chain is composed by the smallest element of each pair
 	if (last != -1)
-		pend_chain.push_back(last);
+		pend_chain.push_back(last); // the straggle element is added to the pend chain
 	return (pend_chain); // pend_chain is not sorted yet !!!
 }
 
-/* The jacobSequence is used in order to leverage the worst case. The jacob
-numbers are used! */
-void PmergeMe::jacobsthalInsertion( std::vector<int> main, std::vector<int> pend ) {
+/*	The Jacobsthal numbers are used in order to leverage the worst case. The steps:
+	1) The sequence of Jacosthal nums is generated
+	2) A mix between the J sequence and real ins_order is created
+	3) This combination is the order followed to pick the items from the pend_chain
+	4) Those items are inserted into the main_chain using binary search
+
+	Example:
+	1) [0, 1, 1, 3, 5, 11, 21, 43 ...] (Jacobsthal numbers)
+	2) [0, 1, 2, 3, 4, 5, 6, 7, .....] (normal ins_order)
+	3) {3} 2 {5} 4 {11} 10 9 8 7 6 {21} 20 19 ... 12 {43} (combination)
+	Note: numbers in curly br. comes from the Jacobsthal numbers; it starts from
+	3 because the first element of the pend_chain is simply popped and pushed to main.
+*/
+std::vector<int> PmergeMe::createInsertionOrder( std::vector<int> main, std::vector<int> pend ) {
 	std::vector<int> jacob;
+	std::vector<int> ins_order; // collection of the order of the ins_order to pick from pend chain
 	long prev_prev;
 	long prev;
-	long n;
+	long n = 0;
 
-	jacob.push_back(0);
-	jacob.push_back(1);
+
+	jacob.push_back(0); // the jacob numbers are created starting from the second 1
+	jacob.push_back(1); // then it will have to be started from idx 1
 	int i = 0;
-	while(true) {
+	while(true) { // modify the condition: stop when the size of pend_chain is reached!
 		prev_prev = jacob[i];
 		prev = jacob[i + 1];
 		n = prev + (prev_prev * 2);
 		if (n > std::numeric_limits<int>::max())
 			break ;
 		jacob.push_back(static_cast<int>(n));
+		updateInsertionOrder(ins_order, static_cast<int>(n), prev, static_cast<int>(pend.size()));
+		if (n >= static_cast<int>(pend.size())) break ; //finish to populate the ins_order vector
 		i++;
 	}
-	std::cout << jacob << std::endl;
+	return (ins_order);
+}
+
+void PmergeMe::updateInsertionOrder( std::vector<int>& ins_order, int n, int prev_jacob, int pend_size ) {
+	if (pend_size > n) {
+		ins_order.push_back(n);
+		if (n == 1) return ; // verify
+		while (--n != prev_jacob)
+			ins_order.push_back(n);
+	}
+	else if (pend_size <= n) {  // in this case I populate ins_order not FROM TO because otherwise i TOO MUCH items than needed
+		int n_idx_left = (pend_size - 1) - ins_order.size(); // (pend_size - 1) because the first element is ease pushed since it is 100% sure
+		std::vector<int> tmp;
+		while (--n != prev_jacob)
+			tmp.push_back(n); // tmp contains a jacobsthal range which has to be cut to dont have more then the needed elements
+		std::vector<int>::iterator it = tmp.end() - n_idx_left; // 11 10 9 8 [7] 6
+		while (it != tmp.end()) {
+			ins_order.push_back(*it++);
+		}
+		return ;
+	}
+}
+
+void PmergeMe::insertion( std::vector<int>& main, std::vector<int>& pend, std::vector<int>& ins_order ) {
+	std::cout << std::endl << "[------- insertion -------]" << std::endl;
+	main.insert(main.begin(), pend.front());	// the first element of pend chain is 100% smaller
+	pend[0] = -1; // to preserve the relations/indexes, NOTHING IS POPPED! Maybe just set to (-1) to visualize
+	std::cout << "!!! First element of pend pushed to main but NOT POPPED from pend !!!" << std::endl;
+	std::cout << std::setw(25) << std::left << "[ MAIN CHAIN ]" << main << std::endl;
+	std::cout << std::setw(25) << std::left << "[ PEND CHAIN ]" << pend << std::endl;
+	std::cout << std::setw(25) << std::left << "[ ins_order ]" << ins_order << std::endl;
+
+	size_t i = 0;
+	while (i < (pend.size() - 1)) { // (pend.size()-1) because ONE is already pushed
+		int current_item = *(pend.begin() + ins_order[i]);
+		std::cout << "Find place for { " << current_item << " }" << std::endl;
+		// here goes binary search
+		i++;
+	}
+
+}
+
+void PmergeMe::binarySearch( std::vector<int>& main, std::vector<int>& pend, std::vector<int>& ins_order ) {
+	std::cout << std::endl << "[------- binary search -------]" << std::endl;
+
 }
 
 // -------------------------------------------------------------------- DISPLAY
