@@ -6,13 +6,13 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:14:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/29 12:28:48 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/29 16:11:10 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-// ----------------------------- CANONICAL FORM
+// ------------------------------------------------------------- CANONICAL FORM
 PmergeMe::PmergeMe( void ) {}
 
 PmergeMe::~PmergeMe( void ) {}
@@ -25,7 +25,7 @@ PmergeMe& PmergeMe::operator=( const PmergeMe& rhs ) {
 	// implement
 }
 
-// ------------------------- OTHER CONSTRUCTORS
+// --------------------------------------------------------- OTHER CONSTRUCTORS
 /*	METHODS TO PARSE A STRING
 	- Use of Iterators and erase()
 
@@ -66,7 +66,7 @@ void PmergeMe::extract_numbers( std::string arg ) {
 	}
 }
 
-// -------------------------------- SORTING
+// -------------------------------------------------------------------- SORTING
 void PmergeMe::fordJohnson( void ) {
 	std::cout << "Size = " << _vect.size() << std::endl;
 
@@ -96,7 +96,10 @@ void PmergeMe::fordJohnson( void ) {
 	insertion(main_chain, pend_chain, insertion_order);
 
 	std::cout << std::setw(25) << std::left << "[ SORTED CHAIN ]" << main_chain << std::endl;
-	// create a is_sorted() function
+	if (isSorted(main_chain))
+		std::cout << "SORTED!" << std::endl;
+	else
+		std::cout << "NOT SORTED!" << std::endl;
 }
 
 PmergeMe::pair_vect_t PmergeMe::createPairVect( void ) {
@@ -228,7 +231,19 @@ int PmergeMe::binarySearch( std::vector<int>& main, int item, int start, int end
 	return (mid + 1);
 }
 
-// -------------------------------- DISPLAY
+bool PmergeMe::isSorted( std::vector<int> vect ) {
+	std::vector<int>::iterator it = vect.begin();
+	while (it != vect.end()) {
+		if ((it + 1) == vect.end())
+			break ;
+		if (*it > *(it + 1))
+			return (false);
+		it++;
+	}
+	return (true);
+}
+
+// -------------------------------------------------------------------- DISPLAY
 std::ostream& operator<<( std::ostream& cout, std::vector<int> vect ) {
 	std::for_each(vect.begin(), vect.end(), displayVectorInt);
 	return (cout);

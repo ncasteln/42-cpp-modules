@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:13:48 by nico              #+#    #+#             */
-/*   Updated: 2024/03/29 11:39:35 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/29 16:32:54 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 #include <limits>
 #include "utils.hpp"
 
+typedef enum CType {
+	VECTOR,
+	LIST
+};
+
+template <typename C, typename CType>
 class PmergeMe
 {
 	typedef std::vector<std::pair <int, int> > pair_vect_t;
@@ -30,16 +36,14 @@ class PmergeMe
 	private:
 		std::vector<int> _vect;
 	public:
-
 		PmergeMe( void );
 		~PmergeMe( void );
 		PmergeMe( const PmergeMe& );
-		PmergeMe& operator= (const PmergeMe& );
+		PmergeMe& operator= ( const PmergeMe& );
 
 		PmergeMe( int argc, char** argv ); // remove ???
 
 		void extract_numbers( std::string ); // make private what ???
-
 		void fordJohnson( void );
 		pair_vect_t createPairVect( void );
 		std::vector<int> createMainChain( pair_vect_t pv );
@@ -48,10 +52,12 @@ class PmergeMe
 		void updateInsertionOrder( std::vector<int>& ins_order, int n, int prev_jacob, int pend_size );
 		void insertion( std::vector<int>& main, std::vector<int>& pend, std::vector<int>& indexes );
 		int binarySearch( std::vector<int>& main, int item, int start, int end );
+		bool isSorted( std::vector<int> );
 
 		class InvalidInput;
 };
 
+template <typename C, typename CType>
 class PmergeMe::InvalidInput: public std::exception {
 	const char* what() const throw() { return ("invalid input"); };
 };
