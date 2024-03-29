@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:13:48 by nico              #+#    #+#             */
-/*   Updated: 2024/03/28 11:33:52 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/29 11:39:35 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ class PmergeMe
 		std::vector<int> createInsertionOrder( std::vector<int>, std::vector<int> );
 		void updateInsertionOrder( std::vector<int>& ins_order, int n, int prev_jacob, int pend_size );
 		void insertion( std::vector<int>& main, std::vector<int>& pend, std::vector<int>& indexes );
-		void binarySearch( std::vector<int>& main, std::vector<int>& pend, std::vector<int>& indexes );
+		int binarySearch( std::vector<int>& main, int item, int start, int end );
 
 		class InvalidInput;
 };

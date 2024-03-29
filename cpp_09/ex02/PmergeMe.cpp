@@ -6,13 +6,13 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:14:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/28 11:55:38 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/29 12:28:48 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-// ------------------------------------------------------------- CANONICAL FORM
+// ----------------------------- CANONICAL FORM
 PmergeMe::PmergeMe( void ) {}
 
 PmergeMe::~PmergeMe( void ) {}
@@ -25,7 +25,7 @@ PmergeMe& PmergeMe::operator=( const PmergeMe& rhs ) {
 	// implement
 }
 
-// --------------------------------------------------------- OTHER CONSTRUCTORS
+// ------------------------- OTHER CONSTRUCTORS
 /*	METHODS TO PARSE A STRING
 	- Use of Iterators and erase()
 
@@ -60,19 +60,24 @@ void PmergeMe::extract_numbers( std::string arg ) {
 		pos = arg.find_first_not_of("1234567890"); // reach the end of the number, can be also end of the string
 		digits = arg.substr(0, pos);
 
-		// check for overflow --------------------------------------------- !!!!!!
+		// check for overflow --------------------- !!!!!!
 		_vect.push_back(std::atoi(digits.c_str()));
 		arg.erase(0, digits.length());
 	}
 }
 
-// -------------------------------------------------------------------- SORTING
+// -------------------------------- SORTING
 void PmergeMe::fordJohnson( void ) {
-	pair_vect_t pv = createPairVect();
-	std::cout << std::setw(25) << std::left << "[ PAIR VECTOR ]" << pv << std::endl;
+	std::cout << "Size = " << _vect.size() << std::endl;
 
-	std::sort(pv.begin(), pv.end()); // probably need to replace with mergeSort ------------- !!!!!!
-	std::cout << std::setw(25) << std::left << "[ AFTER SORT and REV ]" << pv << std::endl;
+	pair_vect_t pv = createPairVect();
+	std::cout << std::setw(25) << std::left << "[ PAIR VECTOR ]" << pv;
+	if (_vect.size() % 2 != 0)
+		std::cout << "[~" << _vect.back() << "~]";
+	std::cout << std::endl;
+
+	std::sort(pv.begin(), pv.end()); // need to replace with mergeSort --------- !!!!!!
+	std::cout << std::setw(25) << std::left << "[ AFTER SORT by highest ]" << pv << std::endl;
 
 	std::vector<int> main_chain = createMainChain(pv);
 	int last = -1;
@@ -80,14 +85,18 @@ void PmergeMe::fordJohnson( void ) {
 		last = _vect.back();
 	std::vector<int> pend_chain = createPendChain(pv, last);
 
-	std::cout << std::endl << "[------- before insertion -------]" << std::endl;
+	std::cout << std::endl << "[--- before insertion ---]" << std::endl;
 	std::cout << std::setw(25) << std::left << "[ MAIN CHAIN ]" << main_chain << std::endl;
 	std::cout << std::setw(25) << std::left << "[ PEND CHAIN ]" << pend_chain << std::endl;
 
 	std::vector<int> insertion_order = createInsertionOrder(main_chain, pend_chain);
 	std::cout << std::setw(25) << std::left << "[ ins_order ] " << insertion_order << std::endl;
+	std::cout << std::setw(25) << std::left << "[ ins_order size ] " << insertion_order.size() << std::endl;
 
 	insertion(main_chain, pend_chain, insertion_order);
+
+	std::cout << std::setw(25) << std::left << "[ SORTED CHAIN ]" << main_chain << std::endl;
+	// create a is_sorted() function
 }
 
 PmergeMe::pair_vect_t PmergeMe::createPairVect( void ) {
@@ -182,7 +191,7 @@ void PmergeMe::updateInsertionOrder( std::vector<int>& ins_order, int n, int pre
 }
 
 void PmergeMe::insertion( std::vector<int>& main, std::vector<int>& pend, std::vector<int>& ins_order ) {
-	std::cout << std::endl << "[------- insertion -------]" << std::endl;
+	std::cout << std::endl << "[--- insertion ---]" << std::endl;
 	main.insert(main.begin(), pend.front());	// the first element of pend chain is 100% smaller
 	pend[0] = -1; // to preserve the relations/indexes, NOTHING IS POPPED! Maybe just set to (-1) to visualize
 	std::cout << "!!! First element of pend pushed to main but NOT POPPED from pend !!!" << std::endl;
@@ -192,20 +201,34 @@ void PmergeMe::insertion( std::vector<int>& main, std::vector<int>& pend, std::v
 
 	size_t i = 0;
 	while (i < (pend.size() - 1)) { // (pend.size()-1) because ONE is already pushed
-		int current_item = *(pend.begin() + ins_order[i]);
-		std::cout << "Find place for { " << current_item << " }" << std::endl;
-		// here goes binary search
+		int item = *(pend.begin() + ins_order[i]);
+		std::cout << std::endl << "Find place for { " << item << " }" << std::endl;
+		int location = binarySearch(main, item, 0, main.size()-1);
+		main.insert(main.begin() + location, item);
+		std::cout << main << std::endl;
 		i++;
 	}
-
 }
 
-void PmergeMe::binarySearch( std::vector<int>& main, std::vector<int>& pend, std::vector<int>& ins_order ) {
-	std::cout << std::endl << "[------- binary search -------]" << std::endl;
+int PmergeMe::binarySearch( std::vector<int>& main, int item, int start, int end ) {
+	std::cout << std::setw(25) << std::left << "[--- binary search ---] ";
+	if (start >= end) {
+		if (item < main[start])
+			return (start);
+		return (start + 1);
+	}
 
+	size_t mid = (start + end) / 2;
+	int mid_item = main[mid];
+
+	if (item > mid_item)
+		return (binarySearch(main, item, mid+1, end));
+	if (item < mid_item)
+		return (binarySearch(main, item, start, mid-1));
+	return (mid + 1);
 }
 
-// -------------------------------------------------------------------- DISPLAY
+// -------------------------------- DISPLAY
 std::ostream& operator<<( std::ostream& cout, std::vector<int> vect ) {
 	std::for_each(vect.begin(), vect.end(), displayVectorInt);
 	return (cout);
@@ -215,56 +238,3 @@ std::ostream& operator<<( std::ostream& cout, std::vector<std::pair<int,int> > v
 	std::for_each(vect.begin(), vect.end(), displayVectorPair);
 	return (cout);
 }
-
-/*
-	std::cout << std::setw(25) << std::left << "[ VECTOR OF PAIRS ]"; // what happens in case of ODD number of elements ????
-	std::pair<int, int> p;
-	std::vector<std::pair<int, int> > pair_vect; // create a vector which holds the pairs
-
-	for (size_t i = 0; i < _vect.size(); i += 2) {
-		p = std::make_pair(_vect[i], _vect[i + 1]);
-		pair_vect.push_back(p);
-		std::cout << "[" << p.first << "," << p.second << "]";
-	}
-	std::cout << std::endl;
-
-	std::cout << std::setw(25) << std::left << "[ VECTOR OF SORTED PAIRS ]"; // what happens in case of ODD number of elements ????
-	std::for_each(pair_vect.begin(), pair_vect.end(), swap_pair);
-	std::cout << std::endl;
-
-
-
-
-*/
-
-
-
-
-/*
-	int jacob[] = { 0, 1, 1 };
-	int prev;
-	int prev_prev;
-
-	int i = 2;
-	while (jacob[0] <= 349525) {
-		if (i == 0) {
-			prev = jacob[2];
-			prev_prev = jacob[1];
-		}
-		if (i == 1) {
-			prev = jacob[0];
-			prev_prev = jacob[2];
-		}
-		if (i == 2) {
-			prev = jacob[1];
-			prev_prev = jacob[0];
-		}
-		jacob[i] = prev + (prev_prev*2);
-		std::cout << "[" << jacob[0] << " " << jacob[1] << " "  << jacob[2] << "]" << std::endl;
-
-		i++;
-		if (i == 3)
-			i = 0;
-	}
-
-*/

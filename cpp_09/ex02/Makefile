@@ -6,7 +6,7 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/27 08:40:56 by nico             ###   ########.fr        #
+#    Updated: 2024/03/29 10:05:58 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ OBJS		=	$(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADERS)
-	c++ $(CXXFLAGS) $(OBJS) -o $(NAME) -I./
+	c++ $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp $(HEADERS)
-	c++ $(CXXFLAGS) -c $< -o $@ -I./
+	c++ $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJS)
