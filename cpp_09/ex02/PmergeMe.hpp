@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:13:48 by nico              #+#    #+#             */
-/*   Updated: 2024/03/29 16:32:54 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/29 17:31:37 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,12 @@
 #include <string>
 #include <cstdlib>
 #include <algorithm>
-#include <vector>
 #include <limits>
 #include "utils.hpp"
 
-typedef enum CType {
-	VECTOR,
-	LIST
-};
+#include <vector>
+#include <list>
 
-template <typename C, typename CType>
 class PmergeMe
 {
 	typedef std::vector<std::pair <int, int> > pair_vect_t;
@@ -41,7 +37,7 @@ class PmergeMe
 		PmergeMe( const PmergeMe& );
 		PmergeMe& operator= ( const PmergeMe& );
 
-		PmergeMe( int argc, char** argv ); // remove ???
+		PmergeMe( int argc, char** argv );
 
 		void extract_numbers( std::string ); // make private what ???
 		void fordJohnson( void );
@@ -57,7 +53,6 @@ class PmergeMe
 		class InvalidInput;
 };
 
-template <typename C, typename CType>
 class PmergeMe::InvalidInput: public std::exception {
 	const char* what() const throw() { return ("invalid input"); };
 };
