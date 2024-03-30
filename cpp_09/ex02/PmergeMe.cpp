@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:14:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/29 17:14:35 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/29 17:43:30 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ PmergeMe& PmergeMe::operator=( const PmergeMe& rhs ) {
 }
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
+/*	METHODS TO PARSE A STRING
+	- Use of Iterators and erase()
+
+*/
 /*	Construct the instance by parsing the arguments. In the first steps is
 	checked if the string contains something else other digits whitespaces
 	or tabs. */
 PmergeMe::PmergeMe( int argc, char** argv ) {
-
 	for (int i = 1; i < argc; i++) {
 		std::string arg = argv[i];
 		// if (arg.empty()) // discard directly "" ----- removed, it seems to work the same
@@ -99,7 +102,7 @@ void PmergeMe::fordJohnson( void ) {
 		std::cout << "NOT SORTED!" << std::endl;
 }
 
-typename PmergeMe::pair_vect_t PmergeMe::createPairVect( void ) {
+PmergeMe::pair_vect_t PmergeMe::createPairVect( void ) {
 	std::pair<int, int> p;
 	pair_vect_t pv; // create a vector which holds the pairs
 

@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:13:48 by nico              #+#    #+#             */
-/*   Updated: 2024/03/29 17:31:37 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/29 17:43:56 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ class PmergeMe
 
 	private:
 		std::vector<int> _vect;
+		std::list<int> _list;
 	public:
 		PmergeMe( void );
 		~PmergeMe( void );
