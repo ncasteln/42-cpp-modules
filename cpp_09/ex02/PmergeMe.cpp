@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:14:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/29 17:43:30 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/30 09:26:39 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,21 @@ PmergeMe::PmergeMe( void ) {}
 
 PmergeMe::~PmergeMe( void ) {}
 
-PmergeMe::PmergeMe( const PmergeMe& ) {
-	// implement
-}
+PmergeMe::PmergeMe( const PmergeMe& obj ):
+	_vect(std::vector<int>(obj._vect)),
+	_list(std::list<int>(obj._list)) {}
 
 PmergeMe& PmergeMe::operator=( const PmergeMe& rhs ) {
-	// implement
+	this->_vect = std::vector<int>(rhs._vect);
+	this->_list = std::list<int>(rhs._list);
+	return (*this);
 }
 
 // --------------------------------------------------------- OTHER CONSTRUCTORS
-/*	METHODS TO PARSE A STRING
-	- Use of Iterators and erase()
-
-*/
 /*	Construct the instance by parsing the arguments. In the first steps is
-	checked if the string contains something else other digits whitespaces
+	checked if the string contains something else other number whitespaces
 	or tabs. */
-PmergeMe::PmergeMe( int argc, char** argv ) {
+PmergeMe::PmergeMe( int argc, char** argv, e_cont type ): _type(type) {
 	for (int i = 1; i < argc; i++) {
 		std::string arg = argv[i];
 		// if (arg.empty()) // discard directly "" ----- removed, it seems to work the same
@@ -42,7 +40,9 @@ PmergeMe::PmergeMe( int argc, char** argv ) {
 			throw InvalidInput();
 		extract_numbers(arg);
 	};
-	if (_vect.empty()) // happens in case of "  " and/or ""
+	if (_type == VECTOR && _vect.empty()) // happens in case of "  " and/or ""
+		throw InvalidInput();
+	if (_type == LIST && _list.empty()) // happens in case of "  " and/or ""
 		throw InvalidInput();
 }
 
@@ -51,18 +51,21 @@ PmergeMe::PmergeMe( int argc, char** argv ) {
 	with multple numbers like "  4   9   12   ". */
 void PmergeMe::extract_numbers( std::string arg ) {
 	size_t pos;
-	std::string digits;
+	std::string number;
 
 	while (!arg.empty()) {
 		pos = arg.find_first_not_of(" \t"); // left trim of whitespaces
 		if (pos == std::string::npos) break ; // means, if there are no other member is finished
 		arg.erase(0, pos);
 		pos = arg.find_first_not_of("1234567890"); // reach the end of the number, can be also end of the string
-		digits = arg.substr(0, pos);
+		number = arg.substr(0, pos);
 
 		// check for overflow --------------------- !!!!!!
-		_vect.push_back(std::atoi(digits.c_str()));
-		arg.erase(0, digits.length());
+		if (_type == VECTOR)
+			_vect.push_back(std::atoi(number.c_str()));
+		else
+			_list.push_back(std::atoi(number.c_str()));
+		arg.erase(0, number.length());
 	}
 }
 
@@ -154,7 +157,6 @@ std::vector<int> PmergeMe::createInsertionOrder( std::vector<int> main, std::vec
 	long prev_prev;
 	long prev;
 	long n = 0;
-
 
 	jacob.push_back(0); // the jacob numbers are created starting from the second 1
 	jacob.push_back(1); // then it will have to be started from idx 1

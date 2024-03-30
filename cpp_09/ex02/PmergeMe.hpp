@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:13:48 by nico              #+#    #+#             */
-/*   Updated: 2024/03/29 17:43:56 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/30 09:08:33 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 #include <vector>
 #include <list>
 
+typedef enum cont {
+	VECTOR, LIST
+}	e_cont;
+
 class PmergeMe
 {
 	typedef std::vector<std::pair <int, int> > pair_vect_t;
@@ -32,13 +36,14 @@ class PmergeMe
 	private:
 		std::vector<int> _vect;
 		std::list<int> _list;
+		e_cont _type;
 	public:
 		PmergeMe( void );
 		~PmergeMe( void );
 		PmergeMe( const PmergeMe& );
 		PmergeMe& operator= ( const PmergeMe& );
 
-		PmergeMe( int argc, char** argv );
+		PmergeMe( int argc, char** argv, e_cont type );
 
 		void extract_numbers( std::string ); // make private what ???
 		void fordJohnson( void );

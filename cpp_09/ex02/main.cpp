@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:19:58 by nico              #+#    #+#             */
-/*   Updated: 2024/03/29 18:11:55 by nico             ###   ########.fr       */
+/*   Updated: 2024/03/30 09:09:55 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@
 
 int main (int argc, char** argv) {
 	try {
-		PmergeMe vector(argc, argv);
-		vector.fordJohnson();
+		PmergeMe vector(argc, argv, VECTOR);
+		vector.fordJohnson/*Vector*/();
+
+		PmergeMe list(argc, argv, LIST);
+		list.fordJohnson/*List*/();
+
 	} catch (std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
 	}
