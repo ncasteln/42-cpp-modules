@@ -1,0 +1,3 @@
+LIST OF SMALL CHANGES TO REMEMBER TO PERFORM
+- Use official headers
+- Makefile remove -I./

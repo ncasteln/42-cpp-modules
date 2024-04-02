@@ -27,7 +27,7 @@
 	The reverse process, which involves reconstructing the object, is called
 	deserialization.
 
-	[reinterpret_cast] to perform type conversions on unrelated types.You should
+	[reinterpret_cast] to perform type conversions on unrelated types we should
 	use this type of cast only when absolutely necessary.
 */
 class Serializer

@@ -6,7 +6,7 @@
 #    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/03/14 12:44:56 by nico             ###   ########.fr        #
+#    Updated: 2024/04/02 14:21:58 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ $(NAME): $(OBJS) $(HEADERS)
 	c++ $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp $(HEADERS)
-	c++ $(CXXFLAGS) -c $< -o $@ -I./
+	c++ $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJS)

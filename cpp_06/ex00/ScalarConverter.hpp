@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/14 12:58:46 by nico             ###   ########.fr       */
+/*   Updated: 2024/04/02 14:47:03 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include <string>
 #include <iostream>
 #include <exception>
-#include <cstdlib>
+#include <cstdlib>		// std::atoi, isprint, isdigit
 #include <iomanip>
 #include <limits>
-#include <cmath>
+#include <cmath>		// std::isinf
 
 # define CHAR		1
 # define STRING		2

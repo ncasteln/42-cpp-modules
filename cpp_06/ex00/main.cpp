@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/27 09:09:46 by nico             ###   ########.fr       */
+/*   Updated: 2024/04/02 14:45:30 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@
 /*
 	*** RESUME
 	As subj says, the class doesn't store anything, it has only static member
-	functions and is not instantiable. The goal is create a class which can
-	take a string, understand its type and convert/display to char, int, float
-	and double. Therefore it performs the followings:
-	1) Check the actual type
-	2) Convert to the actual type
-	3) Cast to the other types and display
+	functions and is not instantiable. That because constructors/destructor are
+	made private.
+	The goal is create a class which can take a string, understand its type and
+	convert/display to char, int, float and double. Therefore it performs the
+	following steps:
+		1) Check the actual type
+		2) Convert to the actual type
+		3) Cast to the other types and display
 
 	*** DECISIONS
 	- I choose to accept any paramenter, so ERROR are thrown only if argc != 2 and
@@ -62,12 +64,13 @@
 	- Only parameters with ONE sign are accepted, more than one are discarded and
 	considered impossible to convert
 
-	*** VERIFY
-	- Constructors
+	*** OPEN QUESTIONS TP VERIFY
+	- Constructors: ok to set to private, BUT the destructor? In this case probably yes
+	becuas the class is not instantiable, but otherwise what would happen?
 	- why MAX_INT is converted into float as 2147483648.0f and not 2147483647.0f ???
-	- I have a fucking BUG in floats!!! try ./convert 340282346638528859811704183484516925440.000000f
-	the f is not printed why ???
+	- what about overflows when they reach LONG or something else?
 */
+
 int main ( int argc, char** argv ) {
 	try {
 		if (argc != 2)

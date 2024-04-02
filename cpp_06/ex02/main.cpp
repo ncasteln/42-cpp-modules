@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/14 13:52:43 by nico             ###   ########.fr       */
+/*   Updated: 2024/04/02 15:06:48 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@
 #include <ctime>	//std::time()
 #include <iostream>
 
-/*	SUBJECT
+/*	SUBJECT:
 	It randomly instanciates A, B or C and returns the instance as a Base
 	pointer. Feel free to use anything you like for the random choice
-	implementation.
-*/
+	implementation. */
 static Base* generate(void) {
 	std::srand(static_cast<unsigned int>(std::time(NULL)));
 	int r = std::rand() % 3;
@@ -35,11 +34,14 @@ static Base* generate(void) {
 		return (new C);
 }
 
-/*	SUBJECT
+/*	SUBJECT about this function:
 	It prints the actual type of the object pointed to by p: "A", "B" or "C".
-*/
+
+	The function try to perform Base-to-derived conversion. This is possible
+	*/
 static void identify(Base* p) {
 	std::cout << "[ Identify using Base pointer ]" << std::endl;
+	std::cout <<  "The instance generated was of type ";
 	if (dynamic_cast<A*>(p))
 		std::cout << "[ A ]" << std::endl;
 	else if (dynamic_cast<B*>(p))
@@ -48,29 +50,28 @@ static void identify(Base* p) {
 		std::cout << "[ C ]" << std::endl;
 }
 
-/*	SUBJECT
+/*	SUBJECT about this function:
 	It prints the actual type of the object pointed to by p: "A", "B" or "C".
-	Using a pointer inside this function is forbidden.
-*/
+	Using a pointer inside this function is forbidden. */
 static void identify(Base& p) {
 	std::cout << "[ Identify using Base reference ]" << std::endl;
 	try {
 		dynamic_cast<A&>(p);
-		std::cout << "[ A ]" << std::endl;
+		std::cout << "The instance generated was of type [ A ]" << std::endl;
 		return ;
 	} catch( std::exception& e ) {
 		std::cerr << "A: " << e.what() << std::endl;
 	}
 	try {
 		dynamic_cast<B&>(p);
-		std::cout << "[ B ]" << std::endl;
+		std::cout << "The instance generated was of type [ B ]" << std::endl;
 		return ;
 	} catch( std::exception& e ) {
 		std::cerr << "B: "<< e.what() << std::endl;
 	}
 	try {
 		dynamic_cast<C&>(p);
-		std::cout << "[ C ]" << std::endl;
+		std::cout << "The instance generated was of type [ C ]" << std::endl;
 		return ;
 	} catch( std::exception& e ) {
 		std::cerr << "C: " << e.what() << std::endl;
@@ -87,10 +88,13 @@ static void identify(Base& p) {
 	dynamic_cast, using identify(Base&) we have to catch the exception thrown in
 	case of failure, which is std::bad_cast.
 
-	The subject specifies that we have not to use OCC for ALL those classes.
+	The subject specifies that we have not to use OCC for those classes.
 
 	QUESTIONS:
-	- virtual for destructor, why exactly is needed? Not properly clear
+	- virtual for destructor, why exactly is needed?
+		Because it make the class "Polymorphic" ( CHECK WHAT MEANS ). Without it
+		it doesn't compile.
+	ANOTHER QUESTION: a virtual destructor why and when is needed ???
 */
 int main ( void ) {
 	Base*	p = generate();
@@ -99,5 +103,7 @@ int main ( void ) {
 	std::cout << std::endl;
 
 	identify(*p);
+
+	delete p;
 	return (0);
 }
