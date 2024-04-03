@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/02 14:49:25 by nico             ###   ########.fr       */
+/*   Updated: 2024/04/03 10:10:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,6 @@
 #include <iostream>
 #include <cstdlib>
 
-
-/*
-	*** RESUME
-	The exercise shows how to use reinterpret_cast, used to cast a type to
-	another complete different type. In this case uintptr_t is used so that
-	data is preserved.
-	During serialization of the object, the pointer of Data* is reinterpreted
-	as uintptr_t. During deserialization, the opposite process is performed.
-	During this cast and re-cast, the data is preserved.
-
-	See Serializer.hpp to check other theory.
-
-	*** VERIFY
-	- Constructors how they should be ???
-
-	*** SOLVED
-	- WHY THE FUCK the integer changes ??? try 10 becomes a, etc
-		Because when I use std::hex, it is saved for every following std::cout, so
-		pay attention to reset to default using std:dec. The result was the hex
-		conversion of the integer.
-*/
 int main ( void ) {
 	Data obj;
 
@@ -61,7 +40,7 @@ int main ( void ) {
 
 	Data* deserialized = Serializer::deserialize(serialized);
 	std::cout << "[ After deserialization ]" << std::endl;
-	std::cout << "| deserialized address  : " << &deserialized << std::endl;
+	std::cout << "| deserialized address  : " << deserialized << std::endl;
 	std::cout << "| i                     : " << deserialized->i << std::endl;
 	std::cout << "| f                     : " << deserialized->f << std::endl;
 	std::cout << "| d                     : " << deserialized->d << std::endl;

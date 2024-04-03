@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
+#    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/04/02 14:45:44 by nico             ###   ########.fr        #
+#    Created: 2024/04/03 10:10:32 by ncasteln          #+#    #+#              #
+#    Updated: 2024/04/03 10:19:30 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
 
-# @-Wconversion - prevent implicit cast when accuracy is lost
+# @-Wconversion - prevent implicit cast when accuracy is lost.
+# @-Wshadow - warns about variable declarations that shadow a variable declared in an outer scope.
 CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Werror
 
 SRC			=	main.cpp \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/02 14:45:30 by nico             ###   ########.fr       */
+/*   Updated: 2024/04/03 10:43:53 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,12 @@
 	indicated by the subject (the 3 points above).
 	- I didnt handled strange notations which uses 'e' or other stuff like
 	"1UL" or "1L".
-	- The copy const and assignment don't do anything, because there is no member to
-	copy.
-	- Only parameters with ONE sign are accepted, more than one are discarded and
-	considered impossible to convert
 
 	*** OPEN QUESTIONS TP VERIFY
-	- Constructors: ok to set to private, BUT the destructor? In this case probably yes
-	becuas the class is not instantiable, but otherwise what would happen?
 	- why MAX_INT is converted into float as 2147483648.0f and not 2147483647.0f ???
-	- what about overflows when they reach LONG or something else?
-*/
-
+	- what about overflows when they reach LONG or something else? */
 int main ( int argc, char** argv ) {
+	ScalarConverter::displayLimits();
 	try {
 		if (argc != 2)
 			throw std::invalid_argument("invalid argument");
@@ -82,3 +75,18 @@ int main ( int argc, char** argv ) {
 	}
 	return (0);
 }
+
+// CHAR (8 bits) min: 0
+// CHAR (8 bits) max: 127
+
+// INT (32 bits) min: -2147483648
+// INT (32 bits) max: 2147483647
+
+// FLOAT (32 bits) min: 0.000000
+// FLOAT (32 bits) max: 340282346638528859811704183484516925440.000000
+
+// LONG (64 bits) min: -9223372036854775808
+// LONG (64 bits) max: 9223372036854775807
+
+// DOUBLE (64 bits) min: 0.000000
+// DOUBLE (64 bits) max: 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000
