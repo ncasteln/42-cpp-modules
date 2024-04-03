@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/03 10:41:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:35:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,83 @@ ScalarConverter::~ScalarConverter( void ) {}
 ScalarConverter::ScalarConverter( const ScalarConverter& obj ) { (void)obj; }
 
 void ScalarConverter::operator=( ScalarConverter& rhs) { (void)rhs; };
+
+// ------------------------------------------------------------------- GET TYPE
+int ScalarConverter::getType( std::string s ) {
+	int (*f[6])( std::string );
+	f[0] = &ScalarConverter::isChar;
+	f[1] = &ScalarConverter::isString;
+	f[2] = &ScalarConverter::isFloat;
+	f[3] = &ScalarConverter::isDouble;
+	f[4] = &ScalarConverter::isLong;
+	f[5] = &ScalarConverter::isInt;
+	int i = 0;
+	while (i < 6) {
+		if (f[i](s))
+			return (f[i](s));
+		i++;
+	}
+	return (0);
+}
+
+int ScalarConverter::isChar( std::string s ) {
+	if (s.size() == 1 && !isdigit(s[0]))
+		return (CHAR);
+	return (0);
+}
+
+/*	The followings things are checked: if the there are 2 dots, and the result
+	of finding them starting from left and from the right is different, means
+	that they are 2 dots; only one sign is accepted; convered case of '.f';
+	'f' is accepted only if at the end and a dot is present. */
+int ScalarConverter::isString( std::string s ) {
+	bool dot = true;
+
+	if (s.find('.') == std::string::npos)
+		dot = false;
+	if (dot && (s.find('.') != s.rfind('.')))
+		return (STRING);
+	std::string::iterator it = s.begin();
+	if (*it == '-' || *it == '+')
+		it++;
+	if (*it == '.' && *(it + 1) == 'f')
+		return (STRING);
+	while (it != s.end()) {
+		if (it == --(s.end()) && dot && *it == 'f')
+			break ;
+		if (!isdigit(*it) && *it != '.')
+			return (STRING);
+		it++;
+	}
+	return (0);
+}
+
+int ScalarConverter::isFloat( std::string s ) {
+	if (s.find('.') != std::string::npos)
+		if (*(--(s.end())) == 'f')
+			return (FLOAT);
+	return (0);
+}
+
+int ScalarConverter::isDouble( std::string s ) {
+	if (s.find('.') != std::string::npos)
+		return (DOUBLE);
+	return (0);
+}
+
+int ScalarConverter::isLong( std::string s ) {
+	long l = std::atol(s.c_str());
+	if (l < std::numeric_limits<int>::min() || l > std::numeric_limits<int>::max())
+		return (LONG);
+	return (0);
+}
+
+/*	isInt() is not necessary but was nice to have it to work with function
+	pointers in getType() function. */
+int ScalarConverter::isInt( std::string s ) {
+	(void)s;
+	return (INT);
+}
 
 // ----------------------------------------------------------------- CONVERSION
 void ScalarConverter::convert( std::string s ) {
@@ -45,20 +122,12 @@ void ScalarConverter::convert( std::string s ) {
 		throw std::invalid_argument("unknown type");
 }
 
-/*
-	To make the function cleaner we could use displayChar() and use atoi
-	first to get the int. But since the subjects asks to firstly cast the
-	value to its actual type, I-ve done in the following way.
-*/
 void ScalarConverter::handleChar( std::string s ) {
 	std::cout << "[ Type detection: " << "CHAR" << " ]" << std::endl;
 	char c = *s.c_str();
-	if (isprint(c))
-		std::cout << "char    : '" << c << "'" << std::endl;
-	else
-		std::cout << "char    : not printable" << std::endl;
 	int i = static_cast<int>(c);
-	std::cout << "int     : " << i << std::endl;
+	ScalarConverter::displayChar(i);
+	std::cout << "int     : " << static_cast<int>(c) << std::endl;
 	std::cout << "float   : " << std::fixed << std::setprecision(1) << static_cast<float>(i) << "f" << std::endl;
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;
 }
@@ -72,13 +141,17 @@ void ScalarConverter::handleInt( std::string s ) {
 	std::cout << "double  : " << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;
 }
 
-/*
-	Why verify if is it long? Because although the overflow of int is already
-	verified, we can still cast the value as float or double.
-*/
+/*	Why verify if is it long? Because although the overflow of int is already
+	verified, we can still cast the value as float or double. */
 void ScalarConverter::handleLong( std::string s ) {
-	std::cout << "[ Type detection: " << "LONG" << " ]" << std::endl ;
-	double d = std::atof(s.c_str());
+	std::cout << "[ Type detection: " << "LONG or more" << " ]" << std::endl ;
+	long l = std::atol(s.c_str()); // added
+
+	////////////////////////////////////
+	/* IF IT IS MORE THAN LONG ?????? */
+	////////////////////////////////////
+
+	double d = static_cast<double>(l);
 	if (std::isinf(d)) {
 		displaySpecial("impossible");
 		return ;
@@ -93,20 +166,16 @@ void ScalarConverter::handleLong( std::string s ) {
 /*
 	Similar to handleChar() and handleInt() functions, the float and double are
 	very similar to each other, but the subject explicits the exact steps that
-	should be performed, therefore the repetition is left as it is.
-*/
+	should be performed, therefore the repetition is left as it is. */
 void ScalarConverter::handleFloat( std::string s ) {
 	std::cout << "[ Type detection: " << "FLOAT" << " ]" << std::endl ;
 	float f = static_cast<float>(std::atof(s.c_str()));
-	double d;
-	if (std::isinf(f)) { // check if the result of conversion is infinite, in that case double is taken with atof
-		d = std::atof(s.c_str());
-		std::cout << "char    : impossible" << std::endl;
-		std::cout << "int     : impossible" << std::endl;
-	}
-	else
-		d = static_cast<double>(f); // otherwise is casted
-
+	// check if the result of conversion is infinite, in that case double is taken with atof
+	// if (std::isinf(f)) {
+	// 	ScalarConverter::displaySpecial("impossible");
+	// 	return ;
+	// }
+	double d = static_cast<double>(f); // otherwise is casted
 	// check of int overflow, if true impossible is printed
 	if (d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
 		std::cout << "char    : impossible" << std::endl;
@@ -155,93 +224,6 @@ void ScalarConverter::handleString( std::string s ) {
 		ScalarConverter::displaySpecial("impossible");
 }
 
-// ------------------------------------------------------------------- GET TYPE
-int ScalarConverter::getType( std::string s ) {
-	int (*f[6])( std::string );
-	f[0] = &ScalarConverter::isChar;
-	f[1] = &ScalarConverter::isString;
-	f[2] = &ScalarConverter::isFloat;
-	f[3] = &ScalarConverter::isDouble;
-	f[4] = &ScalarConverter::isLong;
-	f[5] = &ScalarConverter::isInt;
-	int i = 0;
-	while (i < 6) {
-		if (f[i](s))
-			return (f[i](s));
-		i++;
-	}
-	return (0);
-}
-
-/*	Take everything of size == 1, including digits from 0 to 9. */
-int ScalarConverter::isChar( std::string s ) {
-	if (s.size() == 1 && !isdigit(s[0])) // added
-		return (CHAR);
-	return (0);
-}
-
-int ScalarConverter::isString( std::string s ) {
-	bool dot = true;
-
-	/* Check if there is at least a dot, and if there are more than one */
-	if (s.find('.') == std::string::npos)
-		dot = false;
-	if (dot && (s.find('.') != s.rfind('.')))
-		return (STRING);
-
-	/* Only one sign is accepted, otherwise is a string */
-	std::string::iterator it = s.begin();
-	if (*it == '-' || *it == '+')
-		it++;
-
-	/* Cover edge case of .f */
-	if (*it == '.' && *(it + 1) == 'f')
-		return (STRING);
-
-	while (it != s.end()) {
-		if (it == --(s.end()) && dot && *it == 'f')	// f at the end, only if a dot was detected
-			break ;
-		if (!isdigit(*it) && *it != '.')
-			return (STRING);
-		it++;
-	}
-	return (0);
-}
-
-int ScalarConverter::isFloat( std::string s ) {
-	if (s.find('.') != std::string::npos)
-		if (*(--(s.end())) == 'f')
-			return (FLOAT);
-	return (0);
-}
-
-int ScalarConverter::isDouble( std::string s ) {
-	if (s.find('.') != std::string::npos)
-		return (DOUBLE);
-	return (0);
-}
-
-/*
-	isLong has been created to catch int overflow. double is used to verify the
-	overflow.
-	IMPORTANT!!! use double or long to catch it ?
-				here I am using double
-*/
-int ScalarConverter::isLong( std::string s ) {
-	long l = std::atol(s.c_str());
-	// double d = std::atof(s.c_str());
-	if (l < std::numeric_limits<int>::min() || l > std::numeric_limits<int>::max())
-		return (LONG);
-	return (0);
-}
-
-/*	isInt() is not necessary but was nice to have it to work with function
-	pointers in getType() function. */
-int ScalarConverter::isInt( std::string s ) {
-	(void)s;
-	return (INT);
-}
-
 // -------------------------------------------------------------------- DISPLAY
 /*	The function is created to avoid repetition between codes, since it is a
 	common repeated pattern. */
@@ -250,7 +232,7 @@ void ScalarConverter::displayChar( int i ) {
 	if (i >= 0 && i <= 127) {
 		c = static_cast<char>(i);
 		if (isprint(c))
-			std::cout << "char    : " << c << std::endl;
+			std::cout << "char    : '" << c << "'" << std::endl;
 		else
 			std::cout << "char    : not printable" << std::endl;
 	}

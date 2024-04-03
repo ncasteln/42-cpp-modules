@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:45 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/03 10:43:53 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:32:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@
 	- why MAX_INT is converted into float as 2147483648.0f and not 2147483647.0f ???
 	- what about overflows when they reach LONG or something else? */
 int main ( int argc, char** argv ) {
-	ScalarConverter::displayLimits();
 	try {
 		if (argc != 2)
 			throw std::invalid_argument("invalid argument");
