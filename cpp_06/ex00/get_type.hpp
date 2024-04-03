@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.hpp                                        :+:      :+:    :+:   */
+/*   get_type.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 16:24:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/03 16:24:15 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/04/03 14:58:13 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/04/03 16:20:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __DISPLAY_HPP__
-# define __DISPLAY_HPP__
+#ifndef __GET_TYPE_HPP__
+# define __GET_TYPE_HPP__
 
-#include <iostream>
+#include <string>
 
-/*
-	A function template called by iter was not required but in some way
-	suggested. IMPORTANT: when called by ::iter we need to specify the type
-	that ::display takes in order to work.
-*/
-template <typename T> void display( T item ) {
-	std::cout << "[ " << item << " ] ";
-}
+# define CHAR		1
+# define STRING		2
+# define FLOAT		3
+# define DOUBLE		4
+# define INT		5
+# define LONG		6
 
-#endif
+int getType( std::string s );
+int isChar( std::string s );
+int isString( std::string s );
+int isFloat( std::string s );
+int isDouble( std::string s );
+int isInt( std::string s );
+
+#endif /* __GET_TYPE_HPP__ */

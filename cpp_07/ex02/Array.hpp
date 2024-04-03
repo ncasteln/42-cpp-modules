@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 08:51:08 by nico              #+#    #+#             */
-/*   Updated: 2024/03/14 18:15:16 by nico             ###   ########.fr       */
+/*   Created: 2024/04/03 16:24:48 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/04/03 17:07:53 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,27 @@
 #include <exception>
 
 template <typename T>
-class Array {
+class Array
+{
 	private:
 		T* _array;
 		size_t _size;
 	public:
-		// ----------------------------------------------------- CANONICAL FORM
-		Array( void );
+		Array( void ); // -------------------------------------- CANONICAL FORM
 		~Array( void );
 		Array( const Array& obj );
 		Array& operator=( const Array& rhs );
-
-		// ------------------------------------------------- OTHER CONSTRUCTORS
-		Array( size_t n );
-
-		// ---------------------------------------------------------- OVERLOADS
-		T& operator[]( size_t n );
+		Array( size_t n ); // ------------------------------ OTHER CONSTRUCTORS
+		T& operator[]( size_t n ); // ------------------------------- OVERLOADS
 		const T& operator[]( size_t n ) const;
-
-		// ----------------------------------------------------- MEMB FUNCTIONS
-		size_t size( void ) const;
-
-		// ------------------------------------------------------------- EXCEPT
-		class OutOfRange;
+		size_t size( void ) const; // -------------------------- MEMB FUNCTIONS
+		class OutOfRange; // ------------------------------------------- EXCEPT
 };
 
-/*
-	I choose to separate declaration from implementation, but leaving them in
+/*	I choose to separate declaration from implementation, but leaving them in
 	the same file. An alternative could create a .tpp file which includes all
-	the extensions using #include "Array.tpp".
-*/
+	the extensions using #include "Array.tpp". */
+
 // ------------------------------------------------------------- CANONICAL FORM
 template <typename T> Array<T>::Array( void ): _array(0), _size(0) {}
 
@@ -92,7 +83,7 @@ template <typename T> T& Array<T>::operator[]( size_t n ) {
 	const int arr[2] = { 5, 7 };
 	arr[0] = 2;	-----> this is not allowed, lvalue cannot be modified
 */
-template <typename T> const T& Array<T>::operator[]( size_t n ) const {
+template <typename T> const T& Array<T>::operator[]( size_t n ) const { // second const catches if the instance was declared with const keyword, if not, it's not used this operator|reflects the intance
 	if (n >= this->_size)
 		throw OutOfRange();
 	return (_array[n]);

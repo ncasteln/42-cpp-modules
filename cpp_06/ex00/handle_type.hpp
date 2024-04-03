@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.hpp                                        :+:      :+:    :+:   */
+/*   handle_type.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 16:24:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/03 16:24:15 by ncasteln         ###   ########.fr       */
+/*   Created: 2024/04/03 15:04:55 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/04/03 16:03:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __DISPLAY_HPP__
-# define __DISPLAY_HPP__
+#ifndef __HANDLE_TYPE_HPP__
+# define __HANDLE_TYPE_HPP__
 
+#include <string>
 #include <iostream>
+#include <cstdlib>		// std::atoi, atof, atol, isprint, isdigit
+#include <cmath>		// std::isinf
+#include "display.hpp"
 
-/*
-	A function template called by iter was not required but in some way
-	suggested. IMPORTANT: when called by ::iter we need to specify the type
-	that ::display takes in order to work.
-*/
-template <typename T> void display( T item ) {
-	std::cout << "[ " << item << " ] ";
-}
+void handleChar( std::string );
+void handleInt( std::string );
+void handleDouble( std::string );
+void handleFloat( std::string );
+void handleString( std::string );
 
-#endif
+#endif /* __HANDLE_TYPE_HPP__ */

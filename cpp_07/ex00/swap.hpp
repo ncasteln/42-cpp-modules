@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   swap.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/03/14 14:01:21 by nico             ###   ########.fr       */
+/*   Created: 2024/04/03 16:23:32 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/04/03 16:26:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __SWAP_HPP__
 # define __SWAP_HPP__
 
-/*
+/*	TEMPLATE DEFINITION
 	Since the templates are compiled only by request, the declaration and
 	definition have to be in the same file (or use something like .tpp file).
 

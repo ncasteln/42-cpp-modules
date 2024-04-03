@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 18:20:59 by nico              #+#    #+#             */
-/*   Updated: 2024/03/14 17:58:42 by nico             ###   ########.fr       */
+/*   Created: 2024/04/03 16:24:52 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/04/03 17:04:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <Array.hpp>
+#include "Array.hpp"
 
 /* Subject main() */
 // #include <cstdlib>
@@ -70,12 +70,12 @@
 
 
 int main ( void ) {
-	//////////// not intantiable because no default type set //////////////////
-	// #include <typeinfo>
-	// Array<> default_type;
-	// std::cout << "Size of default_type[]: " << default_type.size() << std::endl;
-	// std::cout << typeid(default_type).name() << std::endl;
-	// std::cout << std::endl;
+	////////// not intantiable because no default type set //////////////////
+	#include <typeinfo>
+	Array<> default_type;
+	std::cout << "Size of default_type[]: " << default_type.size() << std::endl;
+	std::cout << typeid(default_type).name() << std::endl;
+	std::cout << std::endl;
 
 	Array<char> empty;
 	std::cout << "Size of empty[]: " << empty.size() << std::endl;
@@ -109,17 +109,21 @@ int main ( void ) {
 	std::cout << std::endl;
 
 	//////////////////////////// const instance ///////////////////////////////
+	// const int arr[3] = { 1,2,3 };
+	// arr[0] = 99;
 	const Array<double> immutable(10);
 	try {
 		std::cout << "immutable[5] before: " << immutable[5] << std::endl;
 		// immutable[5] = 900.9; // uncomment doesn't compile
+		// array.operator[](5) = 9;
 		std::cout << "immutable[5] after : " << immutable[5] << std::endl;
 	} catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
 	}
 	std::cout << std::endl;
 
-	/////////////// copy constructor && assignment op//////////////////////////
+
+	///////////// copy constructor && assignment op//////////////////////////
 	Array<int> ft(42);
 	for (int i = 0; i < (int)ft.size(); i++)
 		ft[i] = 42;

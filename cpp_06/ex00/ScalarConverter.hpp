@@ -6,58 +6,35 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/03 14:11:17 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:21:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __SCALARCONVERTER_HPP__
 # define __SCALARCONVERTER_HPP__
 
-#include <string>
-#include <iostream>
 #include <exception>
-#include <cstdlib>		// std::atoi, isprint, isdigit
-#include <iomanip>
-#include <limits>
-#include <cmath>		// std::isinf
+#include "get_type.hpp"
+#include "handle_type.hpp"
 
-# define CHAR		1
-# define STRING		2
-# define FLOAT		3
-# define DOUBLE		4
-# define INT		5
-# define LONG		6
-
+/*	As subj says, the class doesn't store anything , it has only static member
+	functions and is not instantiable. That because constructors/destructor are
+	made private.
+	The goal is create a class which can take a string, understand its type and
+	convert/display to char, int, float and double. Therefore it performs the
+	following steps:
+		1) Check the actual type
+		2) Convert to the actual type
+		3) Cast to the other types and display
+*/
 class ScalarConverter
 {
+	ScalarConverter( void );
+	~ScalarConverter( void );
+	ScalarConverter( const ScalarConverter& );
+	void operator=( ScalarConverter& );
 	public:
-		// ----------------------------------------------------------- GET TYPE
-		static int getType( std::string );
-		static int isChar( std::string );
-		static int isString( std::string );
-		static int isFloat( std::string );
-		static int isDouble( std::string );
-		static int isInt( std::string );
-
-		// --------------------------------------------------------- CONVERSION
 		static void convert( std::string );
-		static void handleChar( std::string );
-		static void handleInt( std::string );
-		static void handleDouble( std::string );
-		static void handleFloat( std::string );
-		static void handleString( std::string );
-
-		// ------------------------------------------------------------ DISPLAY
-		static void displayChar( int i );
-		static void displaySpecial( std::string );
-		static void displayImpossible( void );
-		static void displayLimits( void );
-	private:
-		// --------------------------------------------- CANONICAL CONSTRUCTORS
-		ScalarConverter( void );
-		~ScalarConverter( void );
-		ScalarConverter( const ScalarConverter& );
-		void operator=( ScalarConverter& );
 };
 
 #endif

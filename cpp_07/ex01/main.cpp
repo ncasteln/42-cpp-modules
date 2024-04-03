@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 08:52:58 by nico              #+#    #+#             */
-/*   Updated: 2024/03/14 14:19:19 by nico             ###   ########.fr       */
+/*   Created: 2024/04/03 16:24:27 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/04/03 16:37:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include "display.hpp"
 #include "addOne.hpp"
 
-/*	RESUME
-	- Try with other already implemented functions from libraries
-	- what contains main in the eval sheet???
-*/
 int main ( void ) {
 	int numbers[5] = { 10, 34, 56, 127, 999 };
 	::iter(numbers, 5, ::display<int>);
