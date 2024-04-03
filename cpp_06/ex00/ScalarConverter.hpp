@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:49:53 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/03 13:33:11 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:11:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ class ScalarConverter
 		static int isString( std::string );
 		static int isFloat( std::string );
 		static int isDouble( std::string );
-		static int isLong( std::string );
 		static int isInt( std::string );
 
 		// --------------------------------------------------------- CONVERSION
@@ -47,11 +46,11 @@ class ScalarConverter
 		static void handleDouble( std::string );
 		static void handleFloat( std::string );
 		static void handleString( std::string );
-		static void handleLong( std::string );
 
 		// ------------------------------------------------------------ DISPLAY
 		static void displayChar( int i );
 		static void displaySpecial( std::string );
+		static void displayImpossible( void );
 		static void displayLimits( void );
 	private:
 		// --------------------------------------------- CANONICAL CONSTRUCTORS
