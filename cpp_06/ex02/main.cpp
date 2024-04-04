@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 10:11:00 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/03 10:13:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:31:00 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,21 @@ static void identify(Base* p) {
 static void identify(Base& p) {
 	std::cout << "[ Identify using Base reference ]" << std::endl;
 	try {
-		dynamic_cast<A&>(p);
+		A a = dynamic_cast<A&>(p);
 		std::cout << "The instance generated was of type [ A ]" << std::endl;
 		return ;
 	} catch( std::exception& e ) {
 		std::cerr << "A: " << e.what() << std::endl;
 	}
 	try {
-		dynamic_cast<B&>(p);
+		B b = dynamic_cast<B&>(p);
 		std::cout << "The instance generated was of type [ B ]" << std::endl;
 		return ;
 	} catch( std::exception& e ) {
 		std::cerr << "B: "<< e.what() << std::endl;
 	}
 	try {
-		dynamic_cast<C&>(p);
+		C c = dynamic_cast<C&>(p);
 		std::cout << "The instance generated was of type [ C ]" << std::endl;
 		return ;
 	} catch( std::exception& e ) {
