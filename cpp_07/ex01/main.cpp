@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:24:27 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/04 09:14:46 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:33:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,13 @@ int main ( void ) {
 	::iter(strings, 3, ::addOne<std::string>);	// add char like hello+=W ---> helloW
 	::iter(strings, 3, ::display<std::string>);
 	std::cout << std::endl << std::endl;
+
+	std::cout << "[ negative index ]" << std::endl;
+	::iter(c, -1, ::addOne<char>);
+	std::cout << std::endl;
+
+	std::cout << "[ other syntax ]" << std::endl;
+	::iter<std::string, size_t, void(*)(std::string) >(strings, 3, display);
+	std::cout << std::endl;
 	return (0);
 }

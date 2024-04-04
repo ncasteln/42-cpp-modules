@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:25:37 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/03 16:25:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/04 13:43:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ long Span::shortestSpan( void ) const {
 	long span = std::numeric_limits<long>::max();
 	std::vector<int>::iterator cpy_it = cpy.begin();
 
-	while (cpy_it != (cpy.end() - 1)) {
+	while (cpy_it != (cpy.end() - 1)) { // std::sort(begin() end() f) ---> f(int int) ---- 3 7 8 12 14 --- [3,7] [7,8] [8,12] [12,14]
 		long curr = static_cast<long>(*cpy_it);
 		long next = static_cast<long>(*(cpy_it + 1));
 		long diff = curr - next;
@@ -69,12 +69,10 @@ long Span::shortestSpan( void ) const {
 	return (span);
 }
 
-/*
-	mind and max_element return an iterator to the min and maximum value of the
+/*	min and max_element return an iterator to the min and maximum value of the
 	given range of iterators.
 	@param long span: used long to include the longest possible span between the
-	int limits.
-*/
+	int limits. */
 long Span::longestSpan( void ) const {
 	if (this->_N < 2)
 		throw SpanExcept();
