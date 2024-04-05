@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 08:50:52 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/05 08:50:53 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:02:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,19 @@ MutantStack<T>& MutantStack<T>::operator=( const MutantStack& rhs ) {
 	this->c = rhs.c;
 	return (*this);
 };
+
+/* Display function */
+template <typename T>
+std::ostream& operator<<( std::ostream& cout, MutantStack<T> mstack ) {
+	cout << "[ MUTANT STACK ]";
+	typename MutantStack<T>::iterator it = mstack.begin();
+	while (it != mstack.end()) {
+		cout << "[ " << *it << " ] ";
+		it++;
+	}
+	cout << std::endl;
+	return (cout);
+}
 
 #endif
 

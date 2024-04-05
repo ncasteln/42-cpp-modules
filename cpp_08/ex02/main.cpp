@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 08:50:37 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/05 08:50:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:01:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,18 @@
 /* Basic test */
 int main( void ) {
 	MutantStack<int> mstack;
-
 	mstack.push(5);
 	mstack.push(17);
 	mstack.push(3);
 	mstack.push(5);
 	mstack.push(737);
 	mstack.push(99);
+	std::cout << mstack << std::endl;
 
-	MutantStack<int>::iterator it = mstack.begin();		// *(it) deference to 5
-	MutantStack<int>::iterator ite = mstack.end();		// *(--ite) deference to 99
+	// MutantStack<int>::iterator it = mstack.begin();		// *(it) deference to 5
+	// MutantStack<int>::iterator ite = mstack.end();		// *(--ite) deference to 99
 	// same result ---> std::stack<int>::container_type::iterator it = mstack.begin();
 	// same result ---> std::stack<int>::container_type::iterator ite = mstack.end();
-
 	return (0);
 }
 
