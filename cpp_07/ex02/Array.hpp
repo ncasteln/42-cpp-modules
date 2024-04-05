@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:24:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/04 11:30:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:28:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ template <typename T> Array<T>::Array( size_t n ) {
 
 // -------------------------------------------------------- OVERLADED OPERATORS
 template <typename T> T& Array<T>::operator[]( size_t n ) {
-	if (n >= this->_size)
+	if (static_cast<int>(n) < 0 || n >= this->_size)
 		throw OutOfRange();
 	return (this->_array[n]);
 }
@@ -87,7 +87,7 @@ template <typename T> T& Array<T>::operator[]( size_t n ) {
 	TO:		(const int &)0 = 999; ---> evidence that is not possible
 */
 template <typename T> const T& Array<T>::operator[]( size_t n ) const {
-	if (n >= this->_size)
+	if (static_cast<int>(n) < 0 || n >= this->_size)
 		throw OutOfRange();
 	return (_array[n]);
 }
