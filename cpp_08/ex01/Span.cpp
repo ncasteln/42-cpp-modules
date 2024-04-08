@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:25:37 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/05 15:51:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:01:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,24 @@ Span::Span( unsigned int N ):
 }
 
 // ----------------------------------------------------------- MEMBER FUNCTIONS
-/*	std::sort(_container.begin(), _container.end()); by trying this
-	I have a BIG error during compiling, why? Because of [const] keyword. */
+/*	A cpy of the container is created, sorted and then iterated. Curr and next
+	items are compared and the difference updated if matches the condition.
+	I start with span of <long>max() just to have a starting point.
+	Since the nums are sorted, [curr - next] will give always a neg value which
+	is then turned to positive.
+*/
 long Span::shortestSpan( void ) const {
 	if (_N < 2)
 		throw Error(E_SPAN);
 	std::vector<int> cpy(_container);
-
 	std::sort(cpy.begin(), cpy.end());
-
-	long span = std::numeric_limits<long>::max(); // made to have a start different frmo the first pair (i didnt like it)
-
+	long span = std::numeric_limits<long>::max();
 	std::vector<int>::iterator cpy_it = cpy.begin();
-
 	while (cpy_it != (cpy.end() - 1)) {
 		long curr = static_cast<long>(*cpy_it);
 		long next = static_cast<long>(*(cpy_it + 1));
 		long diff = curr - next;
-		std::cout << "(" << curr << ") - (" << next << ") = " << diff << std::endl; // ------------ remove!!!!
-		// since they are sorted in ascending order curr is always smaller than next
-		// therefore diff is always NEGATIVE and has to be turned to positive
-		// either with *= 1 or this way
-		diff = -diff; // get abs value of diff
+		diff *= -1;
 		if (diff < span)
 			span = diff;
 		cpy_it++;
@@ -99,19 +95,21 @@ void Span::addNumber( int n ) {
 
 /*	std::generate accept a range of iterators and a function which has the job
 	to generate an item, which will be stored in the appropriate slot.
+
 	It is not used the begin() iterator of the container, because it depends
 	the function fillContainer() could be called after a couple of call of
 	addNumber(). */
 static int randomNumber( void ) {
 	if (std::rand() % 2)
-		return (std::rand() % std::numeric_limits<int>::max() * -1);
-	return (std::rand() % std::numeric_limits<int>::max());
+		return (std::rand() % std::numeric_limits<int>::max());
+	return (std::rand() % std::numeric_limits<int>::min() ); // * -1
 }
 void Span::fillContainer( void ) {
 	if (_it == _container.end())
 		throw Error(E_SIZEMAX);
 	std::srand(static_cast<unsigned int>(std::time(NULL)));
 	std::generate(_it, _container.end(), randomNumber);
+	_it = _container.end();
 }
 
 // ---------------------------------------------------------- DISPLAY FUNCTIONS

@@ -6,15 +6,16 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/04/05 08:50:48 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/04/08 11:20:05 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	a.out
 
 # @-Wconversion - prevent implicit cast when accuracy is lost.
+# @-Wsign-conversion - prevent implicit change of sign.
 # @-Wshadow - warns about variable declarations that shadow a variable declared in an outer scope.
-CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion #-Werror
+CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Wsign-conversion -Werror
 
 SRC			=	main.cpp
 HEADERS		=	MutantStack.hpp

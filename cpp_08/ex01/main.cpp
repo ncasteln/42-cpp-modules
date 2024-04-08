@@ -6,49 +6,47 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:25:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/05 15:41:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:23:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
-#include <list>
-
 /* Basic examples */
-// int main ( void ) {
-// 	try {
-// 		int N = 5;
-// 		Span s(N);
+int main ( void ) {
+	try {
+		unsigned int N = 5;
+		Span s(N);
 
-// 		// short 1 / long 200
-// 		s.addNumber(100);
-// 		s.addNumber(11);
-// 		s.addNumber(-100);
-// 		s.addNumber(70);
-// 		s.addNumber(10);
+		// short 1 / long 200
+		s.addNumber(100);
+		s.addNumber(11);
+		s.addNumber(-100);
+		s.addNumber(70);
+		s.addNumber(10);
 
-// 		// short 0 / long 3
-// 		// s.addNumber(1);
-// 		// s.addNumber(2);
-// 		// s.addNumber(0);
-// 		// s.addNumber(-1);
-// 		// s.addNumber(2);
+		// short 0 / long 3
+		// s.addNumber(1);
+		// s.addNumber(2);
+		// s.addNumber(0);
+		// s.addNumber(-1);
+		// s.addNumber(2);
 
-// 		// short 0 / long 0
-// 		// s.addNumber(42);
-// 		// s.addNumber(42);
-// 		// s.addNumber(42);
-// 		// s.addNumber(42);
-// 		// s.addNumber(42);
-// 		std::cout << "[ s content ] -> ";
-// 		s.displayContainer();
-// 		std::cout << "[ Longest span = " << s.longestSpan() << " ]" << std::endl;
-// 		std::cout << "[ Shortest span = " << s.shortestSpan() << " ]" << std::endl;
-// 	} catch (std::exception& e) {
-// 		std::cout << "Error: " << e.what() << std::endl;
-// 	}
-// 	return (0);
-// }
+		// short 0 / long 0
+		// s.addNumber(42);
+		// s.addNumber(42);
+		// s.addNumber(42);
+		// s.addNumber(42);
+		// s.addNumber(42);
+		std::cout << "[ s content ] -> ";
+		s.displayContainer();
+		std::cout << "[ Longest span = " << s.longestSpan() << " ]" << std::endl;
+		std::cout << "[ Shortest span = " << s.shortestSpan() << " ]" << std::endl;
+	} catch (std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+	return (0);
+}
 
 
 
@@ -128,7 +126,9 @@
 	// return (0);
 // }
 
-/* Particular cases */
+
+
+/* Edge cases */
 // int main( void ) {
 // 	/* one number */
 // 	try {
@@ -168,13 +168,9 @@
 /* Use of range of iterators to populate the container */
 // int main ( void ) {
 // 	try {
-// 		int N = 10000;
+// 		unsigned int N = 20;
 // 		Span s(N);
 // 		s.fillContainer();
-
-// 		// get max
-// 		// get low
-
 // 		s.displayContainer();
 // 		std::cout << "[ Longest span = " << s.longestSpan() << " ]" << std::endl;
 // 		std::cout << "[ Shortest span = " << s.shortestSpan() << " ]" << std::endl;
@@ -186,29 +182,47 @@
 
 
 
+/* A lot of number, limit given by subj */
+// int main ( void ) {
+// 	try {
+// 		unsigned int N = 10000;
+// 		Span s(N);
+// 		s.fillContainer();
+// 		s.displayContainer();
+// 		std::cout << "[ Longest span = " << s.longestSpan() << " ]" << std::endl;
+// 		std::cout << "[ Shortest span = " << s.shortestSpan() << " ]" << std::endl;
+// 	} catch (std::exception& e) {
+// 		std::cerr << "Error: " << e.what() << std::endl;
+// 	}
+// 	return (0);
+// }
+
+
+
+
 /* Use of range of iterators to populate the container */
-int main ( void ) {
-	try {
-		int N = 10;
-		Span s(N);
-		s.addNumber(10);
-		s.addNumber(-12);
-		s.addNumber(3);
-		s.addNumber(45);
-		s.addNumber(87);
-		s.addNumber(-100);
-		s.addNumber(89);
-		s.addNumber(7);
-		s.addNumber(14);
-		s.addNumber(132);
-		s.displayContainer();
-		std::cout << "[ Longest span = " << s.longestSpan() << " ]" << std::endl;
-		std::cout << "[ Shortest span = " << s.shortestSpan() << " ]" << std::endl;
-	} catch (std::exception& e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-	}
-	return (0);
-}
+// int main ( void ) {
+// 	try {
+// 		unsigned int N = 10;
+// 		Span s(N);
+// 		s.addNumber(10);
+// 		s.addNumber(-12);
+// 		s.addNumber(3);
+// 		s.addNumber(45);
+// 		s.addNumber(87);
+// 		s.addNumber(-100);
+// 		s.addNumber(89);
+// 		s.addNumber(7);
+// 		s.addNumber(14);
+// 		s.addNumber(132);
+// 		s.displayContainer();
+// 		std::cout << "[ Longest span = " << s.longestSpan() << " ]" << std::endl;
+// 		std::cout << "[ Shortest span = " << s.shortestSpan() << " ]" << std::endl;
+// 	} catch (std::exception& e) {
+// 		std::cerr << "Error: " << e.what() << std::endl;
+// 	}
+// 	return (0);
+// }
 
 
 
@@ -216,7 +230,7 @@ int main ( void ) {
 /* Try add more numbers than N */
 // int main ( void ) {
 // 	try {
-// 		int N = 3;
+// 		unsigned int N = 3;
 // 		Span s(N);
 // 		s.addNumber(5);
 // 		s.addNumber(15);

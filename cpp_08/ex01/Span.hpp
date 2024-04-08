@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:25:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/05 15:37:00 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:07:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 #include <vector>
 #include <algorithm>
-#include <iostream>		// display stuff
-#include <exception>
-#include <iterator>		// std::distance
+#include <iostream>		// display
+// #include <exception>
+// #include <iterator>		// std::distance
 #include <limits>		// std::numeric_limits
-#include <cstdlib>		// std::srand() rand()
+// #include <cstdlib>		// std::srand() rand()
 #include <ctime>		// std::time()
 
 /*
@@ -48,10 +48,8 @@ class Span
 		Span( void );
 	public:
 		~Span( void );
-		//explicit ??
 		Span( const Span& );
 		Span& operator= ( const Span& );
-		//explicit ??
 		Span( unsigned int N );
 	private: // ------------------------------------------------- OTHER MEMBERS
 		unsigned int _N;

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:25:12 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/05 09:28:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:19:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int randomNumber( void ) {
 // **************************** second approach *******************************
 int main ( void ) {
 	try {
-		int N = 10;
+		unsigned long N = 10;
 		std::vector<int> container(N);	// change container to list or deque, nothing changes
 		std::srand(static_cast<unsigned int>(std::time(NULL)));
 		std::generate(container.begin(), container.end(), randomNumber);
