@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:25:42 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/08 11:07:28 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:37:36 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>		// display
-// #include <exception>
-// #include <iterator>		// std::distance
 #include <limits>		// std::numeric_limits
-// #include <cstdlib>		// std::srand() rand()
 #include <ctime>		// std::time()
 
 /*

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:25:37 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/08 11:01:11 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:35:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void Span::addNumber( int n ) {
 static int randomNumber( void ) {
 	if (std::rand() % 2)
 		return (std::rand() % std::numeric_limits<int>::max());
-	return (std::rand() % std::numeric_limits<int>::min() ); // * -1
+	return (std::rand() % std::numeric_limits<int>::min());
 }
 void Span::fillContainer( void ) {
 	if (_it == _container.end())

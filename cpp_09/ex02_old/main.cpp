@@ -6,10 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:45:24 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/09 15:33:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/09 09:02:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "PmergeMe.hpp"
 
 /*	STRUCTURE
 	- Decision to take:
@@ -43,14 +44,16 @@
 	- don't overthink
 */
 
-#include "PmergeMe.hpp"
-#include <vector>
-#include <deque>
-
-int main ( int argc, char** argv ) {
+int main (int argc, char** argv) {
 	try {
-		PmergeMe<std::vector<int> > vector(argc, argv, VECTOR);
-		// PmergeMe<std::deque<int> > deque(argc, argv, DEQUE);
+		std::vector<int> vector;
+
+
+		// PmergeMe vector(argc, argv, VECTOR);
+		// vector.fordJohnson/*Vector*/();
+
+		// PmergeMe list(argc, argv, LIST);
+		// list.fordJohnson/*List*/();
 
 	} catch (std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
