@@ -1,8 +1,0 @@
-LIST OF SMALL CHANGES TO REMEMBER TO PERFORM
-- Use official headers
-- Makefile remove -I./
-
-# @-Wconversion - prevent implicit cast when accuracy is lost.
-# @-Wsign-conversion - prevent implicit change of sign.
-# @-Wshadow - warns about variable declarations that shadow a variable declared in an outer scope.
-CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Wsign-conversion -Werror

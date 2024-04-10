@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:45:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/09 16:12:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:39:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,10 @@ PmergeMe<T>::PmergeMe( int argc, char** argv, e_cont type ): _type(type) {
 	if (_type == VECTOR) {
 		std::vector<std::pair<int, int> > pair_vector;
 		pairing(_container, pair_vector);
-		displayContainerPair(pair_vector);
-		mergeSort(pair_vector);
-		// insert(pair_vector);
+		displayContainerPair(pair_vector, 0);
+
+		std::vector<std::pair<int,int> > temp(pair_vector.size(), std::make_pair(-1,-1));
+		mergeSort(pair_vector, pair_vector.begin(), --pair_vector.end(), temp);
 	}
 	else {
 		// std::vector<std::pair<int, int> > pair_list;
@@ -84,6 +85,5 @@ template <typename T>
 class PmergeMe<T>::InvalidInput: public std::exception {
 	const char* what() const throw() { return ("invalid input"); };
 };
-
 
 #endif /* __PMERGEME_HPP__ */

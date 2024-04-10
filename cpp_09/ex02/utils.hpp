@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:46:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/09 16:11:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/10 12:59:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,14 @@ void displayContainer( T container ) {
 }
 
 static void displayPair( std::pair<int, int> p ) { std::cout << "[ " << p.first << " , " << p.second << " ] "; }
+static void displayPairFirst( std::pair<int, int> p ) { std::cout << "[ " << p.first << "] "; }
 template <typename T>
-void displayContainerPair( T container ) {
+void displayContainerPair( T container, int both ) {
 	std::cout << std::setw(20) << std::left << "[ PAIR_CONTAINER ]";
-	std::for_each(container.begin(), container.end(), displayPair);
+	if (both)
+		std::for_each(container.begin(), container.end(), displayPair);
+	else
+		std::for_each(container.begin(), container.end(), displayPairFirst);
 	std::cout << std::endl;
 }
 
@@ -85,38 +89,7 @@ void pairing( T& container, U& pair_container ) {
 
 // -------------------------------------------------------------------- SORTING
 template <typename T>
-void mergeSort( T& container ) {
-	std::sort(container.begin(), container.end());
-	std::cout << "[ AFTER MERGESORT ] " << std::endl;
-	displayContainerPair(container);
-}
-
-std::vector<int> createInsertionOrder( std::vector<int> main, std::vector<int> pend ) {
-	std::vector<int> jacob;
-	std::vector<int> ins_order; // collection of the order of the ins_order to pick from pend chain
-	long prev_prev;
-	long prev;
-	long n = 0;
-
-	jacob.push_back(0); // the jacob numbers are created starting from the second 1
-	jacob.push_back(1); // then it will have to be started from idx 1
-	int i = 0;
-	while(true) { // modify the condition: stop when the size of pend_chain is reached!
-		prev_prev = jacob[i];
-		prev = jacob[i + 1];
-		n = prev + (prev_prev * 2);
-		if (n > std::numeric_limits<int>::max())
-			break ;
-		jacob.push_back(static_cast<int>(n));
-		updateInsertionOrder(ins_order, static_cast<int>(n), prev, static_cast<int>(pend.size()));
-		if (n >= static_cast<int>(pend.size())) break ; //finish to populate the ins_order vector
-		i++;
-	}
-	return (ins_order);
-}
-
-template <typename T>
-void insert( T& container ) {
+void mergeSort( T& container, std::vector<std::pair<int, int> >::iterator l, std::vector<std::pair<int, int> >::iterator r, std::vector<std::pair<int, int> > temp ) {
 
 }
 
