@@ -12,7 +12,7 @@ class Dummy: public ATarget
 		Dummy( const Dummy& obj );
 		Dummy& operator=( const Dummy& obj );
 
-		ATarget* clone( void );
+		ATarget* clone( void ) const;
 };
 
 #endif /* __DUMMY_HPP__ */

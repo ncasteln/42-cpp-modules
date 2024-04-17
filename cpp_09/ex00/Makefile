@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/04/09 10:26:43 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/04/16 13:08:08 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,19 +18,17 @@ NAME		=	btc
 CXXFLAGS	=	-std=c++98 -Wall -Wextra -Wshadow -Wconversion -Wsign-conversion -Werror
 
 SRC			=	main.cpp \
-				BitcoinExchange.cpp \
-				utils.cpp
-HEADERS		=	BitcoinExchange.hpp \
-				utils.hpp
+				BitcoinExchange.cpp
+HEADERS		=	BitcoinExchange.hpp
 OBJS		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADERS)
-	c++ $(CXXFLAGS) $(OBJS) -o $(NAME) -I./
+	c++ $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp $(HEADERS)
-	c++ $(CXXFLAGS) -c $< -o $@ -I./
+	c++ $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJS)

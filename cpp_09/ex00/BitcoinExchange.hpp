@@ -3,78 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:17:21 by nico              #+#    #+#             */
-/*   Updated: 2024/03/23 16:18:40 by nico             ###   ########.fr       */
+/*   Updated: 2024/04/16 15:32:56 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __BITCOINEXCHANGE_HPP__
 # define __BITCOINEXCHANGE_HPP__
 
-#include "utils.hpp"
-
 #include <map>
 #include <string>
 #include <exception>
 #include <iostream>
 #include <limits>
-#include <fstream>
+#include <fstream>	// stream operations
 #include <iomanip>
-
 #include <cstdlib>
 #include <ctime>
 
-#define LINE	"---------------------------------------------------------"
-
-enum e_type {
+typedef enum file_type {
 	INPUT = '|',
 	DATABASE = ',',
 	UNKNOWN
-};
+}	e_type;
 
 class BitcoinExchange
 {
 	private:
-		const e_type _type;
+		const e_type _type; // ------------------------------- MEMBER VARIABLES
 		float _value;
 		std::map<std::string, int> _date;
-
-		// OCC
-		BitcoinExchange( void ); // made private because i never want to init a default one
+		BitcoinExchange( void ); // ---------------------------- CANONICAL FORM
 	public:
-		// OCC
 		~BitcoinExchange( void );
 		BitcoinExchange( const BitcoinExchange& );
 		BitcoinExchange& operator=( const BitcoinExchange& );
-
-		// PARAM CONSTRUCTOR
-		BitcoinExchange( e_type );
-		BitcoinExchange( std::string, e_type );
-
-		// GETTERS
-		std::map<std::string, int> getDate( void );
-		float getValue( void );
-
-		// MEMBER FUNCTIONS
-		void mapDate( std::string to_split );	//make private?
-		bool isValidDate( void );				//make private?
-		bool isValidValue( std::string );
-		void displayMatch( const float exchange_rate );
-
-		// OVERLOAD OPERATORS
-		bool operator>( BitcoinExchange& );
-		bool operator<( BitcoinExchange& );
-		bool operator==( BitcoinExchange& );
-
-		// EXCEPTIONS
-		class InvalidFormat;
-		enum e_err_list {
+		BitcoinExchange( e_type ); // ----------------------- PARAM CONSTRUCTOR
+		BitcoinExchange( std::string line, e_type );
+		class InvalidFormat; // ------------------------------------ EXCEPTIONS
+		typedef enum err {
+			SUCCESS,
+			E_EMPTY,
 			E_NOSEP,
 			E_INVDATE,
-			E_INVVAL
-		};
+			E_INVCHAR,
+			E_OVERFLOW,
+			E_TOOLARGE
+		}	e_err;
+		std::map<std::string, int> getDate( void ); // ---------------- GETTERS
+		float getValue( void );
+		void mapDate( std::string to_split ); // ------------- MEMBER FUNCTIONS
+		bool isValidDate( void );
+		e_err isValidValue( std::string );
+		bool findMatch( BitcoinExchange db, BitcoinExchange& prev );
+		void displayMatch( const float exchange_rate );
+		bool operator>( BitcoinExchange& ); // ------------- OVERLOAD OPERATORS
+		bool operator<( BitcoinExchange& );
+		bool operator==( BitcoinExchange& );
 };
 
 class BitcoinExchange::InvalidFormat: public std::exception
@@ -82,10 +69,11 @@ class BitcoinExchange::InvalidFormat: public std::exception
 	private:
 		int _n;
 	public:
-		InvalidFormat( enum e_err_list n );
+		InvalidFormat( e_err n );
 		const char* what() const throw();
 };
 
 std::ostream& operator<<( std::ostream& cout, BitcoinExchange& obj );
+std::string& trim( std::string& s, const char* to_trim );
 
 # endif /* __BITCOINEXCHANGE_HPP__ */

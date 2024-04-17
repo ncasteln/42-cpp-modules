@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 11:27:01 by nico              #+#    #+#             */
-/*   Updated: 2024/03/26 08:20:49 by nico             ###   ########.fr       */
+/*   Created: 2024/04/16 13:08:44 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/04/17 12:12:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,26 @@
 #include <iomanip>
 #include <limits>
 
-class RPN
-{
+#ifndef VERBOSE
+# define VERBOSE	0
+#endif
+
+class RPN {
 	private:
-		std::stack<int> _a;
-		std::stack<char> _b;
+		std::stack<int> _a;		/* Stack which take the results of _b */
+		std::stack<char> _b;	/* Stack populated by the input */
 	public:
-		RPN( void );
+		RPN( void ); // ---------------------------------------- CANONICAL FORM
 		~RPN( void );
 		RPN( const RPN& );
 		RPN& operator=( const RPN& rhs );
-
-		RPN( std::string expr );
-
-		int isOperator( char c ) const;
+		RPN( std::string expr ); // ------------------------- PARAM CONSTRUCTOR
+		bool isOperator( char c ) const; // ------------------- MEMBER FUNCTIONS
 		int resolveExpr( void );
 		void resolveStack( std::stack<int>& stack, char op );
-		int resolveOperation( int left, int right, char op );
-
-		void displayStacks( void );
-
-		class InvalidInput;
+		int resolveOperation( long left, long right, char op );
+		void displayStacks( void ); // ---------------------------------- UTILS
+		class InvalidInput; // ------------------------------------- EXCEPTIONS
 		enum err_list {
 			E_EMPTY,
 			E_INVCHAR,

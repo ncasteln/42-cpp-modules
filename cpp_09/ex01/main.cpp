@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 11:28:57 by nico              #+#    #+#             */
-/*   Updated: 2024/03/26 08:04:50 by nico             ###   ########.fr       */
+/*   Created: 2024/04/16 13:08:50 by ncasteln          #+#    #+#             */
+/*   Updated: 2024/04/17 12:09:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 		return (std::cerr << "Error: invalid argc" << std::endl, 1);
 	try {
 		RPN rpn(argv[1]);
-		int result = rpn.resolveExpr();
+		long result = rpn.resolveExpr();
 		std::cout << "Result [ " << result << " ]" << std::endl;
 	} catch (std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;

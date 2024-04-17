@@ -15,6 +15,6 @@ Fwoosh& Fwoosh::operator=( const Fwoosh& rhs ) { // -------====--============> r
 	return (*this);
 }
 
-ASpell* Fwoosh::clone( void ) {
+ASpell* Fwoosh::clone( void ) const {
 	return (new Fwoosh);
 }

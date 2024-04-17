@@ -11,12 +11,12 @@ class ATarget
 {
 	public:
 		ATarget( void );
-		~ATarget( void );
+		virtual ~ATarget( void );
 		ATarget( const ATarget& );
 		ATarget& operator=( const ATarget& );
 		const std::string& getType( void ) const;
 
-		virtual ATarget* clone( void ) = 0;
+		virtual ATarget* clone( void ) const = 0;
 
 		void getHitBySpell( const ASpell& ) const;
 	protected:

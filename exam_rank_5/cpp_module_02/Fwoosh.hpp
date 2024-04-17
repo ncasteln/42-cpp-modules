@@ -12,7 +12,7 @@ class Fwoosh: public ASpell
 		Fwoosh( const Fwoosh& obj );
 		Fwoosh& operator=( const Fwoosh& obj );
 
-		ASpell* clone( void );
+		ASpell* clone( void ) const;
 };
 
 #endif /* __FWOOSH_HPP__ */

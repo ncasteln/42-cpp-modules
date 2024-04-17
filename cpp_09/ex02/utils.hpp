@@ -6,91 +6,208 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:46:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/10 12:59:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:21:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __UTILS_HPP__
 # define __UTILS_HPP__
 
+#include <vector>
+#include <deque>
+#include <ctime>
 #include <iostream>
 #include <iomanip>
-#include <cstdlib>
 #include <algorithm>
-#include <vector>
-#include <list>
+#include <limits>
 
+typedef enum cont { VECTOR, DEQUE }	e_cont;
+typedef enum chain { MAIN, PEND }	e_chain;
+
+/*	Forward declaration is used to leave a meaningful order to the steps of
+	sorting and the function used during the process. */
+template <typename T> T createJacobsthalSequence( T container );
+template <typename T> T createInsertionOrder( T jacobSequence, size_t container_size );
+template <typename T> T binSearch( unsigned int item, T begin, T end );
+template <typename T> bool isSorted( T container );
+template <typename T, typename U> T createChain( U pair_container, e_chain type );
+template<typename T> void verbose( std::string step, T first, T second );
+
+/*	Part of the parsing. The approach used is to modify the original std::string,
+	erasing its characters and reducing it to an empty string. An overflow check
+	is performed after use of atol(). */
 template <typename T>
-void extract_numbers( std::string arg, T& container ) {
+int extract_numbers( std::string arg, T& container ) {
 	size_t pos;
 	std::string number;
+	long n;
 
 	while (!arg.empty()) {
-		pos = arg.find_first_not_of(" \t"); // left trim of whitespaces
-		if (pos == std::string::npos) break ; // means, if there are no other member is finished
+		pos = arg.find_first_not_of(" \t");
+		if (pos == std::string::npos) break ;
 		arg.erase(0, pos);
-		pos = arg.find_first_not_of("1234567890"); // reach the end of the number, can be also end of the string
+		pos = arg.find_first_not_of("1234567890");
 		number = arg.substr(0, pos);
-		// check for overflow --------------------- !!!!!!
-		container.push_back(std::atoi(number.c_str()));
+		n = std::atol(number.c_str());
+		if (n < std::numeric_limits<int>::min() || n > std::numeric_limits<int>::max())
+			return (1);
+		container.push_back(static_cast<unsigned int>(n));
 		arg.erase(0, number.length());
 	}
-}
-
-template <typename T>
-int parse( int argc, char** argv, T& container ) {
-	for (int i = 1; i < argc; i++) {
-		std::string arg = argv[i];
-		if (arg.find_first_not_of("1234567890 \t") != std::string::npos)
-			return (1);
-		extract_numbers(arg, container);
-	};
-	if (container.empty())
-		return (1);
 	return (0);
 }
 
-// -------------------------------------------------------------------- DISPLAY
-static void displayItem( int item ) { std::cout << "[ " << item << " ]"; }
-template <typename T>
-void displayContainer( T container ) {
-	std::cout << std::setw(20) << std::left << "[ CONTAINER ] ";
-	std::for_each(container.begin(), container.end(), displayItem);
-	std::cout << std::endl;
-}
-
-static void displayPair( std::pair<int, int> p ) { std::cout << "[ " << p.first << " , " << p.second << " ] "; }
-static void displayPairFirst( std::pair<int, int> p ) { std::cout << "[ " << p.first << "] "; }
-template <typename T>
-void displayContainerPair( T container, int both ) {
-	std::cout << std::setw(20) << std::left << "[ PAIR_CONTAINER ]";
-	if (both)
-		std::for_each(container.begin(), container.end(), displayPair);
-	else
-		std::for_each(container.begin(), container.end(), displayPairFirst);
-	std::cout << std::endl;
-}
-
-// -------------------------------------------------------------------- PAIRING
+// -------------------------------------------------------------- SORTING STEPS
+/*	The function creates a container of pair, and directly sorts the items of
+	each pair by ascending order.
+	@_container.size() - (_container.size()%2) loop condition, depends if the
+	container size is odd or even. In case of odd i don't want create a pair
+	with the last element. */
 template <typename T, typename U>
-void pairing( T& container, U& pair_container ) {
+U pairing( T container ) {
+	U pair_container;
 	std::pair<int, int> p;
-	size_t isOddSize = 0;  // remember the last item in case the number of them is ODD ------ needed ?????????
 
-	if (container.size() % 2 != 0) // in the first step isOddSize is used to change the for loop, then hols a "real" value
-		isOddSize = 1;
-	for (size_t i = 0; i < container.size() - isOddSize; i += 2) {
+	for (size_t i = 0; i < container.size() - (container.size()%2); i += 2) {
 		p = std::make_pair(container[i], container[i + 1]); // create a pair two-by-two
-		if (p.first > p.second)
+		if (p.first < p.second)
 			std::swap(p.first, p.second);
 		pair_container.push_back(p); // push to the vector
 	}
+	verbose("[ PAIRING ]", createChain<T,U>(pair_container, MAIN), createChain<T,U>(pair_container, PEND));
+	return (pair_container);
 }
 
-// -------------------------------------------------------------------- SORTING
-template <typename T>
-void mergeSort( T& container, std::vector<std::pair<int, int> >::iterator l, std::vector<std::pair<int, int> >::iterator r, std::vector<std::pair<int, int> > temp ) {
+/*	Merge sort using iterators and takign a container of pairs as parameter. Se elements
+	are sorted based onf the first parameter of each pair in ascending order. */
+template <typename U>
+void merge( U& pair_container ) {
+	if (pair_container.size() <= 1)
+		return ;
+	long int middle = static_cast<long int>(pair_container.size() / 2);
 
+	U left(pair_container.begin(), pair_container.begin() + middle);
+	merge(left);
+
+	U right(pair_container.begin() + middle, pair_container.end());
+	merge(right);
+	std::merge(left.begin(), left.end(), right.begin(), right.end(), pair_container.begin());
+}
+
+/*	@if ((container.size() % 2) != 0), if the size was odd, the last element is
+	left and inserted into the main_chain. */
+template <typename T, typename U>
+T insertion( T container, U pair_container ) {
+	T jacobSequence = createJacobsthalSequence(container);
+	T insertionOrder = createInsertionOrder(jacobSequence, container.size());
+	T main_chain = createChain<T, U>(pair_container, MAIN);
+	T pend_chain = createChain<T, U>(pair_container, PEND);
+	typename T::iterator pendIt = pend_chain.begin();
+	typename T::iterator location;
+	while (pendIt != pend_chain.end()) {
+		location = binSearch(*pendIt, main_chain.begin(), main_chain.end());
+		main_chain.insert(location, *pendIt);
+		pendIt++;
+	}
+	if ((container.size() % 2) != 0) {
+		location = binSearch(*(--container.end()), main_chain.begin(), main_chain.end());
+		main_chain.insert(location, *(--container.end()));
+	}
+	verbose("[ JACOBING ]", jacobSequence, insertionOrder);
+	verbose("[ INSERTING ]", main_chain, pend_chain);
+	return (main_chain);
+}
+
+
+// ----------------------------------------------------------------- JACOBSTAHL
+/*	Create the Jacobsthal number sequence based on the container size. Jacobstahl
+	rule: start with 0 and 1, and then (prev+(prev_prev*2)).
+	@param jN: current calculating jacobsthal */
+template <typename T>
+T createJacobsthalSequence( T container ) {
+	T jacobSequence;
+	unsigned int prev_prev;
+	unsigned int prev;
+	unsigned int jN = 0;
+
+	jacobSequence.push_back(0);
+	jacobSequence.push_back(1);
+	size_t i = 0;
+	while(jN < static_cast<unsigned int>(container.size())) {
+		prev_prev = jacobSequence[i];
+		prev = jacobSequence[i + 1];
+		jN = prev + (prev_prev * 2);
+		jacobSequence.push_back(jN);
+		i++;
+	}
+	return (jacobSequence);
+}
+
+/*	Create the insertion order that the insertion sort will have to follow to
+	insert the items of the pend chain into the main one. This order follows
+	the jacobsthal numbers sequence.
+	@line: jacobSequence.erase(jacobSequence.begin() + 1); remove the second
+	item from the sequence 0 {1} 1 3 5 11 21 (pretty odd, but it's the same
+	if I pop and push the first of pend to main, and then start from 1). */
+template <typename T>
+T createInsertionOrder( T jacobSequence, size_t container_size ) {
+	jacobSequence.erase(jacobSequence.begin() + 1);
+	T insertionOrder;
+	typename T::iterator jit = jacobSequence.begin();
+	unsigned int n;
+	unsigned int prev;
+	while (insertionOrder.size() != (container_size / 2)) {
+		n = *jit;
+		if (jit == jacobSequence.begin()) {
+			insertionOrder.push_back(n);
+			prev = n;
+			jit++;
+			continue ;
+		}
+		while (n != prev) {
+			insertionOrder.push_back(n);
+			n--;
+			if (insertionOrder.size() == (container_size / 2))
+				break ;
+		}
+		prev = *jit;
+		jit++;
+	}
+	return (insertionOrder);
+}
+
+
+// ---------------------------------------------------------------------- UTILS
+/*	The function takes a container of pairs and retrieves a container of the same
+	type, with just the first (main chain) or the second (pend) items of the
+	pairs, based on the type passed. */
+template <typename T, typename U>
+T createChain( U pair_container, e_chain type ) {
+	T chain;
+	typename U::iterator it = pair_container.begin();
+	while (it != pair_container.end()) {
+		if (type == MAIN)
+			chain.push_back((*it).first);
+		else if (type == PEND)
+			chain.push_back((*it).second);
+		it++;
+	}
+	return (chain);
+}
+
+/*	BinarySearch using iterators; basically respect the same principles, so the
+	sequence of numbers in which the items has to find place, has to be sorted. */
+template <typename T>
+T binSearch( unsigned int item, T begin, T end ) {
+	if (begin == end)
+		return (begin);
+	long int m = std::distance(begin, end) / 2;
+	T mid = begin + m;
+	if (item < *mid)
+		return (binSearch(item, begin, mid));
+	else if (item > *mid)
+		return (binSearch(item, mid+1, end));
+	return (mid+1);
 }
 
 template <typename T>
@@ -104,6 +221,47 @@ bool isSorted( T container ) {
 		it++;
 	}
 	return (true);
+}
+
+
+// -------------------------------------------------------------------- DISPLAY
+/*	If the number are grater than 5 digits, change the value set by std::setw()
+	to see the cells well aligned. */
+static void displayItem( int n ) { std::cout << std::right << "[" << std::setw(5) << n << "]"; };
+template<typename T>
+void displayCont( T container, std::string title ) {
+	std::cout << std::setw(20) << std::left << title;
+	typename T::iterator end = container.end();
+	if (container.size() > 15)
+		end = container.begin() + 15;
+	std::for_each(container.begin(), end, displayItem);
+	if (container.size() > 15)
+		std::cout << "[...]";
+	std::cout << std::endl;
+}
+
+template<typename T>
+void displayTime(size_t size, e_cont type, double elapsed_time, T result_container) {
+	std::cout << "Time to process " << size << " items using "
+		<< (type == VECTOR ? "std::vector" : "std::deque")
+		<< std::fixed << std::setprecision(6) << ": " << elapsed_time/CLOCKS_PER_SEC << " us" << std::endl;
+	if (VERBOSE) {
+		if (isSorted(result_container))
+			std::cout << "\e[0;32m[ SORTED! ]\e[0;37m" << std::endl;
+		else
+			std::cout << "\e[0;31m[ NOT SORTED! ]\e[0;37m" << std::endl;
+	}
+}
+
+template<typename T>
+void verbose( std::string step, T first, T second ) {
+	if (!VERBOSE)
+		return ;
+	displayCont(first, step);
+	displayCont(second, step);
+	for (unsigned int i = 0; i < 120; i++)
+		std::cout << "-";
+	std::cout << std::endl;
 }
 
 #endif /* __UTILS_HPP__ */

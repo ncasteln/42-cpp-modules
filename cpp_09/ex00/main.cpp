@@ -3,121 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:16:39 by nico              #+#    #+#             */
-/*   Updated: 2024/03/20 11:26:47 by nico             ###   ########.fr       */
+/*   Updated: 2024/04/17 12:16:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
-#include <fstream> // maybe remove
-#include <iostream>
 
 static int open_ifstream(std::ifstream& stream, const char* file_name) {
 	stream.open(file_name, std::ifstream::in);
-	if (!stream)	// ios::operator! same as dbstream.fail()
-		return (1);
+	if (!stream)
+		return (std::cerr << "Error: fail opening INPUT file stream" << std::endl, 1);
 	return (0);
 }
 
-/*
-	I decided to open/close the database for every input line, but I could also
-	use the followings:
-	- dbstream.clear();		// clear error flags
-	- dbstream.seekg(0);	// reset offset position to zero
-*/
-int read_dbstream(BitcoinExchange& input, BitcoinExchange& prev) {
-	std::ifstream dbstream;
-	std::string db_buff;
+/*	@ db_stream.clear(); reset/clear the errors
+	@ db_stream.seekg(0); move the position of reading to the beginning
+	@ if(dbstra.eof()) catches dates which goes over the end of db */
+int read_db_stream(BitcoinExchange& input, std::ifstream& db_stream) {
+	std::string db_line;
 
-	if (open_ifstream(dbstream, "./data.csv")) // for every input it is closed and opened
-		return (std::cerr << "Error: fail opening database stream" << std::endl, 1);
-	while (getline(dbstream, db_buff)) {
-		if (db_buff.empty()) continue ;
-		if (dbstream.fail()) {
-			std::cerr << "Error: stream state error occured" << std::endl;
-			dbstream.close();
+	db_stream.clear();
+	db_stream.seekg(0);
+	if (db_stream.fail()) {
+		std::cerr << "Error: DATABASE stream state error occured" << std::endl;
+		db_stream.close();
+		return (1);
+	}
+	BitcoinExchange prev(DATABASE);
+	while (getline(db_stream, db_line)) {
+		if (db_stream.fail()) {
+			std::cerr << "Error: DATABASE stream state error occured" << std::endl;
+			db_stream.close();
 			return (1);
 		}
-
-		/* db is constructed like the other input instances, but it is not parsed
-		since it is not my "responsability" */
-		try {
-			BitcoinExchange db(db_buff, DATABASE);
-			if (input == db) {
-				input.displayMatch(db.getValue());
-				break ;
-			}
-			else if (input < db) {
-				if (prev.getValue() == -1) // catches when input is in the past in compairson with the first db date
-					input.displayMatch(db.getValue());
-				else
-					input.displayMatch(prev.getValue());
-				break ;
-			}
-			else if (input > db)
-				prev = db; // go on but save the previous
-		} catch ( std::exception& e ) {
-			/* TRY AND CATCH are only ued to jump the first line of the
-			database ( or other line with invalid format ) which holds date,exchange_rate string,
-			otherwise is not necessary since the database is assumed that contains always correct values */
-		}
+		if (db_line.empty()) continue ;
+		BitcoinExchange db(db_line, DATABASE);
+		if (input.findMatch(db, prev))
+			break ;
 	};
-	if (dbstream.eof()) // catch dates that go over the highest in the future
+	if (db_stream.eof())
 		input.displayMatch(prev.getValue());
-	dbstream.close();
 	return (0);
 }
 
-int read_instream(std::ifstream& instream, std::string& in_buff) {
-	while (getline(instream, in_buff)) { //  && instream.good() check if no errors occure
+/*	Conventionally a database starts with a header describing the content, so I
+	assume that the first line is defined by external and I don't parse it. */
+int read_in_stream(std::ifstream& in_stream ) {
+	std::ifstream db_stream;
+	std::string in_line;
+
+	bool header = true;
+	if (open_ifstream(db_stream, "./data.csv"))
+		return (std::cerr << "Error: fail opening DATABASE stream" << std::endl, 1);
+	while (getline(in_stream, in_line)) {
+		if (in_stream.fail()) {
+			std::cerr << "Error: INPUT stream state error occured" << std::endl;
+			break ;
+		}
+		if (header) {
+			header = false;
+			continue ;
+		}
+		if (in_line.empty()) continue ;
 		try {
-			if (instream.fail()) {
-				std::cerr << "Error: stream state error occured" << std::endl;
-				break ;
-			}
-			if (in_buff.empty()) continue ;
-
-			std::cout << "Parsing ---> [" << in_buff << "]" << std::endl;
-
-			BitcoinExchange input(in_buff, INPUT); // throws exceptions in case of errors in storing the inputline
-			BitcoinExchange prev(DATABASE);	// need to create to remember the lower and not the higher
-
-			if (read_dbstream(input, prev)) // check return value ?
+			BitcoinExchange input(in_line, INPUT);
+			if (read_db_stream(input, db_stream))
 				return (1);
 		} catch (std::exception& e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
-		std::cout << LINE << std::endl;
 	}
+	db_stream.close();
 	return (0);
 }
 
+/*	Since some stream errors could occure, in such cases I completely exit
+	from the program. */
 int main( int argc, char** argv ) {
-	std::ifstream instream;
-	std::string in_buff;
+	std::ifstream in_stream;
 
 	if (argc != 2)
 		return (std::cerr << "Error: invalid argc" << std::endl, 1);
-	if (open_ifstream(instream, argv[1]))
-		return (std::cerr << "Error: fail opening input file stream" << std::endl, 1);
-	if (read_instream(instream, in_buff)) {
-		instream.close();
+	if (open_ifstream(in_stream, argv[1]))
+		return (1);
+	if (read_in_stream(in_stream)) {
+		in_stream.close();
 		return (1);
 	}
-	instream.close();
+	in_stream.close();
 	return (0);
 }
-
-/* TO CHECK AND TO DO
-	- in utils there is only one util, should move it in another place ?
-	- empty line cases
-	- double or float ???
-	- PROBLEM with exception: what to do in case of open() or reading errors? I think I would to exit()
-		// if (instream.fail()) // correct practice ? put a try {} outside ????
-		// 	throw std::ios_base::failure("fail occured while reading instream");
-	- check limits begin and end of database
-		// date bigger then the biggest
-		// date lower then the lowest
-*/

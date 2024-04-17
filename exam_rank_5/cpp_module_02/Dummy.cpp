@@ -13,6 +13,6 @@ Dummy& Dummy::operator=( const Dummy& rhs ) { // -------====--=============> rig
 	return (*this);
 }
 
-ATarget* Dummy::clone( void ) {
+ATarget* Dummy::clone( void ) const {
 	return (new Dummy);
 }

@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 14:46:08 by ncasteln          #+#    #+#              #
-#    Updated: 2024/04/09 10:26:39 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/04/16 15:34:45 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,20 @@ SRC			=	main.cpp \
 HEADERS		=	RPN.hpp
 OBJS		=	$(SRC:.cpp=.o)
 
+VERBOSE		=	VERBOSE=0
+ifeq ($(filter verbose,$(MAKECMDGOALS)),verbose)
+	VERBOSE	=	VERBOSE=1
+endif
+
 all: $(NAME)
 
+verbose: fclean $(NAME)
+
 $(NAME): $(OBJS) $(HEADERS)
-	c++ $(CXXFLAGS) $(OBJS) -o $(NAME) -I./
+	c++ $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp $(HEADERS)
-	c++ $(CXXFLAGS) -c $< -o $@ -I./
+	c++ $(CXXFLAGS) -c $< -o $@ -D$(VERBOSE)
 
 clean:
 	rm -rf $(OBJS)
@@ -38,4 +45,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: all, clean, fclean, re, verbose
