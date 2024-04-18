@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:45:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/18 12:22:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:43:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ PmergeMe<T, U>::PmergeMe( int argc, char** argv, e_cont type ): _type(type) {
 	U pair_container = pairing<T,U>(_container);
 	merge(pair_container);
 	verbose("[ MERGING ]", createChain<T>(pair_container, MAIN), createChain<T>(pair_container, PEND));
-	T result_container = insertion(_container, pair_container, _type);
+	T result_container = insertion(_container, pair_container);
 	clock_t end = clock();
 	displayCont(result_container, "[ After ]");
 	displayTime(_container.size(), _type, static_cast<double>(end-start), result_container);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:46:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/18 12:26:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:43:56 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ template <typename T> T binSearch( unsigned int item, T begin, T end );
 template <typename T> bool isSorted( T container );
 template <typename T, typename U> T createChain( U pair_container, e_chain type );
 template<typename T> void verbose( std::string step, T first, T second );
+template<typename T> void insertVector( T& main_chain, T pend_chain, T insertionOrder );
+template<typename T> void insertDeque( T& main_chain, T pend_chain, T insertionOrder );
 
 /*	Part of the parsing. The approach used is to modify the original std::string,
 	erasing its characters and reducing it to an empty string. An overflow check
@@ -69,10 +71,10 @@ U pairing( T container ) {
 	std::pair<int, int> p;
 
 	for (size_t i = 0; i < container.size() - (container.size()%2); i += 2) {
-		p = std::make_pair(container[i], container[i + 1]); // create a pair two-by-two
+		p = std::make_pair(container[i], container[i + 1]);
 		if (p.first < p.second)
 			std::swap(p.first, p.second);
-		pair_container.push_back(p); // push to the vector
+		pair_container.push_back(p);
 	}
 	verbose("[ PAIRING ]", createChain<T,U>(pair_container, MAIN), createChain<T,U>(pair_container, PEND));
 	return (pair_container);
@@ -96,83 +98,69 @@ void merge( U& pair_container ) {
 
 /*	@if ((container.size() % 2) != 0), if the size was odd, the last element is
 	left and inserted into the main_chain. */
+// template <typename T, typename U>
+// T insertion( T container, U pair_container, e_cont type ) {
+// 	T jacobSequence = createJacobsthalSequence(container);
+// 	T insertionOrder = createInsertionOrder(jacobSequence, container.size());
+// 	T main_chain = createChain<T, U>(pair_container, MAIN);
+// 	T pend_chain = createChain<T, U>(pair_container, PEND);
+
+// 	if (type == VECTOR)
+// 		insertVector(main_chain, pend_chain, insertionOrder);
+// 	else if (type == DEQUE)
+// 		insertDeque(main_chain, pend_chain, insertionOrder);
+// 	if ((container.size() % 2) != 0) {
+// 		typename T::iterator location = binSearch(*(--container.end()), main_chain.begin(), main_chain.end());
+// 		main_chain.insert(location, *(--container.end()));
+// 	}
+// 	verbose("[ JACOBING ]", jacobSequence, insertionOrder);
+// 	verbose("[ INSERTING ]", main_chain, pend_chain);
+// 	return (main_chain);
+// }
+
+// template <typename T>
+// void insertVector( T& main_chain, T pend_chain, T insertionOrder ) {
+// 	typename T::iterator location;
+// 	typename T::iterator index = insertionOrder.begin();
+// 	while (index != insertionOrder.end()) {
+// 		location = binSearch(*(pend_chain.begin() + (*index)), main_chain.begin(), main_chain.end());
+// 		main_chain.insert(location, (*(pend_chain.begin() + (*index))));
+// 		index++;
+// 	}
+// }
+
+// template <typename T>
+// void insertDeque( T& main_chain, T pend_chain, T insertionOrder ) {
+// 	typename T::iterator location;
+// 	typename T::iterator index = insertionOrder.begin();
+// 	while (index != insertionOrder.end()) {
+// 		size_t counter = 0;
+// 		while (counter < insertionOrder.size()) {
+// 			if (counter == *index)
+// 				break ;
+// 			counter++;
+// 		}
+// 		unsigned int number = pend_chain[counter];
+// 		location = binSearch(number, main_chain.begin(), main_chain.end());
+// 		main_chain.insert(location, number);
+// 		index++;
+// 	}
+// }
+
 template <typename T, typename U>
-T insertion( T container, U pair_container, e_cont type ) {
+T insertion( T container, U pair_container ) {
 	T jacobSequence = createJacobsthalSequence(container);
 	T insertionOrder = createInsertionOrder(jacobSequence, container.size());
 	T main_chain = createChain<T, U>(pair_container, MAIN);
 	T pend_chain = createChain<T, U>(pair_container, PEND);
 
-	typename T::iterator pendIt = pend_chain.begin();
 	typename T::iterator location;
 	typename T::iterator index = insertionOrder.begin();
-
-	if (type == VECTOR) {
-		while (index != insertionOrder.end()) {
-			// if (std::find(jacobSequence.begin(), jacobSequence.end(), *index) != jacobSequence.end())
-			// 	std::cout <<"[\e[0;31m" << *index << "\e[0;37m" << "-"; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
-			// else
-			// 	std::cout << "[" << *index << "-"; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
-			location = binSearch(*(pendIt + (*index)), main_chain.begin(), main_chain.end());
-			main_chain.insert(location, (*(pendIt + (*index))));
-
-			// std::cout << counter << "] ";
-			// counter++;
-			index++;
-			// pendIt++;
-		}
+	while (index != insertionOrder.end()) {
+		location = binSearch(*(pend_chain.begin() + (*index)), main_chain.begin(), main_chain.end());
+		main_chain.insert(location, (*(pend_chain.begin() + (*index))));
+		index++;
 	}
-	else if (type == DEQUE) {
-		while (index != insertionOrder.end()) {
-			int counter = 0;
-			while (counter < insertionOrder.size()) {
-				if (counter == *index)
-					break ;
-				counter++;
-			}
-			unsigned int number = pend_chain[counter];
-			location = binSearch(number, main_chain.begin(), main_chain.end());
-			main_chain.insert(location, number);//(*(pendIt + (*index))));
-			index++;
-		}
-	}
-
-
-	// YES JACOBSTHAL
-	// typename T::iterator index = insertionOrder.begin();
-	// int counter = 0;
-	// while (index != insertionOrder.end()) {
-	// 	if (std::find(jacobSequence.begin(), jacobSequence.end(), *index) != jacobSequence.end())
-	// 		std::cout <<"[\e[0;31m" << *index << "\e[0;37m" << "-"; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
-	// 	else
-	// 		std::cout << "[" << *index << "-"; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
-	// 	location = binSearch(*(pendIt + (*index)), main_chain.begin(), main_chain.end());
-	// 	main_chain.insert(location, (*(pendIt + (*index))));
-
-	// 	std::cout << counter << "] ";
-	// 	counter++;
-	// 	index++;
-	// 	// pendIt++;
-	// }
-	// std::cout << std::endl;
-
-	// while (index != insertionOrder.end()) {
-	// 	// std::cout << "{index} " << *index << " | "; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
-	// 	location = binSearch(*(pendIt + (*index)), main_chain.begin(), main_chain.end());
-	// 	main_chain.insert(location, (*(pendIt + (*index))));
-	// 	count++;
-	// 	index++;
-	// 	// pendIt++;
-	// }
-	// std::cout << "||" << count << "||" << std::endl;
-	// exit(9);
-
-	// NO JACOBSTHAL
-	// while (pendIt != pend_chain.end()) {
-	// 	location = binSearch(*pendIt, main_chain.begin(), main_chain.end());
-	// 	main_chain.insert(location, *pendIt);
-	// 	pendIt++;
-	// }
 	if ((container.size() % 2) != 0) {
 		location = binSearch(*(--container.end()), main_chain.begin(), main_chain.end());
 		main_chain.insert(location, *(--container.end()));
@@ -182,6 +170,41 @@ T insertion( T container, U pair_container, e_cont type ) {
 	return (main_chain);
 }
 
+/*	Use of template specialization: in case of deque I needed to use a special
+	function because of the undefined behavior mentioned in the reference:
+	"...unlike vectors, deques are not guaranteed to store all its elements in
+	contiguous storage locations: accessing elements in a deque by offsetting
+	a pointer to another element causes undefined behavior." */
+template <typename U>
+std::deque<unsigned int> insertion( std::deque<unsigned int> container, U pair_container ) {
+	typedef std::deque<unsigned int> deque;
+	deque jacobSequence = createJacobsthalSequence(container);
+	deque insertionOrder = createInsertionOrder(jacobSequence, container.size());
+	deque main_chain = createChain<deque, U>(pair_container, MAIN);
+	deque pend_chain = createChain<deque, U>(pair_container, PEND);
+
+	typename deque::iterator location;
+	typename deque::iterator index = insertionOrder.begin();
+	while (index != insertionOrder.end()) {
+		size_t counter = 0;
+		while (counter < insertionOrder.size()) {
+			if (counter == *index)
+				break ;
+			counter++;
+		}
+		unsigned int number = pend_chain[counter];
+		location = binSearch(number, main_chain.begin(), main_chain.end());
+		main_chain.insert(location, number);
+		index++;
+	}
+	if ((container.size() % 2) != 0) {
+		location = binSearch(*(--container.end()), main_chain.begin(), main_chain.end());
+		main_chain.insert(location, *(--container.end()));
+	}
+	verbose("[ JACOBING ]", jacobSequence, insertionOrder);
+	verbose("[ INSERTING ]", main_chain, pend_chain);
+	return (main_chain);
+}
 
 // ----------------------------------------------------------------- JACOBSTAHL
 /*	Create the Jacobsthal number sequence based on the container size. Jacobstahl
