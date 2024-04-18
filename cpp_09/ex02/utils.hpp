@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:46:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/17 12:21:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:26:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,82 @@ void merge( U& pair_container ) {
 /*	@if ((container.size() % 2) != 0), if the size was odd, the last element is
 	left and inserted into the main_chain. */
 template <typename T, typename U>
-T insertion( T container, U pair_container ) {
+T insertion( T container, U pair_container, e_cont type ) {
 	T jacobSequence = createJacobsthalSequence(container);
 	T insertionOrder = createInsertionOrder(jacobSequence, container.size());
 	T main_chain = createChain<T, U>(pair_container, MAIN);
 	T pend_chain = createChain<T, U>(pair_container, PEND);
+
 	typename T::iterator pendIt = pend_chain.begin();
 	typename T::iterator location;
-	while (pendIt != pend_chain.end()) {
-		location = binSearch(*pendIt, main_chain.begin(), main_chain.end());
-		main_chain.insert(location, *pendIt);
-		pendIt++;
+	typename T::iterator index = insertionOrder.begin();
+
+	if (type == VECTOR) {
+		while (index != insertionOrder.end()) {
+			// if (std::find(jacobSequence.begin(), jacobSequence.end(), *index) != jacobSequence.end())
+			// 	std::cout <<"[\e[0;31m" << *index << "\e[0;37m" << "-"; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
+			// else
+			// 	std::cout << "[" << *index << "-"; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
+			location = binSearch(*(pendIt + (*index)), main_chain.begin(), main_chain.end());
+			main_chain.insert(location, (*(pendIt + (*index))));
+
+			// std::cout << counter << "] ";
+			// counter++;
+			index++;
+			// pendIt++;
+		}
 	}
+	else if (type == DEQUE) {
+		while (index != insertionOrder.end()) {
+			int counter = 0;
+			while (counter < insertionOrder.size()) {
+				if (counter == *index)
+					break ;
+				counter++;
+			}
+			unsigned int number = pend_chain[counter];
+			location = binSearch(number, main_chain.begin(), main_chain.end());
+			main_chain.insert(location, number);//(*(pendIt + (*index))));
+			index++;
+		}
+	}
+
+
+	// YES JACOBSTHAL
+	// typename T::iterator index = insertionOrder.begin();
+	// int counter = 0;
+	// while (index != insertionOrder.end()) {
+	// 	if (std::find(jacobSequence.begin(), jacobSequence.end(), *index) != jacobSequence.end())
+	// 		std::cout <<"[\e[0;31m" << *index << "\e[0;37m" << "-"; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
+	// 	else
+	// 		std::cout << "[" << *index << "-"; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
+	// 	location = binSearch(*(pendIt + (*index)), main_chain.begin(), main_chain.end());
+	// 	main_chain.insert(location, (*(pendIt + (*index))));
+
+	// 	std::cout << counter << "] ";
+	// 	counter++;
+	// 	index++;
+	// 	// pendIt++;
+	// }
+	// std::cout << std::endl;
+
+	// while (index != insertionOrder.end()) {
+	// 	// std::cout << "{index} " << *index << " | "; // << " ---- {*(pendIt + (*index))} ++++ " << *(pendIt + (*index));
+	// 	location = binSearch(*(pendIt + (*index)), main_chain.begin(), main_chain.end());
+	// 	main_chain.insert(location, (*(pendIt + (*index))));
+	// 	count++;
+	// 	index++;
+	// 	// pendIt++;
+	// }
+	// std::cout << "||" << count << "||" << std::endl;
+	// exit(9);
+
+	// NO JACOBSTHAL
+	// while (pendIt != pend_chain.end()) {
+	// 	location = binSearch(*pendIt, main_chain.begin(), main_chain.end());
+	// 	main_chain.insert(location, *pendIt);
+	// 	pendIt++;
+	// }
 	if ((container.size() % 2) != 0) {
 		location = binSearch(*(--container.end()), main_chain.begin(), main_chain.end());
 		main_chain.insert(location, *(--container.end()));
