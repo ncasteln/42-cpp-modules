@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:45:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/18 13:43:31 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:11:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ template <typename T, typename U> PmergeMe<T, U>& PmergeMe<T, U>::operator=( con
 template <typename T, typename U>
 PmergeMe<T, U>::PmergeMe( int argc, char** argv, e_cont type ): _type(type) {
 	clock_t start = clock();
+	std::cout << "START ----" << start << " " << std::endl;
 	parse(argc, argv);
 	displayCont(_container, "[ Before ]");
 	U pair_container = pairing<T,U>(_container);
@@ -64,6 +65,9 @@ PmergeMe<T, U>::PmergeMe( int argc, char** argv, e_cont type ): _type(type) {
 	verbose("[ MERGING ]", createChain<T>(pair_container, MAIN), createChain<T>(pair_container, PEND));
 	T result_container = insertion(_container, pair_container);
 	clock_t end = clock();
+	std::cout << "END ----" << end << " " << std::endl;
+	std::cout << "SUB ----" << end - start << " " << std::endl;
+	std::cout << "DOBLE ----" << static_cast<double>(end-start) << " " << std::endl;
 	displayCont(result_container, "[ After ]");
 	displayTime(_container.size(), _type, static_cast<double>(end-start), result_container);
 }

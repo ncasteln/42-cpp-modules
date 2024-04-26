@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:46:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2024/04/18 13:43:56 by ncasteln         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:11:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,57 +95,6 @@ void merge( U& pair_container ) {
 	merge(right);
 	std::merge(left.begin(), left.end(), right.begin(), right.end(), pair_container.begin());
 }
-
-/*	@if ((container.size() % 2) != 0), if the size was odd, the last element is
-	left and inserted into the main_chain. */
-// template <typename T, typename U>
-// T insertion( T container, U pair_container, e_cont type ) {
-// 	T jacobSequence = createJacobsthalSequence(container);
-// 	T insertionOrder = createInsertionOrder(jacobSequence, container.size());
-// 	T main_chain = createChain<T, U>(pair_container, MAIN);
-// 	T pend_chain = createChain<T, U>(pair_container, PEND);
-
-// 	if (type == VECTOR)
-// 		insertVector(main_chain, pend_chain, insertionOrder);
-// 	else if (type == DEQUE)
-// 		insertDeque(main_chain, pend_chain, insertionOrder);
-// 	if ((container.size() % 2) != 0) {
-// 		typename T::iterator location = binSearch(*(--container.end()), main_chain.begin(), main_chain.end());
-// 		main_chain.insert(location, *(--container.end()));
-// 	}
-// 	verbose("[ JACOBING ]", jacobSequence, insertionOrder);
-// 	verbose("[ INSERTING ]", main_chain, pend_chain);
-// 	return (main_chain);
-// }
-
-// template <typename T>
-// void insertVector( T& main_chain, T pend_chain, T insertionOrder ) {
-// 	typename T::iterator location;
-// 	typename T::iterator index = insertionOrder.begin();
-// 	while (index != insertionOrder.end()) {
-// 		location = binSearch(*(pend_chain.begin() + (*index)), main_chain.begin(), main_chain.end());
-// 		main_chain.insert(location, (*(pend_chain.begin() + (*index))));
-// 		index++;
-// 	}
-// }
-
-// template <typename T>
-// void insertDeque( T& main_chain, T pend_chain, T insertionOrder ) {
-// 	typename T::iterator location;
-// 	typename T::iterator index = insertionOrder.begin();
-// 	while (index != insertionOrder.end()) {
-// 		size_t counter = 0;
-// 		while (counter < insertionOrder.size()) {
-// 			if (counter == *index)
-// 				break ;
-// 			counter++;
-// 		}
-// 		unsigned int number = pend_chain[counter];
-// 		location = binSearch(number, main_chain.begin(), main_chain.end());
-// 		main_chain.insert(location, number);
-// 		index++;
-// 	}
-// }
 
 template <typename T, typename U>
 T insertion( T container, U pair_container ) {
